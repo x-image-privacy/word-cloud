@@ -70,6 +70,10 @@ function netForce(point, passRect){
     }
 }
 
+function netForceMethod1(point, passRect){
+    
+}
+
 // fonction qui retourne un triangle rectangle avec comme hypoténus la droite de la force résultante 
 
 function getTriangleFromNetForce(netForce){
@@ -90,6 +94,8 @@ function stepY(x, th, ty, step){
     val = (step/th) * ty
     return y + val
 }
+
+
 
 function futurPosition(rect, passRect, step){
 
