@@ -13,12 +13,61 @@ function sortData(data){
     return data.x.sort()
 }
 
+function centre(w){
+    x = x + w/2
+    y = y + h/2
+
+    return x, y
+}
+
+function distance(p1, p2){
+    return sqrt((p2.x - p1.x)^2 + (p2.y-p1.y)^2)
+}
+
 // force résultante entre un rectangle (en son centre) et tout les centres des autres rectangles
 // input: current point, list[center of all already done rect]
 // output: a line (by equation or two points)
 
 function netForce(point, passRect){
 
+    distance = []
+    Force = []
+
+    xForce = []
+    yForce = []
+
+    for(rect in passRect){
+
+        // calculate distance between each rectangles
+        d = distance(point, rect)
+        distance.push(d)
+
+
+        // calculate the force of gravity between the object
+        F = G * 1 / d^2
+
+        Force.push(F)
+
+        // calculate the x anf y components of the forces
+
+        angle = arctan((rect.y - point.y)/(rect.x - point.x))
+
+        Fx = F * cos(angle)
+        Fy = F * sin(angle)
+
+        xForce.push(Fx)
+        yForce.push(Fy)
+
+        sumXForce = xForce.sum()
+        sumYForce = yForce.sum()
+
+        coordinateF = sumXForce * i + sumYForce * j
+
+
+
+        return [sumXForce, sumYForce]
+
+    }
 }
 
 // fonction qui retourne un triangle rectangle avec comme hypoténus la droite de la force résultante 

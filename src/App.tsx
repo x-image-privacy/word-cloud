@@ -8,8 +8,36 @@ const defaultWords = [
   { id: "3456", text: "haha", x: 130, y: 40 },
 ];
 
-const limitWidth = window.innerWidth;
-const limitHeight = window.innerHeight;
+const centerRect = (rect: {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+}) => {
+  const elem = document.getElementById(rect.id);
+  if (elem) {
+    const h = elem.getBoundingClientRect().height;
+    const w = elem.getBoundingClientRect().width;
+
+    let x = rect.x + Math.floor(w / 2);
+    let y = rect.y + Math.floor(h / 2);
+
+    return [x, y];
+  }
+};
+
+const distance = (
+  w1: { id: string; text: string; x: number; y: number },
+  w2: { id: string; text: string; x: number; y: number }
+) => {
+  const centerW1 = centerRect(w1);
+  const centerW2 = centerRect(w2);
+
+  return Math.sqrt(
+    Math.pow(centerW2[0] - centerW1[0], 2) +
+      Math.pow(centerW2[1] - centerW1[1], 2)
+  );
+};
 
 const allCollision = (
   word: { id: string; text: string; x: number; y: number },
@@ -51,17 +79,6 @@ const collision = (
     console.log("No collision");
     return false;
   }
-};
-
-const distance = (
-  word1: { id: string; text: string; x: number; y: number },
-  word2: { id: string; text: string; x: number; y: number }
-) => {
-  const w1 = document.getElementById(word1.id).getBoundingClientRect().width;
-  const h1 = document.getElementById(word1.id).getBoundingClientRect().height;
-
-  const w2 = document.getElementById(word2.id).getBoundingClientRect().width;
-  const h2 = document.getElementById(word2.id).getBoundingClientRect().height;
 };
 
 const finished = (array: any[]) => {
