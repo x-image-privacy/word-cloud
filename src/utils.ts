@@ -1,3 +1,98 @@
+// This function put the first word in the center of the parent rectangle
+export const setFirstWordInCenterOfParent = (
+  w: {
+    id: string;
+    text: string;
+    x: number;
+    y: number;
+  },
+  p: string
+) => {
+  const centerOfParent = centerParent(p);
+
+  w.x = centerOfParent[0];
+  w.y = centerOfParent[1];
+
+  return w;
+};
+
+// function that return the coordinate of the parent in an array
+export const getCoordinateOfParent = (parent: string) => {
+  let xParent = 0;
+  let yParent = 0;
+  let wParent = 0;
+  let hParent = 0;
+
+  const p = document.getElementById(parent);
+
+  if (p) {
+    xParent = p.getBoundingClientRect().x;
+    yParent = p.getBoundingClientRect().y;
+    wParent = p.getBoundingClientRect().width;
+    hParent = p.getBoundingClientRect().height;
+  }
+
+  return [xParent, yParent, wParent, hParent];
+};
+
+// function that calculate the center of the parent
+export const centerParent = (p: string) => {
+  const parent = getCoordinateOfParent(p);
+
+  const centerOfParentX = parent[0] + Math.floor(parent[2] / 2);
+  const centerOfParentY = parent[1] + Math.floor(parent[3] / 2);
+
+  return [centerOfParentX, centerOfParentY];
+};
+
+// This function return a random interger between two numbers
+export const randomIntFromInterval = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+// This function put the word in a random place
+export const putWordInRandomPositionOnParent = (
+  w: {
+    id: string;
+    text: string;
+    x: number;
+    y: number;
+  },
+  p: string
+) => {
+  const parent = getCoordinateOfParent(p);
+  const xParent = parent[0];
+  const yParent = parent[1];
+  const wParent = parent[2];
+  const hParent = parent[3];
+
+  // Chose the parent face
+  const parentFace = randomIntFromInterval(1, 4);
+  const xValue = randomIntFromInterval(0, xParent + wParent);
+  const yValue = randomIntFromInterval(0, yParent + hParent);
+
+  // ([0, x + w], 0)
+  if (parentFace === 1) {
+    w.x = xValue;
+    w.y = 0;
+
+    // (0, [0, y + h])
+  } else if (parentFace === 2) {
+    w.x = 0;
+    w.y = yValue;
+    // ([0, x + w], y + h)
+  } else if (parentFace === 3) {
+    w.x = xValue;
+    w.y = yParent + hParent;
+    // (x + w, [0, y + h])
+  } else if (parentFace == 4) {
+    w.x = xParent + wParent;
+    w.y = yValue;
+  }
+
+  return w;
+};
+
 export const centerWord = (
   rect: {
     id: string;
@@ -12,25 +107,6 @@ export const centerWord = (
   let y = rect.y + Math.floor(h / 2);
 
   return [x, y];
-};
-
-export const centerParent = (p: any) => {
-  let xParent = 0;
-  let yParent = 0;
-  let wParent = 0;
-  let hParent = 0;
-
-  if (p) {
-    xParent = p.getBoundingClientRect().x;
-    yParent = p.getBoundingClientRect().y;
-    wParent = p.getBoundingClientRect().width;
-    hParent = p.getBoundingClientRect().height;
-
-    const centerOfParentX = xParent + Math.floor(wParent / 2);
-    const centerOfParentY = yParent + Math.floor(hParent / 2);
-
-    return [centerOfParentX, centerOfParentY];
-  }
 };
 
 export const distance = (

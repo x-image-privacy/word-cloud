@@ -1,5 +1,9 @@
 import "./App.css";
-import { centerWord } from "./utils";
+import {
+  centerWord,
+  putWordInRandomPositionOnParent,
+  setFirstWordInCenterOfParent,
+} from "./utils";
 import * as React from "react";
 
 const defaultWords = [
@@ -19,45 +23,32 @@ const Wordcloud = () => {
 
       const newWords = prevWords.forEach((w) => {
         const elem = document.getElementById(w.id);
+        const parent = "rect";
 
         if (elem) {
-          const heightW = elem.getBoundingClientRect().height;
-          const widthW = elem.getBoundingClientRect().width;
+          if (prevWords.length === 0) {
+            w = setFirstWordInCenterOfParent(w, parent);
+            passRect.push(w);
+          } else {
+            // Get the height and width of the word
+            const heightW = elem.getBoundingClientRect().height;
+            const widthW = elem.getBoundingClientRect().width;
 
-          // Get the center of the word
+            // put the word in random place arround the parent
+            w = putWordInRandomPositionOnParent(w, parent);
 
-          const centeredX = centerWord(w, heightW, widthW);
+            // Get the center of the word
+            const centeredX = centerWord(w, heightW, widthW);
 
-          const xW = centeredX[0];
-          const yW = centeredX[1];
+            const xW = centeredX[0];
+            const yW = centeredX[1];
+
+            // move the word
+          }
         }
-
-        return w;
       });
 
       // const newWords = prevWords.map((w) => {
-
-      //   const elem = document.getElementById(w.id);
-
-      //   if (elem) {
-      //     const heightW = elem.getBoundingClientRect().height;
-      //     const widthW = elem.getBoundingClientRect().width;
-
-      //     const rect = document.getElementById("rect");
-
-      //     if (rect) {
-      //       console.log(rect.getBoundingClientRect());
-      //       const xParent = rect.getBoundingClientRect().x;
-      //       const yParent = rect.getBoundingClientRect().y;
-      //       const wParent = rect.getBoundingClientRect().width;
-      //       const hParent = rect.getBoundingClientRect().height;
-      //     }
-
-      //     if (currArray.indexOf(w) == -1) {
-      //       currArray.push(w);
-      //       w = findLocation(w, currArray);
-      //     }
-
       //     return w;
       //   }
 
