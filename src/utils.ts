@@ -109,6 +109,39 @@ export const centerWord = (
   return [x, y];
 };
 
+export const netForce = (
+  w: {
+    id: string;
+    text: string;
+    x: number;
+    y: number;
+  },
+  passRect: {
+    id: string;
+    text: string;
+    x: number;
+    y: number;
+  }[]
+) => {
+  let diffX: number[] = [];
+  let diffY: number[] = [];
+  passRect.forEach((passW) => {
+    const x = passW.x - w.x;
+    const y = passW.y - w.y;
+
+    diffX.push(x);
+    diffY.push(y);
+  });
+
+  let sumDiffX = 0;
+  let sumDiffY = 0;
+
+  diffX.map((e) => (sumDiffX += e));
+  diffY.map((e) => (sumDiffY += e));
+
+  return [sumDiffX, sumDiffY];
+};
+
 export const distance = (
   w1: { id: string; text: string; x: number; y: number },
   w2: { id: string; text: string; x: number; y: number }
