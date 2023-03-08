@@ -122,7 +122,7 @@ export const netForce = (
     x: number;
     y: number;
   }[]
-) => {
+): [number, number] => {
   let diffX: number[] = [];
   let diffY: number[] = [];
   passRect.forEach((passW) => {
@@ -150,7 +150,7 @@ export const getTriangleFromNetForce = (
     y: number;
   },
   netForce: [number, number]
-) => {
+): [number, number] => {
   const lenghtHypontenus = Math.sqrt(
     Math.pow(netForce[0] - word.x, 2) + Math.pow(netForce[1] - word.y, 2)
   );
@@ -200,36 +200,69 @@ export const futurPosition = (
     x: number;
     y: number;
   }[],
-  step: number,
-  w1H: number,
-  w1W: number,
-  w2H: number,
-  w2W: number
+  step: number
 ) => {
-  let isCollision = 1;
+  let isCollision = 0;
+  let isCollisionY;
+  let isCollisionX;
   let netForceW;
   let rightAnglePoint;
 
+  // tmp are future possible position of word
   let tmpWPosition = [word.x, word.y];
   let tmpW = word;
+  let tmpWX = word;
+  let tmpWY = word;
+  let collisionOnXY;
 
-  while (isCollision) {
+  while (!isCollision) {
+    collisionOnXY = [0, 0];
     netForceW = netForce(word, passRect);
 
     rightAnglePoint = getTriangleFromNetForce(word, netForceW);
 
     tmpWPosition = moveOnHypotenus(
-      tmpWPosition,
+      [word.x, word.y],
       netForceW,
       rightAnglePoint,
       step
     );
 
+    // set the position
     tmpW.x = tmpWPosition[0];
     tmpW.y = tmpWPosition[1];
 
-    isCollision = allCollision(word, passRect);
+    tmpWX.x = tmpWPosition[0];
+    tmpWY.y = tmpWPosition[1];
+
+    // test if the word can be move over the hypotenuse
+    isCollision = allCollision(tmpW, passRect);
+
+    if (isCollision) {
+      // test collision on x
+      isCollisionX = allCollision(tmpWX, passRect);
+      isCollisionY = allCollision(tmpWY, passRect);
+
+      if (collisionOnXY[0] === 1 && collisionOnXY[1] === 1) {
+        return word;
+      }
+
+      if (isCollisionX) {
+        collisionOnXY[0] = 1;
+      } else {
+        word.x = tmpWX.x;
+      }
+
+      if (isCollisionY) {
+        collisionOnXY[1] = 1;
+      } else {
+        word.y = tmpWY.y;
+      }
+    } else {
+      word = tmpW;
+    }
   }
+  return word;
 };
 
 export const distanceBetweenWord = (

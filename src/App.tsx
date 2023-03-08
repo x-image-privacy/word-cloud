@@ -1,6 +1,7 @@
 import "./App.css";
 import {
   centerWord,
+  futurPosition,
   putWordInRandomPositionOnParent,
   setFirstWordInCenterOfParent,
 } from "./utils";
@@ -11,6 +12,17 @@ const defaultWords = [
   { id: "2345", text: "hello", x: 50, y: 10 },
   { id: "3456", text: "haha", x: 130, y: 40 },
 ];
+
+// may be we don't need this
+export const isFinish = (
+  passRect: { id: string; text: string; x: number; y: number }[]
+) => {
+  if (passRect.length === defaultWords.length) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 
 const MAX_WIDTH = 150;
 const Wordcloud = () => {
@@ -44,21 +56,12 @@ const Wordcloud = () => {
             const yW = centeredX[1];
 
             // move the word
+            w = futurPosition(w, passRect, 3);
+
+            passRect.push(w);
           }
         }
       });
-
-      // const newWords = prevWords.map((w) => {
-      //     return w;
-      //   }
-
-      //   {
-      //   ...w,
-      //   x: 100 - w.x > 0 ? w.x + 1 : w.x - 1,
-      //   y: 100 - w.y > 0 ? w.y + 1 : w.y - 1,
-      //   };
-      // });
-
       return newWords;
     });
   };
