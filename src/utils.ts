@@ -102,11 +102,43 @@ export const centerWord = (
   },
   h: number,
   w: number
-) => {
-  let x = rect.x + Math.floor(w / 2);
-  let y = rect.y + Math.floor(h / 2);
+): {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+} => {
+  const x = rect.x + Math.floor(w / 2);
+  const y = rect.y + Math.floor(h / 2);
 
-  return [x, y];
+  rect.x = x;
+  rect.y = y;
+
+  return rect;
+};
+
+export const uncenteredWord = (
+  rect: {
+    id: string;
+    text: string;
+    x: number;
+    y: number;
+  },
+  h: number,
+  w: number
+): {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+} => {
+  const x = rect.x - Math.floor(w / 2);
+  const y = rect.y - Math.floor(h / 2);
+
+  rect.x = x;
+  rect.y = y;
+
+  return rect;
 };
 
 export const netForce = (
@@ -285,6 +317,10 @@ export const collision = (
 ) => {
   const positionW1 = getCoordinateOfParent(w1.id);
   const positionW2 = getCoordinateOfParent(w2.id);
+
+  w1 = uncenteredWord(w1, positionW1[2], positionW1[3]);
+  w2 = uncenteredWord(w2, positionW1[2], positionW1[3]);
+
   if (
     w1.x < w2.x + positionW2[2] &&
     w1.x + positionW1[2] > w2.x &&

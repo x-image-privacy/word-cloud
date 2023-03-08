@@ -32,10 +32,10 @@ const Wordcloud = () => {
   const updateWords = () => {
     setWords((prevWords) => {
       let passRect: { id: string; text: string; x: number; y: number }[] = [];
+      const parent = "rect";
 
       const newWords = prevWords.forEach((w) => {
         const elem = document.getElementById(w.id);
-        const parent = "rect";
 
         if (elem) {
           if (prevWords.length === 0) {
@@ -50,10 +50,7 @@ const Wordcloud = () => {
             w = putWordInRandomPositionOnParent(w, parent);
 
             // Get the center of the word
-            const centeredX = centerWord(w, heightW, widthW);
-
-            const xW = centeredX[0];
-            const yW = centeredX[1];
+            w = centerWord(w, heightW, widthW);
 
             // move the word
             w = futurPosition(w, passRect, 3);
