@@ -1,48 +1,41 @@
-// This function put the first word in the center of the parent rectangle
-export const setFirstWordInCenterOfParent = (
-  w: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  p: string
-) => {
-  const centerOfParent = centerParent(p);
+export type Word = {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+};
 
-  w.x = centerOfParent[0];
-  w.y = centerOfParent[1];
+export type WordArray = Word[];
+
+export type Coordinate = {
+  x: number;
+  y: number;
+};
+
+// This function put the first word in the center of the parent rectangle
+export const setFirstWordInCenterOfParent = (w: Word, p: string) => {
+  const parent = getCoordinateByID(p);
+
+  w.x = parent.x + Math.floor(parent.w / 2);
+  w.y = parent.y + Math.floor(parent.h / 2);
 
   return w;
 };
 
 // function that return the coordinate of the parent in an array
-export const getCoordinateOfParent = (parent: string) => {
-  let xParent = 0;
-  let yParent = 0;
-  let wParent = 0;
-  let hParent = 0;
-
+export const getCoordinateByID = (parent: string) => {
   const p = document.getElementById(parent);
 
   if (p) {
-    xParent = p.getBoundingClientRect().x;
-    yParent = p.getBoundingClientRect().y;
-    wParent = p.getBoundingClientRect().width;
-    hParent = p.getBoundingClientRect().height;
+    const x = p.getBoundingClientRect().x;
+    const y = p.getBoundingClientRect().y;
+    const w = p.getBoundingClientRect().width;
+    const h = p.getBoundingClientRect().height;
+
+    return { x, y, w, h };
   }
 
-  return [xParent, yParent, wParent, hParent];
-};
-
-// function that calculate the center of the parent
-export const centerParent = (p: string) => {
-  const parent = getCoordinateOfParent(p);
-
-  const centerOfParentX = parent[0] + Math.floor(parent[2] / 2);
-  const centerOfParentY = parent[1] + Math.floor(parent[3] / 2);
-
-  return [centerOfParentX, centerOfParentY];
+  return { x: 0, y: 0, w: 0, h: 0 };
 };
 
 // This function return a random interger between two numbers
@@ -51,118 +44,52 @@ export const randomIntFromInterval = (min: number, max: number) => {
 };
 
 // This function put the word in a random place
-export const putWordInRandomPositionOnParent = (
-  w: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  p: string
-) => {
-  const parent = getCoordinateOfParent(p);
-  const xParent = parent[0];
-  const yParent = parent[1];
-  const wParent = parent[2];
-  const hParent = parent[3];
+export const putWordInRandomPositionOnParent = (w: Word, p: string) => {
+  const parent = getCoordinateByID(p);
 
   // Chose the parent face
   const parentFace = randomIntFromInterval(1, 4);
-  const xValue = randomIntFromInterval(0, xParent + wParent);
-  const yValue = randomIntFromInterval(0, yParent + hParent);
+  const xValue = randomIntFromInterval(0, parent.w);
+  const yValue = randomIntFromInterval(0, parent.h);
 
-  // ([0, x + w], 0)
   if (parentFace === 1) {
     w.x = xValue;
     w.y = 0;
-
-    // (0, [0, y + h])
   } else if (parentFace === 2) {
     w.x = 0;
     w.y = yValue;
-    // ([0, x + w], y + h)
   } else if (parentFace === 3) {
     w.x = xValue;
-    w.y = yParent + hParent;
-    // (x + w, [0, y + h])
+    w.y = parent.h;
   } else if (parentFace == 4) {
-    w.x = xParent + wParent;
+    w.x = parent.w;
     w.y = yValue;
   }
 
   return w;
 };
 
-export const centerWord = (
-  rect: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  h: number,
-  w: number
-): {
-  id: string;
-  text: string;
-  x: number;
-  y: number;
-} => {
-  const x = rect.x + Math.floor(w / 2);
-  const y = rect.y + Math.floor(h / 2);
+export const centerOfObject = (word: Word, h: number, w: number): Word => {
+  word.x += Math.floor(w / 2);
+  word.y += Math.floor(h / 2);
 
-  rect.x = x;
-  rect.y = y;
-
-  return rect;
+  return word;
 };
 
-export const uncenteredWord = (
-  rect: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  h: number,
-  w: number
-): {
-  id: string;
-  text: string;
-  x: number;
-  y: number;
-} => {
-  const x = rect.x - Math.floor(w / 2);
-  const y = rect.y - Math.floor(h / 2);
+export const uncenteredWord = (word: Word, h: number, w: number): Word => {
+  word.x -= Math.floor(w / 2);
+  word.y -= Math.floor(h / 2);
 
-  rect.x = x;
-  rect.y = y;
-
-  return rect;
+  return word;
 };
 
-export const netForce = (
-  w: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  passRect: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  }[]
-): [number, number] => {
+export const netForce = (w: Word, passRect: WordArray): Coordinate => {
   let diffX: number[] = [];
   let diffY: number[] = [];
-  passRect.forEach((passW) => {
-    const x = passW.x - w.x;
-    const y = passW.y - w.y;
 
-    diffX.push(x);
-    diffY.push(y);
+  passRect.forEach((passW) => {
+    diffX.push(passW.x - w.x);
+    diffY.push(passW.y - w.y);
   });
 
   let sumDiffX = 0;
@@ -171,123 +98,95 @@ export const netForce = (
   diffX.map((e) => (sumDiffX += e));
   diffY.map((e) => (sumDiffY += e));
 
-  return [sumDiffX, sumDiffY];
+  return { x: sumDiffX, y: sumDiffY };
 };
 
 export const getTriangleFromNetForce = (
-  word: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  netForce: [number, number]
-): [number, number] => {
+  word: Word,
+  netForce: Coordinate
+): Coordinate => {
   const lenghtHypontenus = Math.sqrt(
-    Math.pow(netForce[0] - word.x, 2) + Math.pow(netForce[1] - word.y, 2)
+    Math.pow(netForce.x - word.x, 2) + Math.pow(netForce.y - word.y, 2)
   );
 
   const deltaX =
-    ((netForce[1] - word.y) * lenghtHypontenus) / (2 * lenghtHypontenus);
+    ((netForce.y - word.y) * lenghtHypontenus) / (2 * lenghtHypontenus);
   const deltaY =
-    ((netForce[0] - word.x) * lenghtHypontenus) / (2 * lenghtHypontenus);
+    ((netForce.x - word.x) * lenghtHypontenus) / (2 * lenghtHypontenus);
 
-  const midPointX = (word.x + netForce[0]) / 2;
-  const midPointY = (word.y + netForce[1]) / 2;
+  const midPointX = (word.x + netForce.x) / 2;
+  const midPointY = (word.y + netForce.y) / 2;
 
-  const rightTriangleVertexX = midPointX + deltaX / 2;
-  const rightTriangleVertexY = midPointY + deltaY / 2;
+  const x = midPointX + deltaX / 2;
+  const y = midPointY - deltaY / 2;
 
-  return [rightTriangleVertexX, rightTriangleVertexY];
+  return { x, y };
 };
 
 export const moveOnHypotenus = (
-  A: [x: number, y: number], // adjacent - hypotenuse
-  B: [x: number, y: number], // hypotenuse - opposite
-  C: [x: number, y: number], // right angle
+  A: Coordinate, // adjacent - hypotenuse
+  B: Coordinate, // hypotenuse - opposite
+  C: Coordinate, // right angle
   step: number
 ) => {
   const lenghtHypontenus = distanceBetweenPoint(A, B);
 
   const distanceCA =
-    ((A[0] - C[0]) * (B[0] - A[0]) + (A[1] - C[1]) * (B[1] - A[1])) /
-    lenghtHypontenus;
+    ((A.x - C.x) * (B.x - A.x) + (A.y - C.y) * (B.y - A.y)) / lenghtHypontenus;
 
-  const newX = A[0] + (step * (B[0] - A[0])) / lenghtHypontenus;
-  const newY = A[1] + (step * (B[1] - A[1])) / lenghtHypontenus;
+  const x = A.x + (step * (B.x - A.x)) / lenghtHypontenus;
+  const y = A.y + (step * (B.y - A.y)) / lenghtHypontenus;
 
-  return [newX, newY];
+  return { x, y };
 };
 
 export const futurPosition = (
-  word: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  },
-  passRect: {
-    id: string;
-    text: string;
-    x: number;
-    y: number;
-  }[],
+  word: Word,
+  passRect: WordArray,
   step: number
 ) => {
   let isCollision = 0;
-  let isCollisionY;
-  let isCollisionX;
-  let netForceW;
-  let rightAnglePoint;
-
-  // tmp are future possible position of word
-  let tmpWPosition = [word.x, word.y];
-  let tmpW = word;
-  let tmpWX = word;
-  let tmpWY = word;
-  let collisionOnXY;
 
   while (!isCollision) {
-    collisionOnXY = [0, 0];
-    netForceW = netForce(word, passRect);
+    const netForceW = netForce(word, passRect);
 
-    rightAnglePoint = getTriangleFromNetForce(word, netForceW);
+    const rightAnglePoint = getTriangleFromNetForce(word, netForceW);
 
-    tmpWPosition = moveOnHypotenus(
-      [word.x, word.y],
+    const tmpWPosition = moveOnHypotenus(
+      { x: word.x, y: word.y },
       netForceW,
       rightAnglePoint,
       step
     );
 
     // set the position
-    tmpW.x = tmpWPosition[0];
-    tmpW.y = tmpWPosition[1];
+    const tmpW = word;
+    let tmpWX = word;
+    let tmpWY = word;
 
-    tmpWX.x = tmpWPosition[0];
-    tmpWY.y = tmpWPosition[1];
+    tmpW.x = tmpWPosition.x;
+    tmpW.y = tmpWPosition.y;
+
+    tmpWX.x = tmpWPosition.x;
+    tmpWY.y = tmpWPosition.y;
 
     // test if the word can be move over the hypotenuse
     isCollision = allCollision(tmpW, passRect);
 
     if (isCollision) {
       // test collision on x
-      isCollisionX = allCollision(tmpWX, passRect);
-      isCollisionY = allCollision(tmpWY, passRect);
+      const isCollisionX = allCollision(tmpWX, passRect);
+      const isCollisionY = allCollision(tmpWY, passRect);
 
-      if (collisionOnXY[0] === 1 && collisionOnXY[1] === 1) {
+      if (isCollisionX && isCollisionY) {
         return word;
       }
 
-      if (isCollisionX) {
-        collisionOnXY[0] = 1;
-      } else {
+      if (!isCollisionX) {
         word.x = tmpWX.x;
       }
 
-      if (isCollisionY) {
-        collisionOnXY[1] = 1;
-      } else {
+      if (!isCollisionY) {
         word.y = tmpWY.y;
       }
     } else {
@@ -297,56 +196,39 @@ export const futurPosition = (
   return word;
 };
 
-export const distanceBetweenWord = (
-  w1: { id: string; text: string; x: number; y: number },
-  w2: { id: string; text: string; x: number; y: number }
-) => {
+export const distanceBetweenWord = (w1: Word, w2: Word) => {
   return Math.sqrt(Math.pow(w2.x - w1.x, 2) + Math.pow(w2.y - w1.y, 2));
 };
 
-export const distanceBetweenPoint = (
-  w1: [x: number, y: number],
-  w2: [x: number, y: number]
-) => {
-  return Math.sqrt(Math.pow(w2[0] - w1[0], 2) + Math.pow(w2[1] - w1[1], 2));
+export const distanceBetweenPoint = (w1: Coordinate, w2: Coordinate) => {
+  return Math.sqrt(Math.pow(w2.x - w1.x, 2) + Math.pow(w2.y - w1.y, 2));
 };
 
-export const collision = (
-  w1: { id: string; text: string; x: number; y: number },
-  w2: { id: string; text: string; x: number; y: number }
-) => {
-  const positionW1 = getCoordinateOfParent(w1.id);
-  const positionW2 = getCoordinateOfParent(w2.id);
+export const collision = (w1: Word, w2: Word) => {
+  const positionW1 = getCoordinateByID(w1.id);
+  const positionW2 = getCoordinateByID(w2.id);
 
-  w1 = uncenteredWord(w1, positionW1[2], positionW1[3]);
-  w2 = uncenteredWord(w2, positionW1[2], positionW1[3]);
+  w1 = uncenteredWord(w1, positionW1.w, positionW1.h);
+  w2 = uncenteredWord(w2, positionW1.w, positionW1.h);
 
   if (
-    w1.x < w2.x + positionW2[2] &&
-    w1.x + positionW1[2] > w2.x &&
-    w1.y < w2.y + positionW2[3] &&
-    positionW1[3] + w1.y > w2.y
+    w1.x < w2.x + positionW2.w &&
+    w1.x + positionW1.w > w2.x &&
+    w1.y < w2.y + positionW2.h &&
+    positionW1.h + w1.y > w2.y
   ) {
-    console.log("collision");
     return 1;
   } else {
-    console.log("No collision");
     return 0;
   }
 };
 
-export const allCollision = (
-  word: { id: string; text: string; x: number; y: number },
-  wordArray: any[]
-): any => {
-  wordArray.forEach((w: { id: string; text: string; x: number; y: number }) => {
+export const allCollision = (word: Word, passRect: WordArray): any => {
+  passRect.forEach((w: { id: string; text: string; x: number; y: number }) => {
     if (word.id !== w.id) {
       if (collision(word, w)) {
-        console.log("collision");
         return 1;
       } else {
-        console.log("No collision");
-
         return 0;
       }
     }

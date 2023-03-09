@@ -1,6 +1,6 @@
 import "./App.css";
 import {
-  centerWord,
+  centerOfObject,
   futurPosition,
   putWordInRandomPositionOnParent,
   setFirstWordInCenterOfParent,
@@ -24,33 +24,38 @@ export const isFinish = (
   }
 };
 
-const MAX_WIDTH = 150;
+const PARENT_ID = "rect";
+
 const Wordcloud = () => {
   const [words, setWords] = React.useState(defaultWords);
   const [intervalId, setIntervalId] = React.useState<number | null>(null);
 
   const updateWords = () => {
+    console.log("start");
+
     setWords((prevWords) => {
       let passRect: { id: string; text: string; x: number; y: number }[] = [];
-      const parent = "rect";
 
-      const newWords = prevWords.forEach((w) => {
+      console.log("start word move");
+
+      const newWords = prevWords.map((w) => {
         const elem = document.getElementById(w.id);
 
         if (elem) {
-          if (prevWords.length === 0) {
-            w = setFirstWordInCenterOfParent(w, parent);
+          if (passRect.length === 0) {
+            w = setFirstWordInCenterOfParent(w, PARENT_ID);
             passRect.push(w);
+            console.log("first element done");
           } else {
             // Get the height and width of the word
             const heightW = elem.getBoundingClientRect().height;
             const widthW = elem.getBoundingClientRect().width;
 
             // put the word in random place arround the parent
-            w = putWordInRandomPositionOnParent(w, parent);
+            w = putWordInRandomPositionOnParent(w, PARENT_ID);
 
             // Get the center of the word
-            w = centerWord(w, heightW, widthW);
+            w = centerOfObject(w, heightW, widthW);
 
             // move the word
             w = futurPosition(w, passRect, 3);
@@ -58,21 +63,18 @@ const Wordcloud = () => {
             passRect.push(w);
           }
         }
+        return w;
       });
+
       return newWords;
     });
+    console.log("stop");
   };
 
   React.useEffect(() => {
-    setIntervalId(setInterval(updateWords, 50));
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
+    updateWords();
   }, []);
-
+  console.log(words);
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px">
       {words.map((word) => (
