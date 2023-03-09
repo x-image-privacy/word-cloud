@@ -15,9 +15,10 @@ export type Coordinate = {
 // This function put the first word in the center of the parent rectangle
 export const setFirstWordInCenterOfParent = (w: Word, p: string) => {
   const parent = getCoordinateByID(p);
+  const word = getCoordinateByID(w.id);
 
-  w.x = parent.x + Math.floor(parent.w / 2);
-  w.y = parent.y + Math.floor(parent.h / 2);
+  w.x = Math.floor(parent.w / 2) - word.w / 2;
+  w.y = Math.floor(parent.h / 2) - word.h / 2;
 
   return w;
 };
@@ -105,25 +106,33 @@ export const getTriangleFromNetForce = (
   word: Word,
   netForce: Coordinate
 ): Coordinate => {
-  const lenghtHypontenus = Math.sqrt(
-    Math.pow(netForce.x - word.x, 2) + Math.pow(netForce.y - word.y, 2)
-  );
+  //   const lenghtHypontenus = Math.floor(
+  //     Math.sqrt(
+  //       Math.pow(netForce.x - word.x, 2) + Math.pow(netForce.y - word.y, 2)
+  //     )
+  //   );
 
-  const deltaX =
-    ((netForce.y - word.y) * lenghtHypontenus) / (2 * lenghtHypontenus);
-  const deltaY =
-    ((netForce.x - word.x) * lenghtHypontenus) / (2 * lenghtHypontenus);
+  //   const deltaX =
+  //     ((netForce.y - word.y) * lenghtHypontenus) / (2 * lenghtHypontenus);
+  //   const deltaY =
+  //     ((netForce.x - word.x) * lenghtHypontenus) / (2 * lenghtHypontenus);
 
-  const midPointX = (word.x + netForce.x) / 2;
-  const midPointY = (word.y + netForce.y) / 2;
+  //   //   console.log(deltaX);
+  //   //   console.log(deltaY);
 
-  const x = midPointX + deltaX / 2;
-  const y = midPointY - deltaY / 2;
+  //   const midPointX = (word.x + netForce.x) / 2;
+  //   const midPointY = (word.y + netForce.y) / 2;
+
+  //   const x = midPointX + deltaX / 2;
+  //   const y = midPointY - deltaY / 2;
+
+  const x = word.x;
+  const y = netForce.y;
 
   return { x, y };
 };
 
-export const moveOnHypotenus = (
+export const moveWordOnHypotenuse = (
   A: Coordinate, // adjacent - hypotenuse
   B: Coordinate, // hypotenuse - opposite
   C: Coordinate, // right angle
@@ -149,10 +158,9 @@ export const futurPosition = (
 
   while (!isCollision) {
     const netForceW = netForce(word, passRect);
-
     const rightAnglePoint = getTriangleFromNetForce(word, netForceW);
 
-    const tmpWPosition = moveOnHypotenus(
+    const futurWPosition = moveWordOnHypotenuse(
       { x: word.x, y: word.y },
       netForceW,
       rightAnglePoint,
@@ -164,11 +172,11 @@ export const futurPosition = (
     let tmpWX = word;
     let tmpWY = word;
 
-    tmpW.x = tmpWPosition.x;
-    tmpW.y = tmpWPosition.y;
+    tmpW.x = futurWPosition.x;
+    tmpW.y = futurWPosition.y;
 
-    tmpWX.x = tmpWPosition.x;
-    tmpWY.y = tmpWPosition.y;
+    tmpWX.x = futurWPosition.x;
+    tmpWY.y = futurWPosition.y;
 
     // test if the word can be move over the hypotenuse
     isCollision = allCollision(tmpW, passRect);
@@ -224,7 +232,7 @@ export const collision = (w1: Word, w2: Word) => {
 };
 
 export const allCollision = (word: Word, passRect: WordArray): any => {
-  passRect.forEach((w: { id: string; text: string; x: number; y: number }) => {
+  passRect.forEach((w: Word) => {
     if (word.id !== w.id) {
       if (collision(word, w)) {
         return 1;

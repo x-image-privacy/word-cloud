@@ -2,8 +2,11 @@ import "./App.css";
 import {
   centerOfObject,
   futurPosition,
+  getTriangleFromNetForce,
+  moveWordOnHypotenuse,
   putWordInRandomPositionOnParent,
   setFirstWordInCenterOfParent,
+  WordArray,
 } from "./utils";
 import * as React from "react";
 
@@ -13,30 +16,16 @@ const defaultWords = [
   { id: "3456", text: "haha", x: 130, y: 40 },
 ];
 
-// may be we don't need this
-export const isFinish = (
-  passRect: { id: string; text: string; x: number; y: number }[]
-) => {
-  if (passRect.length === defaultWords.length) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
-
 const PARENT_ID = "rect";
 
 const Wordcloud = () => {
   const [words, setWords] = React.useState(defaultWords);
-  const [intervalId, setIntervalId] = React.useState<number | null>(null);
 
   const updateWords = () => {
     console.log("start");
 
     setWords((prevWords) => {
-      let passRect: { id: string; text: string; x: number; y: number }[] = [];
-
-      console.log("start word move");
+      let passRect: WordArray = [];
 
       const newWords = prevWords.map((w) => {
         const elem = document.getElementById(w.id);
@@ -44,8 +33,8 @@ const Wordcloud = () => {
         if (elem) {
           if (passRect.length === 0) {
             w = setFirstWordInCenterOfParent(w, PARENT_ID);
+
             passRect.push(w);
-            console.log("first element done");
           } else {
             // Get the height and width of the word
             const heightW = elem.getBoundingClientRect().height;
@@ -54,11 +43,21 @@ const Wordcloud = () => {
             // put the word in random place arround the parent
             w = putWordInRandomPositionOnParent(w, PARENT_ID);
 
+            console.log("res");
+            console.log(
+              moveWordOnHypotenuse(
+                { x: 4, y: 6 },
+                { x: -1, y: -1 },
+                { x: 4, y: -1 },
+                4
+              )
+            );
+
             // Get the center of the word
             w = centerOfObject(w, heightW, widthW);
 
             // move the word
-            w = futurPosition(w, passRect, 3);
+            // w = futurPosition(w, passRect, 3);
 
             passRect.push(w);
           }
