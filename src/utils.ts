@@ -157,6 +157,7 @@ export const futurPosition = (
 
   while (!isCollision) {
     const netForceW = netForce(word, passRect);
+
     const rightAnglePoint = getTriangleFromNetForce(word, netForceW);
 
     const futurWPosition = moveWordOnHypotenuse(

@@ -23,17 +23,20 @@ const Wordcloud = () => {
     console.log("start");
 
     setWords((prevWords) => {
-      let passRect: WordArray = [];
+      let init: WordArray = [];
 
-      const newWords = prevWords.map((w) => {
+      const newWords = prevWords.reduce((passRect, w) => {
         const elem = document.getElementById(w.id);
 
         if (elem) {
           if (passRect.length === 0) {
             w = setFirstWordInCenterOfParent(w, PARENT_ID);
+            console.log("first elem");
+            console.log("w", w);
+
             passRect.push(w);
-            console.log(w);
           } else {
+            console.log("w before", w);
             // Get the height and width of the word
             const heightW = elem.getBoundingClientRect().height;
             const widthW = elem.getBoundingClientRect().width;
@@ -48,11 +51,12 @@ const Wordcloud = () => {
             w = futurPosition(w, passRect, 1, PARENT_ID);
 
             passRect.push(w);
+            console.log("w after", w);
           }
         }
-        return w;
-      });
-
+        return passRect;
+        // return w;
+      }, init);
       return newWords;
     });
     console.log("stop");
