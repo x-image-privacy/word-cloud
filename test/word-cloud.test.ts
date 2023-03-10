@@ -82,5 +82,7 @@ describe("netForce", () => {
 });
 
 describe("Triangle from net force", () => {
-  it("Naive test", () => {});
+  it("Naive test", () => {
+    let net = { x: 6, y: 3 };
+  });
 });

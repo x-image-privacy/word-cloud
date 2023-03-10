@@ -2,8 +2,6 @@ import "./App.css";
 import {
   centerOfObject,
   futurPosition,
-  getTriangleFromNetForce,
-  moveWordOnHypotenuse,
   putWordInRandomPositionOnParent,
   setFirstWordInCenterOfParent,
   WordArray,
@@ -33,7 +31,6 @@ const Wordcloud = () => {
         if (elem) {
           if (passRect.length === 0) {
             w = setFirstWordInCenterOfParent(w, PARENT_ID);
-
             passRect.push(w);
           } else {
             // Get the height and width of the word
@@ -43,21 +40,11 @@ const Wordcloud = () => {
             // put the word in random place arround the parent
             w = putWordInRandomPositionOnParent(w, PARENT_ID);
 
-            console.log("res");
-            console.log(
-              moveWordOnHypotenuse(
-                { x: 4, y: 6 },
-                { x: -1, y: -1 },
-                { x: 4, y: -1 },
-                4
-              )
-            );
-
             // Get the center of the word
             w = centerOfObject(w, heightW, widthW);
 
             // move the word
-            // w = futurPosition(w, passRect, 3);
+            w = futurPosition(w, passRect, 1, PARENT_ID);
 
             passRect.push(w);
           }
@@ -73,7 +60,6 @@ const Wordcloud = () => {
   React.useEffect(() => {
     updateWords();
   }, []);
-  console.log(words);
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px">
       {words.map((word) => (

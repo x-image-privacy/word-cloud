@@ -106,26 +106,6 @@ export const getTriangleFromNetForce = (
   word: Word,
   netForce: Coordinate
 ): Coordinate => {
-  //   const lenghtHypontenus = Math.floor(
-  //     Math.sqrt(
-  //       Math.pow(netForce.x - word.x, 2) + Math.pow(netForce.y - word.y, 2)
-  //     )
-  //   );
-
-  //   const deltaX =
-  //     ((netForce.y - word.y) * lenghtHypontenus) / (2 * lenghtHypontenus);
-  //   const deltaY =
-  //     ((netForce.x - word.x) * lenghtHypontenus) / (2 * lenghtHypontenus);
-
-  //   //   console.log(deltaX);
-  //   //   console.log(deltaY);
-
-  //   const midPointX = (word.x + netForce.x) / 2;
-  //   const midPointY = (word.y + netForce.y) / 2;
-
-  //   const x = midPointX + deltaX / 2;
-  //   const y = midPointY - deltaY / 2;
-
   const x = word.x;
   const y = netForce.y;
 
@@ -139,20 +119,39 @@ export const moveWordOnHypotenuse = (
   step: number
 ) => {
   const lenghtHypontenus = distanceBetweenPoint(A, B);
+  const distanceBC = distanceBetweenPoint(B, C);
 
-  const distanceCA =
-    ((A.x - C.x) * (B.x - A.x) + (A.y - C.y) * (B.y - A.y)) / lenghtHypontenus;
+  const angle = Math.asin(distanceBC / lenghtHypontenus);
 
-  const x = A.x + (step * (B.x - A.x)) / lenghtHypontenus;
-  const y = A.y + (step * (B.y - A.y)) / lenghtHypontenus;
+  const x = Math.floor(A.x + step * Math.cos((angle * Math.PI) / 180));
+  const y = Math.floor(A.y + step * Math.sin((angle * Math.PI) / 180));
 
   return { x, y };
+};
+
+export const limiteOfParent = (word: Word, parent: string) => {
+  const coordinateParent = getCoordinateByID(parent);
+  const coordinateWord = getCoordinateByID(word.id);
+
+  const unCenteredW = uncenteredWord(word, coordinateWord.h, coordinateWord.w);
+
+  if (
+    unCenteredW.x > coordinateParent.w ||
+    unCenteredW.y > coordinateParent.w ||
+    unCenteredW.x < 0 ||
+    unCenteredW.y < 0
+  ) {
+    return 1;
+  } else {
+    return 0;
+  }
 };
 
 export const futurPosition = (
   word: Word,
   passRect: WordArray,
-  step: number
+  step: number,
+  parent: string
 ) => {
   let isCollision = 0;
 
@@ -168,7 +167,7 @@ export const futurPosition = (
     );
 
     // set the position
-    const tmpW = word;
+    let tmpW = word;
     let tmpWX = word;
     let tmpWY = word;
 
@@ -192,13 +191,23 @@ export const futurPosition = (
 
       if (!isCollisionX) {
         word.x = tmpWX.x;
+
+        if (limiteOfParent(word, parent)) {
+          return word;
+        }
       }
 
       if (!isCollisionY) {
         word.y = tmpWY.y;
+        if (limiteOfParent(word, parent)) {
+          return word;
+        }
       }
     } else {
       word = tmpW;
+      if (limiteOfParent(word, parent)) {
+        return word;
+      }
     }
   }
   return word;
@@ -217,7 +226,7 @@ export const collision = (w1: Word, w2: Word) => {
   const positionW2 = getCoordinateByID(w2.id);
 
   w1 = uncenteredWord(w1, positionW1.w, positionW1.h);
-  w2 = uncenteredWord(w2, positionW1.w, positionW1.h);
+  w2 = uncenteredWord(w2, positionW2.w, positionW2.h);
 
   if (
     w1.x < w2.x + positionW2.w &&
@@ -239,7 +248,8 @@ export const allCollision = (word: Word, passRect: WordArray): any => {
       } else {
         return 0;
       }
+    } else {
+      return 0;
     }
-    return 0;
   });
 };
