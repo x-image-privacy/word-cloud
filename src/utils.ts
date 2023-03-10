@@ -121,10 +121,10 @@ export const moveWordOnHypotenuse = (
   const lenghtHypontenus = distanceBetweenPoint(A, B);
   const distanceBC = distanceBetweenPoint(B, C);
 
-  const angle = Math.asin(distanceBC / lenghtHypontenus);
+  const angle = Math.asin(distanceBC / lenghtHypontenus) * (180 / Math.PI);
 
-  const x = Math.floor(A.x + step * Math.cos((angle * Math.PI) / 180));
-  const y = Math.floor(A.y + step * Math.sin((angle * Math.PI) / 180));
+  const x = Math.floor(A.x + step * Math.cos(angle) * (180 / Math.PI));
+  const y = Math.floor(A.y + step * Math.sin(angle) * (180 / Math.PI));
 
   return { x, y };
 };

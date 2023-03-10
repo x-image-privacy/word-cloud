@@ -32,6 +32,7 @@ const Wordcloud = () => {
           if (passRect.length === 0) {
             w = setFirstWordInCenterOfParent(w, PARENT_ID);
             passRect.push(w);
+            console.log(w);
           } else {
             // Get the height and width of the word
             const heightW = elem.getBoundingClientRect().height;
