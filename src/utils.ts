@@ -71,7 +71,7 @@ export const placeWordOnOuterCircle = (w: Rectangle) => {
   return newPosition;
 };
 
-const getMoveDirection = (
+export const getMoveDirection = (
   pastWords: Rectangle[],
   currentWord: Rectangle
 ): Coordinate => {

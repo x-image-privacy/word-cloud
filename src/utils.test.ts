@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { areCentersTooClose, Coordinate, Rectangle } from "./utils";
+import {
+  areCentersTooClose,
+  Coordinate,
+  getBoundingRect,
+  Rectangle,
+  getMoveDirection,
+} from "./utils";
 
 const origin: Coordinate = {
   x: 0,
@@ -26,5 +32,41 @@ describe("areCentersTooClose", () => {
     expect(areCentersTooClose(origin, { x: 2, y: 2 }, 2.5, 2.5)).toBe(true);
     expect(areCentersTooClose(origin, { x: -2, y: -2 }, 2.5, 2.5)).toBe(true);
     expect(areCentersTooClose({ x: -2, y: -2 }, origin, 2.5, 2.5)).toBe(true);
+  });
+});
+
+describe("Get move direction", () => {
+  it("Test with three rectangle", () => {
+    const rect = { id: "word-1", text: " Big word ", coef: 0.99 };
+
+    expect(
+      getMoveDirection(
+        [
+          {
+            x: 4,
+            y: 6,
+            width: 4,
+            height: 4,
+          },
+          {
+            x: 8,
+            y: 5,
+            width: 7,
+            height: 7,
+          },
+        ],
+        {
+          x: 3,
+          y: 4,
+          width: 3,
+          height: 3,
+        }
+      )
+    ).toEqual({
+      x: 6,
+      y: 3,
+      width: 3,
+      height: 3,
+    });
   });
 });

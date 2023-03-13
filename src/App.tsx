@@ -1,7 +1,6 @@
 import "./App.css";
 import {
   futurPosition,
-  getArea,
   getBoundingRect,
   placeWordOnOuterCircle,
   Word,
@@ -71,7 +70,6 @@ const Wordcloud = () => {
         ...word,
         rect: newPositions[idx],
       }));
-
     });
   };
 
