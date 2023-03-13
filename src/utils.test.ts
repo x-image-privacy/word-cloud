@@ -36,35 +36,57 @@ describe("areCentersTooClose", () => {
 });
 
 describe("Get move direction", () => {
-  it("Test with three rectangle", () => {
-    const rect = { id: "word-1", text: " Big word ", coef: 0.99 };
+  it("1 rectangle", () => {
+    expect(
+      getMoveDirection([{ x: 4, y: 6, width: 4, height: 4 }], {
+        x: 3,
+        y: 4,
+        width: 3,
+        height: 3,
+      })
+    ).toEqual({ x: 1, y: 2 });
+  });
 
+  it("2 rectangles", () => {
     expect(
       getMoveDirection(
         [
-          {
-            x: 4,
-            y: 6,
-            width: 4,
-            height: 4,
-          },
-          {
-            x: 8,
-            y: 5,
-            width: 7,
-            height: 7,
-          },
+          { x: 4, y: 6, width: 4, height: 4 },
+          { x: 8, y: 5, width: 7, height: 7 },
         ],
-        {
-          x: 3,
-          y: 4,
-          width: 3,
-          height: 3,
-        }
+        { x: 3, y: 4, width: 3, height: 3 }
       )
     ).toEqual({
       x: 6,
       y: 3,
+    });
+  });
+
+  it("Negative coordinate", () => {
+    expect(
+      getMoveDirection([{ x: -4, y: -6, width: 4, height: 4 }], {
+        x: 3,
+        y: -4,
+        width: 3,
+        height: 3,
+      })
+    ).toEqual({
+      x: -7,
+      y: -2,
+    });
+  });
+
+  it("Same coordinate", () => {
+    expect(
+      getMoveDirection([{ x: 0, y: 0, width: 4, height: 4 }], {
+        x: 0,
+        y: 0,
+        width: 3,
+        height: 3,
+      })
+    ).toEqual({
+      x: 0,
+      y: 0,
     });
   });
 });
