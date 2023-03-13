@@ -71,6 +71,7 @@ const Wordcloud = () => {
         ...word,
         rect: newPositions[idx],
       }));
+
     });
   };
 
