@@ -58,11 +58,10 @@ export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
 };
 
 // This function put the word in a random place
-export const placeWordOnOuterCircle = (w: Rectangle) => {
+export const placeWordOnOuterCircle = (w: Rectangle): Rectangle => {
   // Chose the parent face
   const angle = Math.random() * 360;
   const radius = Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2;
-  console.log(angle);
   const newPosition = {
     ...w,
     x: radius * Math.cos(angle) + CENTER_X,
@@ -91,7 +90,7 @@ export const futurPosition = (
   word: Rectangle,
   passRect: Rectangle[],
   step: number
-) => {
+): Rectangle => {
   let isCollision = false;
   let movedWord: Rectangle = {
     x: word.x,
