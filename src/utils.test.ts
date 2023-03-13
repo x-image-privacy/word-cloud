@@ -65,8 +65,6 @@ describe("Get move direction", () => {
     ).toEqual({
       x: 6,
       y: 3,
-      width: 3,
-      height: 3,
     });
   });
 });
