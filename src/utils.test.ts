@@ -5,6 +5,8 @@ import {
   allCollision,
   Rectangle,
   getMoveDirection,
+  getTheCircle,
+  getDistance,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -125,5 +127,38 @@ describe("All collision", () => {
         { x: 6, y: 6, width: 2, height: 2 },
       ])
     ).toBe(true);
+  });
+});
+
+describe("Get distance", () => {
+  it("Naive test", () => {
+    expect(
+      getDistance({ x: 1, y: 1 }, { x: 1, y: 1, width: 4, height: 4 })
+    ).toEqual(0);
+  });
+});
+
+describe("Get the circle", () => {
+  it("Center of mass", () => {
+    expect(getTheCircle([{ x: 1, y: 1, width: 4, height: 4 }])).toEqual({
+      x: 1,
+      y: 1,
+      radius: 250,
+    });
+  });
+
+  it("Center of mass", () => {
+    expect(
+      getTheCircle([
+        { x: 1, y: 1, width: 4, height: 4 },
+        { x: 3, y: 4, width: 4, height: 4 },
+        { x: 2, y: 2, width: 4, height: 4 },
+        { x: -2, y: 1, width: 4, height: 4 },
+      ])
+    ).toEqual({
+      x: 1,
+      y: 2,
+      radius: 250,
+    });
   });
 });

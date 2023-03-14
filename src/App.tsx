@@ -2,6 +2,7 @@ import "./App.css";
 import {
   futurPosition,
   getBoundingRect,
+  getTheCircle,
   placeWordOnOuterCircle,
   Word,
 } from "./utils";
@@ -58,7 +59,7 @@ const Wordcloud = () => {
           // move the word
           const futureWord = futurPosition(
             // put the word in random place around the parent
-            placeWordOnOuterCircle(rect),
+            placeWordOnOuterCircle(rect, placedElements),
             placedElements,
             3
           );

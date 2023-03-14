@@ -25,6 +25,12 @@ export type Coordinate = {
   y: number;
 };
 
+export type Circle = {
+  x: number;
+  y: number;
+  radius: number;
+};
+
 export const getBoundingRect = (
   id: string,
   tagName: "svg" | "text" = "text"
@@ -57,15 +63,48 @@ export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
   return { x: 0, y: 0, width: 50, height: 20 };
 };
 
+export const getDistance = (point: Coordinate, word: Rectangle): number => {
+  return Math.sqrt((point.x - word.x) ** 2 + (point.y - word.y) ** 2);
+};
+
+export const getTheCircle = (passRect: Rectangle[]): Circle => {
+  const centerMass: Coordinate = passRect.reduce(
+    (acc, word) => {
+      const sum = {
+        x: acc.x + word.x,
+        y: acc.y + word.y,
+      };
+      return sum;
+    },
+    { x: 0, y: 0 }
+  );
+  centerMass.x /= passRect.length;
+  centerMass.y /= passRect.length;
+
+  const distance: number[] = passRect.map((word) =>
+    getDistance(centerMass, word)
+  );
+
+  const radius =
+    Math.max(...distance) < Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2
+      ? Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2
+      : Math.max(...distance);
+
+  return { x: centerMass.x, y: centerMass.y, radius };
+};
+
 // This function put the word in a random place
-export const placeWordOnOuterCircle = (w: Rectangle): Rectangle => {
+export const placeWordOnOuterCircle = (
+  w: Rectangle,
+  passRect: Rectangle[]
+): Rectangle => {
   // Chose the parent face
   const angle = Math.random() * 360;
-  const radius = Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2;
+  const circle = getTheCircle(passRect);
   const newPosition = {
     ...w,
-    x: radius * Math.cos(angle) + CENTER_X,
-    y: radius * Math.sin(angle) + CENTER_Y,
+    x: circle.radius * Math.cos(angle) + circle.x,
+    y: circle.radius * Math.sin(angle) + circle.y,
   };
   return newPosition;
 };
