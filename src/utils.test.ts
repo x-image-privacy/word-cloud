@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   areCentersTooClose,
   Coordinate,
-  getBoundingRect,
+  allCollision,
   Rectangle,
   getMoveDirection,
 } from "./utils";
@@ -10,6 +10,13 @@ import {
 const origin: Coordinate = {
   x: 0,
   y: 0,
+};
+
+const originRectangle: Rectangle = {
+  x: 0,
+  y: 0,
+  width: 1,
+  height: 1,
 };
 
 describe("areCentersTooClose", () => {
@@ -88,5 +95,35 @@ describe("Get move direction", () => {
       x: 0,
       y: 0,
     });
+  });
+});
+
+describe("All collision", () => {
+  it("True", () => {
+    expect(allCollision(originRectangle, [originRectangle])).toBe(true);
+  });
+
+  it("False", () => {
+    expect(
+      allCollision(originRectangle, [{ x: 4, y: 4, width: 2, height: 2 }])
+    ).toBe(false);
+  });
+
+  it("Two placed element true", () => {
+    expect(
+      allCollision(originRectangle, [
+        { x: 2, y: 2, width: 4, height: 4 },
+        { x: 6, y: 6, width: 2, height: 2 },
+      ])
+    ).toBe(true);
+  });
+
+  it("Two placed element false", () => {
+    expect(
+      allCollision(originRectangle, [
+        { x: 2, y: 2, width: 4, height: 4 },
+        { x: 6, y: 6, width: 2, height: 2 },
+      ])
+    ).toBe(true);
   });
 });
