@@ -1,10 +1,4 @@
-import {
-  CENTER_X,
-  CENTER_Y,
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
-  DEFAULT_RECT,
-} from "./constants";
+import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
 
 export type Word = {
   id: string;
@@ -124,6 +118,8 @@ export const getMoveDirection = (
     { x: 0, y: 0 }
   );
 };
+// compute the median number of iteration
+// let iterArray: number[] = [];
 
 export const futurPosition = (
   word: Rectangle,
@@ -131,6 +127,7 @@ export const futurPosition = (
   step: number
 ): Rectangle => {
   let isCollision = false;
+
   let movedWord: Rectangle = {
     x: word.x,
     y: word.y,
@@ -171,11 +168,24 @@ export const futurPosition = (
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
-  } while (!isCollision && displacement > 2 && iter < 600);
-  console.log(isCollision, displacement, iter);
+  } while (!isCollision && displacement > 2 && iter < 300);
+  // [...iterArray, iter];
+  // iterArray.push(iter);
 
+  // console.log("iter", iterArray);
+  // console.log("median", median(iterArray));
   return movedWord;
 };
+
+// export const median = (arr: number[]) => {
+//   arr.sort((a, b) => a - b);
+//   const midpoint = Math.floor(arr.length / 2);
+//   const median =
+//     arr.length % 2 === 1
+//       ? arr[midpoint]
+//       : (arr[midpoint - 1] + arr[midpoint]) / 2;
+//   return median;
+// };
 
 export const areCentersTooClose = (
   centerA: Coordinate,

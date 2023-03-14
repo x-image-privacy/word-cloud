@@ -136,10 +136,16 @@ describe("Get distance", () => {
       getDistance({ x: 1, y: 1 }, { x: 1, y: 1, width: 4, height: 4 })
     ).toEqual(0);
   });
+
+  it("Naive test", () => {
+    expect(
+      getDistance({ x: 10, y: 5 }, { x: 1, y: 5, width: 4, height: 4 })
+    ).toEqual(9);
+  });
 });
 
 describe("Get the circle", () => {
-  it("Center of mass", () => {
+  it("Center of mass one word", () => {
     expect(getTheCircle([{ x: 1, y: 1, width: 4, height: 4 }])).toEqual({
       x: 1,
       y: 1,
@@ -147,7 +153,7 @@ describe("Get the circle", () => {
     });
   });
 
-  it("Center of mass", () => {
+  it("Center of mass multiple words", () => {
     expect(
       getTheCircle([
         { x: 1, y: 1, width: 4, height: 4 },
@@ -159,6 +165,19 @@ describe("Get the circle", () => {
       x: 1,
       y: 2,
       radius: 250,
+    });
+  });
+
+  it("Center of mass update radius", () => {
+    expect(
+      getTheCircle([
+        { x: 0, y: 0, width: 4, height: 4 },
+        { x: 600, y: 0, width: 4, height: 4 },
+      ])
+    ).toEqual({
+      x: 300,
+      y: 0,
+      radius: 300,
     });
   });
 });
