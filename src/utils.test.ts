@@ -111,7 +111,7 @@ describe("All collision", () => {
     ).toBe(false);
   });
 
-  it("Collision with 2 rectanlges", () => {
+  it("Collision with 2 rectangles", () => {
     expect(
       allCollision(originRectangle, [
         { x: 2, y: 2, width: 4, height: 4 },
