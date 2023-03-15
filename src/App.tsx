@@ -3,16 +3,12 @@ import {
   futurPosition,
   getBoundingRect,
   placeWordOnOuterCircle,
+  updateParent,
 } from "./utils";
 import * as React from "react";
-import {
-  CENTER_X,
-  CENTER_Y,
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
-  DEFAULT_RECT,
-} from "./constants";
+
 import { defaultWords1, defaultWords2 } from "./data";
+import { DEFAULT_RECT, PARENT } from "./constants";
 
 const CUT_OFF = 0.5;
 
@@ -32,14 +28,19 @@ const Wordcloud = () => {
       const centeredRect = {
         width: firstRect.width,
         height: firstRect.height,
-        x: CENTER_X,
-        y: CENTER_Y,
+        x: PARENT.centerX,
+        y: PARENT.centerY,
       };
+
+      console.log(PARENT.centerX);
+      console.log(PARENT.centerY);
 
       const weight = [1, 1, 1, 1];
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
           const futureWord = futurPosition(rect, placedElements, 3, weight);
+          updateParent(placedElements);
+
           return [...placedElements, futureWord];
         },
         [centeredRect]
@@ -62,8 +63,8 @@ const Wordcloud = () => {
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      width={CONTAINER_WIDTH}
-      height={CONTAINER_HEIGHT}
+      width={PARENT.width}
+      height={PARENT.height}
       style={{ outline: "1px solid green" }}
     >
       {words.map((word) => {
@@ -81,28 +82,28 @@ const Wordcloud = () => {
             fontSize={fontSize}
             style={{ outline: "1px solid rgba(255, 0, 0, 0.1)" }}
             id={word.id}
-            x={(word.rect?.x || CENTER_X).toString()}
+            x={(word.rect?.x || PARENT.centerX).toString()}
             // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-            y={((word.rect?.y || CENTER_Y) + fontSize / 3).toString()}
+            y={((word.rect?.y || PARENT.centerY) + fontSize / 3).toString()}
           >
             {word.text}
           </text>
         );
       })}
       <line
-        x1={CENTER_X}
-        x2={CENTER_X}
+        x1={PARENT.centerX}
+        x2={PARENT.centerX}
         y1="0"
-        y2={CONTAINER_HEIGHT}
+        y2={PARENT.height}
         opacity={0.1}
         stroke="orange"
         strokeWidth="1"
       />
       <line
         x1="0"
-        x2={CONTAINER_WIDTH}
-        y1={CENTER_Y}
-        y2={CENTER_Y}
+        x2={PARENT.width}
+        y1={PARENT.centerY}
+        y2={PARENT.centerY}
         opacity={0.1}
         stroke="orange"
         strokeWidth="1"

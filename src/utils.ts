@@ -1,9 +1,4 @@
-import {
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
-  DEFAULT_RECT,
-  INTERVAL,
-} from "./constants";
+import { DEFAULT_RECT, INTERVAL, PARENT } from "./constants";
 
 export type Word = {
   id: string;
@@ -87,11 +82,7 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
     getDistance(centerMass, word)
   );
 
-  const radius = Math.max(
-    ...distance,
-    CONTAINER_HEIGHT / 2,
-    CONTAINER_WIDTH / 2
-  );
+  const radius = Math.max(...distance, PARENT.height / 2, PARENT.width / 2);
 
   return { x: centerMass.x, y: centerMass.y, radius };
 };
@@ -234,3 +225,30 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
       )
     )
     .some((t) => t === true);
+
+export const updateParent = (passRect: Rectangle[]) => {
+  const maxXRight = passRect.map((word) => word.x);
+  const maxDistanceXRight = Math.max(...maxXRight);
+
+  const maxYBottom = passRect.map((word) => word.y);
+  const maxDistanceYBottom = Math.max(...maxYBottom);
+
+  if (
+    maxDistanceYBottom > PARENT.height &&
+    maxDistanceYBottom > maxDistanceXRight
+  ) {
+    const coef = maxDistanceYBottom / PARENT.height;
+    PARENT.height *= coef;
+    PARENT.width *= coef;
+  }
+
+  if (
+    maxDistanceXRight > PARENT.width &&
+    maxDistanceXRight > maxDistanceYBottom
+  ) {
+    const coef = maxDistanceXRight / PARENT.width;
+
+    PARENT.width *= coef;
+    PARENT.height *= coef;
+  }
+};
