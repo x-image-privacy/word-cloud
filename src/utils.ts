@@ -124,7 +124,8 @@ export const placeWordOnOuterCircle = (
   const randomInter = randomInterval(0, Math.max(...cumulativeWeight));
   const inter = cumulativeWeight.findIndex((el) => el > randomInter);
 
-  weight[inter] += 1;
+  weight[inter] = weight[inter] + 1;
+  console.log(weight);
 
   let angleInter = { x: 0, y: 360 };
 
@@ -173,10 +174,12 @@ export const futurPosition = (
   weight: number[]
 ): FuturPosition => {
   let isCollision = false;
-  console.log(weight);
+  // console.log(weight);
 
   // put the word in random place around the parent
-  let movedWord = placeWordOnOuterCircle(word, passRect, weight).rect;
+  const move = placeWordOnOuterCircle(word, passRect, weight);
+  let movedWord = move.rect;
+  weight = move.weight;
   let iter = 0;
   let displacement = 0;
   do {

@@ -40,6 +40,7 @@ const Wordcloud = () => {
       let weight = [0, 0, 0, 0];
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
+          console.log(weight);
           // move the word
           const futurePositionWord = futurPosition(
             rect,
