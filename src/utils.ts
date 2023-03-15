@@ -79,10 +79,11 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
     getDistance(centerMass, word)
   );
 
-  const radius =
-    Math.max(...distance) < Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2
-      ? Math.max(CONTAINER_HEIGHT, CONTAINER_WIDTH) / 2
-      : Math.max(...distance);
+  const radius = Math.max(
+    ...distance,
+    CONTAINER_HEIGHT / 2,
+    CONTAINER_WIDTH / 2
+  );
 
   return { x: centerMass.x, y: centerMass.y, radius };
 };
@@ -118,8 +119,6 @@ export const getMoveDirection = (
     { x: 0, y: 0 }
   );
 };
-// compute the median number of iteration
-// let iterArray: number[] = [];
 
 export const futurPosition = (
   word: Rectangle,
@@ -134,6 +133,9 @@ export const futurPosition = (
     width: word.width,
     height: word.height,
   };
+
+  // put the word in random place around the parent
+  movedWord = placeWordOnOuterCircle(movedWord, passRect);
   let iter = 0;
   let displacement = 0;
   do {
@@ -169,23 +171,8 @@ export const futurPosition = (
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
   } while (!isCollision && displacement > 2 && iter < 300);
-  // [...iterArray, iter];
-  // iterArray.push(iter);
-
-  // console.log("iter", iterArray);
-  // console.log("median", median(iterArray));
   return movedWord;
 };
-
-// export const median = (arr: number[]) => {
-//   arr.sort((a, b) => a - b);
-//   const midpoint = Math.floor(arr.length / 2);
-//   const median =
-//     arr.length % 2 === 1
-//       ? arr[midpoint]
-//       : (arr[midpoint - 1] + arr[midpoint]) / 2;
-//   return median;
-// };
 
 export const areCentersTooClose = (
   centerA: Coordinate,
@@ -207,98 +194,3 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
       )
     )
     .some((t) => t === true);
-
-// export const distanceBetweenWord = (w1: Word, w2: Word) => {
-//   return Math.sqrt(Math.pow(w2.x - w1.x, 2) + Math.pow(w2.y - w1.y, 2));
-// };
-
-// export const distanceBetweenPoint = (w1: Coordinate, w2: Coordinate) => {
-//   return Math.sqrt(Math.pow(w2.x - w1.x, 2) + Math.pow(w2.y - w1.y, 2));
-// };
-
-// export const collision = (w1: Rectangle, w2: Rectangle) => {
-//   if (
-//     w1.x < w2.x + 2.w &&
-//     w1.x + positionW1.w > w2.x &&
-//     w1.y < w2.y + positionW2.h &&
-//     positionW1.h + w1.y > w2.y
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
-
-// export const uncenteredWord = (
-//   word: Rectangle,
-//   h: number,
-//   w: number
-// ): Rectangle => {
-//   word.x -= Math.floor(w / 2);
-//   word.y -= Math.floor(h / 2);
-
-//   return word;
-// };
-
-// export const netForce = (w: Rectangle, passRect: Rectangle[]): Coordinate => {
-//   let diffX: number[] = [];
-//   let diffY: number[] = [];
-
-//   passRect.forEach((passW) => {
-//     diffX.push(passW.x - w.x);
-//     diffY.push(passW.y - w.y);
-//   });
-
-//   let sumDiffX = 0;
-//   let sumDiffY = 0;
-
-//   diffX.map((e) => (sumDiffX += e));
-//   diffY.map((e) => (sumDiffY += e));
-
-//   return { x: sumDiffX, y: sumDiffY };
-// };
-
-// export const getTriangleFromNetForce = (
-//   word: Rectangle,
-//   netForce: Coordinate
-// ): Coordinate => {
-//   const x = word.x;
-//   const y = netForce.y;
-
-//   return { x, y };
-// };
-
-// export const moveWordOnHypotenuse = (
-//   A: Coordinate, // adjacent - hypotenuse
-//   B: Coordinate, // hypotenuse - opposite
-//   C: Coordinate, // right angle
-//   step: number
-// ) => {
-//   const lenghtHypontenus = distanceBetweenPoint(A, B);
-//   const distanceBC = distanceBetweenPoint(B, C);
-
-//   const angle = Math.asin(distanceBC / lenghtHypontenus) * (180 / Math.PI);
-
-//   const x = Math.floor(A.x + step * Math.cos(angle) * (180 / Math.PI));
-//   const y = Math.floor(A.y + step * Math.sin(angle) * (180 / Math.PI));
-
-//   return { x, y };
-// };
-
-// export const limiteOfParent = (word: Word, parent: string) => {
-//   const coordinateParent = getCoordinateByID(parent);
-//   const coordinateWord = getCoordinateByID(word.id);
-
-//   const unCenteredW = uncenteredWord(word, coordinateWord.h, coordinateWord.w);
-
-//   if (
-//     unCenteredW.x > coordinateParent.w ||
-//     unCenteredW.y > coordinateParent.w ||
-//     unCenteredW.x < 0 ||
-//     unCenteredW.y < 0
-//   ) {
-//     return 1;
-//   } else {
-//     return 0;
-//   }
-// };

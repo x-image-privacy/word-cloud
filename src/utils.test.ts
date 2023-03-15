@@ -101,26 +101,17 @@ describe("Get move direction", () => {
 });
 
 describe("All collision", () => {
-  it("True", () => {
+  it("Collision with self", () => {
     expect(allCollision(originRectangle, [originRectangle])).toBe(true);
   });
 
-  it("False", () => {
+  it("No collision with 2 rectangles", () => {
     expect(
       allCollision(originRectangle, [{ x: 4, y: 4, width: 2, height: 2 }])
     ).toBe(false);
   });
 
-  it("Two placed element true", () => {
-    expect(
-      allCollision(originRectangle, [
-        { x: 2, y: 2, width: 4, height: 4 },
-        { x: 6, y: 6, width: 2, height: 2 },
-      ])
-    ).toBe(true);
-  });
-
-  it("Two placed element false", () => {
+  it("Collision with 2 rectanlges", () => {
     expect(
       allCollision(originRectangle, [
         { x: 2, y: 2, width: 4, height: 4 },
