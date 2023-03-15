@@ -135,7 +135,7 @@ export const futurPosition = (
   };
 
   // put the word in random place around the parent
-  movedWord = placeWordOnOuterCircle(movedWord, passRect);
+  let movedWord = placeWordOnOuterCircle(word, passRect);
   let iter = 0;
   let displacement = 0;
   do {
