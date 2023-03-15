@@ -12,7 +12,7 @@ import {
   CONTAINER_WIDTH,
   DEFAULT_RECT,
 } from "./constants";
-import { defaultWords1 } from "./data";
+import { defaultWords1, defaultWords2 } from "./data";
 
 const CUT_OFF = 0.5;
 
@@ -20,7 +20,7 @@ export const MAX_FONT_SIZE = 20;
 export const MIN_FONT_SIZE = 6;
 
 const Wordcloud = () => {
-  const [words, setWords] = React.useState(defaultWords1);
+  const [words, setWords] = React.useState(defaultWords2);
 
   const updateWords = () => {
     setWords((prevWords) => {
@@ -44,6 +44,8 @@ const Wordcloud = () => {
         },
         [centeredRect]
       );
+
+      console.log(weight);
 
       return wordsToPlace.map((word, idx) => ({
         ...word,

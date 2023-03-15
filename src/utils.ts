@@ -1,4 +1,9 @@
-import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
+import {
+  CONTAINER_HEIGHT,
+  CONTAINER_WIDTH,
+  DEFAULT_RECT,
+  INTERVAL,
+} from "./constants";
 
 export type Word = {
   id: string;
@@ -30,13 +35,6 @@ export type FuturPosition = {
   weight: number[];
 };
 
-export const interval = {
-  a: { x: 0, y: 89 },
-  b: { x: 90, y: 179 },
-  c: { x: 180, y: 269 },
-  d: { x: 270, y: 360 },
-};
-
 export const getBoundingRect = (
   id: string,
   tagName: "svg" | "text" = "text"
@@ -52,8 +50,6 @@ export const getBoundingRect = (
     height: bbox.height - 5,
   };
 };
-
-export const getArea = (rect: Rectangle): number => rect.width * rect.height;
 
 // This function put the first word in the center of the parent rectangle
 export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
@@ -121,7 +117,10 @@ export const placeWordOnOuterCircle = (
   // Chose the parent face
   const cumulativeWeight = cumulativeBins(weight);
 
-  const randomInter = randomInterval(0, cumulativeWeight.slice(-1)[0]);
+  const randomInter = randomInterval(
+    0,
+    cumulativeWeight[cumulativeWeight.length - 1]
+  );
   const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
 
   weight[inter] += 1;
@@ -132,13 +131,13 @@ export const placeWordOnOuterCircle = (
   let angleInter = { x: 0, y: 360 };
 
   if (inter === 0) {
-    angleInter = interval.a;
+    angleInter = INTERVAL.a;
   } else if (inter === 1) {
-    angleInter = interval.b;
+    angleInter = INTERVAL.b;
   } else if (inter === 2) {
-    angleInter = interval.c;
+    angleInter = INTERVAL.c;
   } else if (inter === 3) {
-    angleInter = interval.d;
+    angleInter = INTERVAL.d;
   }
 
   const angle = randomInterval(angleInter.x, angleInter.y);

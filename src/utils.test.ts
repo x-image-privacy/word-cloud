@@ -7,6 +7,8 @@ import {
   getMoveDirection,
   getTheCircle,
   getDistance,
+  randomInterval,
+  cumulativeBins,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -170,5 +172,28 @@ describe("Get the circle", () => {
       y: 0,
       radius: 300,
     });
+  });
+});
+
+describe("Random interval", () => {
+  it("Less than or equal of max of interval", () => {
+    expect(randomInterval(1, 4)).toBeLessThanOrEqual(4);
+  });
+  it("Greater than or equal of min of interval", () => {
+    expect(randomInterval(1, 4)).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("CumulativeBins", () => {
+  it("With same value", () => {
+    expect(cumulativeBins([1, 1, 1, 1])).toEqual([1, 2, 3, 4]);
+  });
+
+  it("With different value", () => {
+    expect(cumulativeBins([4, 2, 1, 3])).toEqual([4, 6, 7, 10]);
+  });
+
+  it("With negative value", () => {
+    expect(cumulativeBins([4, -2, 1, 3])).toEqual([4, 2, 3, 6]);
   });
 });
