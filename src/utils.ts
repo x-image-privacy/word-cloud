@@ -127,13 +127,6 @@ export const futurPosition = (
 ): Rectangle => {
   let isCollision = false;
 
-  let movedWord: Rectangle = {
-    x: word.x,
-    y: word.y,
-    width: word.width,
-    height: word.height,
-  };
-
   // put the word in random place around the parent
   let movedWord = placeWordOnOuterCircle(word, passRect);
   let iter = 0;
