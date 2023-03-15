@@ -101,7 +101,7 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
 };
 
 export const randomInterval = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 };
 
 export const cumulativeBins = (bin: number[]): number[] => {
@@ -113,19 +113,28 @@ export const cumulativeBins = (bin: number[]): number[] => {
   );
 };
 
+// export const getWeight = (passRect: Rectangle[]) => {
+//   const weight =
+// };
+
 // This function put the word in a random place
 export const placeWordOnOuterCircle = (
   w: Rectangle,
   passRect: Rectangle[],
   weight: number[]
-): FuturPosition => {
+): Rectangle => {
   // Chose the parent face
+  console.log("weight place", weight);
   const cumulativeWeight = cumulativeBins(weight);
-  const randomInter = randomInterval(0, Math.max(...cumulativeWeight));
+  console.log("cumul place", cumulativeWeight);
+
+  const randomInter = randomInterval(0, cumulativeWeight.slice(-1)[0]);
+  console.log("random", randomInter);
   const inter = cumulativeWeight.findIndex((el) => el > randomInter);
 
-  weight[inter] = weight[inter] + 1;
-  console.log(weight);
+  console.log("inter", inter);
+
+  weight[inter] += 1;
 
   let angleInter = { x: 0, y: 360 };
 
@@ -139,16 +148,19 @@ export const placeWordOnOuterCircle = (
     angleInter = interval.d;
   }
 
+  console.log("angle interval", angleInter);
+
   const angle = randomInterval(angleInter.x, angleInter.y);
 
-  // const angle = Math.random() * 360;
+  console.log("angle", angle);
+
   const circle = getTheCircle(passRect);
   const newPosition = {
     ...w,
     x: circle.radius * Math.cos(angle) + circle.x,
     y: circle.radius * Math.sin(angle) + circle.y,
   };
-  return { rect: newPosition, weight };
+  return newPosition;
 };
 
 export const getMoveDirection = (
@@ -172,14 +184,12 @@ export const futurPosition = (
   passRect: Rectangle[],
   step: number,
   weight: number[]
-): FuturPosition => {
+): Rectangle => {
   let isCollision = false;
   // console.log(weight);
 
   // put the word in random place around the parent
-  const move = placeWordOnOuterCircle(word, passRect, weight);
-  let movedWord = move.rect;
-  weight = move.weight;
+  let movedWord = placeWordOnOuterCircle(word, passRect, weight);
   let iter = 0;
   let displacement = 0;
   do {
@@ -215,7 +225,7 @@ export const futurPosition = (
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
   } while (!isCollision && displacement > 2 && iter < 300);
-  return { rect: movedWord, weight };
+  return movedWord;
 };
 
 export const areCentersTooClose = (

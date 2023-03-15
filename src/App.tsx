@@ -36,20 +36,11 @@ const Wordcloud = () => {
         y: CENTER_Y,
       };
 
-      // let cumulWeight = [0, 0, 0, 0];
-      let weight = [0, 0, 0, 0];
+      const weight = [1, 1, 1, 1];
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
-          console.log(weight);
-          // move the word
-          const futurePositionWord = futurPosition(
-            rect,
-            placedElements,
-            3,
-            weight
-          );
-          const futureWord = futurePositionWord.rect;
-          weight = futurePositionWord.weight;
+          const futureWord = futurPosition(rect, placedElements, 3, weight);
+          // console.log("weight reduce", weight);
           return [...placedElements, futureWord];
         },
         [centeredRect]
