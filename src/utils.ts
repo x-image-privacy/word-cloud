@@ -101,9 +101,8 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
 };
 
 export const randomInterval = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.random() * (max - min) + min;
 };
-
 export const cumulativeBins = (bin: number[]): number[] => {
   return bin.map(
     (
@@ -113,10 +112,6 @@ export const cumulativeBins = (bin: number[]): number[] => {
   );
 };
 
-// export const getWeight = (passRect: Rectangle[]) => {
-//   const weight =
-// };
-
 // This function put the word in a random place
 export const placeWordOnOuterCircle = (
   w: Rectangle,
@@ -124,17 +119,15 @@ export const placeWordOnOuterCircle = (
   weight: number[]
 ): Rectangle => {
   // Chose the parent face
-  console.log("weight place", weight);
   const cumulativeWeight = cumulativeBins(weight);
-  console.log("cumul place", cumulativeWeight);
 
   const randomInter = randomInterval(0, cumulativeWeight.slice(-1)[0]);
-  console.log("random", randomInter);
-  const inter = cumulativeWeight.findIndex((el) => el > randomInter);
-
-  console.log("inter", inter);
+  const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
 
   weight[inter] += 1;
+
+  // substract the max to each element to promote other interval
+  weight = weight.map((a) => Math.max(...weight) - a);
 
   let angleInter = { x: 0, y: 360 };
 
@@ -148,12 +141,7 @@ export const placeWordOnOuterCircle = (
     angleInter = interval.d;
   }
 
-  console.log("angle interval", angleInter);
-
   const angle = randomInterval(angleInter.x, angleInter.y);
-
-  console.log("angle", angle);
-
   const circle = getTheCircle(passRect);
   const newPosition = {
     ...w,
@@ -186,7 +174,6 @@ export const futurPosition = (
   weight: number[]
 ): Rectangle => {
   let isCollision = false;
-  // console.log(weight);
 
   // put the word in random place around the parent
   let movedWord = placeWordOnOuterCircle(word, passRect, weight);
