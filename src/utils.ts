@@ -1,4 +1,9 @@
-import { DEFAULT_RECT, INTERVAL, PARENT } from "./constants";
+import {
+  CONTAINER_HEIGHT,
+  CONTAINER_WIDTH,
+  DEFAULT_RECT,
+  INTERVAL,
+} from "./constants";
 
 export type Word = {
   id: string;
@@ -23,11 +28,6 @@ export type Circle = {
   x: number;
   y: number;
   radius: number;
-};
-
-export type FuturPosition = {
-  rect: Rectangle;
-  weight: number[];
 };
 
 export const getBoundingRect = (
@@ -64,7 +64,7 @@ export const getDistance = (point: Coordinate, word: Rectangle): number => {
   return Math.sqrt((point.x - word.x) ** 2 + (point.y - word.y) ** 2);
 };
 
-export const getTheCircle = (passRect: Rectangle[]): Circle => {
+export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
   const centerMass: Coordinate = passRect.reduce(
     (acc, word) => {
       const sum = {
@@ -78,11 +78,21 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
   centerMass.x /= passRect.length;
   centerMass.y /= passRect.length;
 
+  return centerMass;
+};
+
+export const getTheCircle = (passRect: Rectangle[]): Circle => {
+  const centerMass = centerOfMass(passRect);
+
   const distance: number[] = passRect.map((word) =>
     getDistance(centerMass, word)
   );
 
-  const radius = Math.max(...distance, PARENT.height / 2, PARENT.width / 2);
+  const radius = Math.max(
+    ...distance,
+    CONTAINER_HEIGHT / 2,
+    CONTAINER_WIDTH / 2
+  );
 
   return { x: centerMass.x, y: centerMass.y, radius };
 };
@@ -226,29 +236,64 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
-export const updateParent = (passRect: Rectangle[]) => {
-  const maxXRight = passRect.map((word) => word.x);
-  const maxDistanceXRight = Math.max(...maxXRight);
+// export const updateParent = (passRect: Rectangle[]) => {
+//   const centerMass = centerOfMass(passRect);
 
-  const maxYBottom = passRect.map((word) => word.y);
-  const maxDistanceYBottom = Math.max(...maxYBottom);
+//   rectParent.centerX = centerMass.x;
+//   rectParent.centerY = centerMass.y;
 
-  if (
-    maxDistanceYBottom > PARENT.height &&
-    maxDistanceYBottom > maxDistanceXRight
-  ) {
-    const coef = maxDistanceYBottom / PARENT.height;
-    PARENT.height *= coef;
-    PARENT.width *= coef;
-  }
+//   const rectX = passRect.map((word) => word.x);
+//   const maxX = Math.max(...rectX);
+//   const minX = Math.min(...rectX);
 
-  if (
-    maxDistanceXRight > PARENT.width &&
-    maxDistanceXRight > maxDistanceYBottom
-  ) {
-    const coef = maxDistanceXRight / PARENT.width;
+//   const distanceMaxX = maxX - rectParent.centerX;
+//   const distanceMinX = rectParent.centerX - minX;
 
-    PARENT.width *= coef;
-    PARENT.height *= coef;
-  }
-};
+//   if (distanceMaxX > distanceMinX && distanceMaxX > rectParent.width / 2) {
+//     rectParent.width = rectParent.centerX + (distanceMaxX + 10);
+//   } else if (
+//     distanceMinX > distanceMaxX &&
+//     distanceMinX > rectParent.width / 2
+//   ) {
+//     rectParent.width = rectParent.centerX + (distanceMinX + 10);
+//   }
+
+//   const rectY = passRect.map((word) => word.y);
+//   const maxY = Math.max(...rectY);
+//   const minY = Math.min(...rectY);
+
+//   const distanceMaxY = maxY - rectParent.centerY;
+//   const distanceMinY = rectParent.centerY - minY;
+
+//   if (distanceMaxY > distanceMinY && distanceMaxY > rectParent.height / 2) {
+//     rectParent.height = rectParent.centerY + (distanceMaxY + 10);
+//   } else if (
+//     distanceMinY > distanceMaxY &&
+//     distanceMinY > rectParent.height / 2
+//   ) {
+//     rectParent.height = rectParent.centerY + (distanceMinY + 10);
+//   }
+
+//   return rectParent;
+
+// rectParent.height = centerMass.y * coef;
+// rectParent.width = centerMass.x * coef;
+
+// if (
+//   maxDistanceYBottom > rectParent.height &&
+//   maxDistanceYBottom > maxDistanceXRight
+// ) {
+//   const coef = maxDistanceYBottom / rectParent.height;
+//   rectParent.height *= coef;
+//   rectParent.width *= coef;
+// }
+
+// if (
+//   maxDistanceXRight > rectParent.width &&
+//   maxDistanceXRight > maxDistanceYBottom
+// ) {
+//   const coef = maxDistanceXRight / rectParent.width;
+
+//   rectParent.width *= coef;
+//   rectParent.height *= coef;
+// }

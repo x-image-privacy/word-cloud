@@ -1,6 +1,12 @@
+export const CONTAINER_WIDTH = 500;
+export const CONTAINER_HEIGHT = 300;
+
+export const CENTER_Y = CONTAINER_HEIGHT / 2;
+export const CENTER_X = CONTAINER_WIDTH / 2;
+
 export const DEFAULT_RECT = {
-  x: 250,
-  y: 150,
+  x: CENTER_X,
+  y: CENTER_Y,
   width: 10,
   height: 10,
 };
@@ -10,11 +16,4 @@ export const INTERVAL = {
   b: { x: 90, y: 179 },
   c: { x: 180, y: 269 },
   d: { x: 270, y: 360 },
-};
-
-export let PARENT = {
-  width: 500,
-  height: 300,
-  centerY: 150,
-  centerX: 250,
 };
