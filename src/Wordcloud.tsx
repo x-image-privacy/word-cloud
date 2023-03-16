@@ -1,5 +1,11 @@
 import "./App.css";
-import { futurPosition, getBoundingRect, Rectangle, Word } from "./utils";
+import {
+  boundParent,
+  futurPosition,
+  getBoundingRect,
+  Rectangle,
+  Word,
+} from "./utils";
 import * as React from "react";
 
 import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
@@ -23,10 +29,10 @@ const Wordcloud = ({
   const [words, setWords] = React.useState(data);
 
   const rectParent = {
+    x: width / 2,
+    y: height / 2,
     width: width,
     height: height,
-    centerY: height / 2,
-    centerX: width / 2,
   };
 
   const updateWords = () => {
@@ -47,7 +53,6 @@ const Wordcloud = ({
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
           const futureWord = futurPosition(rect, placedElements, 3, weight);
-
           return [...placedElements, futureWord];
         },
         [centeredRect]
@@ -60,9 +65,14 @@ const Wordcloud = ({
     });
   };
 
-  // const parent = updateParent(
-  //   words.filter((w) => Boolean(w.rect)).map((w) => w.rect) as Rectangle[]
-  // );
+  console.log("before", rectParent);
+
+  const parent = boundParent(
+    words.filter((w) => Boolean(w.rect)).map((w) => w.rect) as Rectangle[],
+    rectParent
+  );
+
+  console.log("after", parent);
 
   React.useEffect(() => {
     updateWords();
@@ -75,7 +85,7 @@ const Wordcloud = ({
       width={width}
       height={height}
       style={{ outline: "1px solid green" }}
-      // viewBox={`${parent.centerX} ${parent.centerY} 1000 1000`}
+      viewBox={`${parent.x} ${parent.y} ${parent.width} ${parent.height}`}
     >
       {words.map((word) => {
         const fontSize =

@@ -1,3 +1,4 @@
+import { R } from "vitest/dist/types-7cd96283";
 import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
@@ -28,6 +29,13 @@ export type Circle = {
   x: number;
   y: number;
   radius: number;
+};
+
+export type Bound = {
+  topX: number;
+  topY: number;
+  bottomX: number;
+  bottomY: number;
 };
 
 export const getBoundingRect = (
@@ -236,64 +244,55 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
-// export const updateParent = (passRect: Rectangle[]) => {
-//   const centerMass = centerOfMass(passRect);
+export const boundParent = (
+  passRect: Rectangle[],
+  parent: Rectangle
+): Rectangle => {
+  const newParentBound = passRect.reduce(
+    (bound, rect) => {
+      const topLeftRect = {
+        x: rect.x - rect.width / 2,
+        y: rect.y - rect.height / 2,
+      };
 
-//   rectParent.centerX = centerMass.x;
-//   rectParent.centerY = centerMass.y;
+      // console.log(topLeftRect);
 
-//   const rectX = passRect.map((word) => word.x);
-//   const maxX = Math.max(...rectX);
-//   const minX = Math.min(...rectX);
+      const bottomRightRect = {
+        x: rect.x + rect.width / 2,
+        y: rect.y + rect.height / 2,
+      };
 
-//   const distanceMaxX = maxX - rectParent.centerX;
-//   const distanceMinX = rectParent.centerX - minX;
+      // const distX = topLeftRect.x < bound.x;
 
-//   if (distanceMaxX > distanceMinX && distanceMaxX > rectParent.width / 2) {
-//     rectParent.width = rectParent.centerX + (distanceMaxX + 10);
-//   } else if (
-//     distanceMinX > distanceMaxX &&
-//     distanceMinX > rectParent.width / 2
-//   ) {
-//     rectParent.width = rectParent.centerX + (distanceMinX + 10);
-//   }
+      // value on left
+      if (topLeftRect.x < bound.x) {
+        bound.x = topLeftRect.x;
+      }
 
-//   const rectY = passRect.map((word) => word.y);
-//   const maxY = Math.max(...rectY);
-//   const minY = Math.min(...rectY);
+      // value on top
+      if (topLeftRect.y < bound.y) {
+        bound.y = topLeftRect.y;
+      }
+      // value on right
 
-//   const distanceMaxY = maxY - rectParent.centerY;
-//   const distanceMinY = rectParent.centerY - minY;
+      if (bottomRightRect.x > bound.width) {
+        bound.width = bottomRightRect.x;
+      }
+      // value on bottom
 
-//   if (distanceMaxY > distanceMinY && distanceMaxY > rectParent.height / 2) {
-//     rectParent.height = rectParent.centerY + (distanceMaxY + 10);
-//   } else if (
-//     distanceMinY > distanceMaxY &&
-//     distanceMinY > rectParent.height / 2
-//   ) {
-//     rectParent.height = rectParent.centerY + (distanceMinY + 10);
-//   }
+      if (bottomRightRect.y > bound.height) {
+        bound.height = bottomRightRect.y;
+      }
 
-//   return rectParent;
+      return bound;
+    },
+    {
+      x: parent.x - parent.width / 2,
+      y: parent.y - parent.height / 2,
+      width: parent.width,
+      height: parent.height,
+    }
+  );
 
-// rectParent.height = centerMass.y * coef;
-// rectParent.width = centerMass.x * coef;
-
-// if (
-//   maxDistanceYBottom > rectParent.height &&
-//   maxDistanceYBottom > maxDistanceXRight
-// ) {
-//   const coef = maxDistanceYBottom / rectParent.height;
-//   rectParent.height *= coef;
-//   rectParent.width *= coef;
-// }
-
-// if (
-//   maxDistanceXRight > rectParent.width &&
-//   maxDistanceXRight > maxDistanceYBottom
-// ) {
-//   const coef = maxDistanceXRight / rectParent.width;
-
-//   rectParent.width *= coef;
-//   rectParent.height *= coef;
-// }
+  return newParentBound;
+};
