@@ -70,6 +70,8 @@ const Wordcloud = ({
     rectParent
   );
 
+  console.log("bound", parent);
+
   React.useEffect(() => {
     updateWords();
   }, []);

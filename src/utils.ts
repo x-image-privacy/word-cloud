@@ -253,6 +253,7 @@ export const boundParent = (
   passRect: Rectangle[],
   parent: Rectangle
 ): Rectangle => {
+  console.log("max", Math.min(...passRect.map((w) => w.x - w.width / 2)));
   const newParentBound = passRect.reduce(
     (bound, rect) => {
       const topLeftRect = {
