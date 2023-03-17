@@ -1,4 +1,3 @@
-import { p, R } from "vitest/dist/types-7cd96283";
 import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
@@ -105,9 +104,13 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
   return { x: centerMass.x, y: centerMass.y, radius };
 };
 
+// This function return a random float between min and max
 export const randomInterval = (min: number, max: number): number => {
   return Math.random() * (max - min) + min;
 };
+
+// This function return the cumulative weight of an array : for example [1, 2, 3, 4] become [1, 3, 6, 10]
+// source: https://quickref.me/create-an-array-of-cumulative-sum.html
 export const cumulativeBins = (bin: number[]): number[] => {
   return bin.map(
     (
@@ -134,8 +137,10 @@ export const placeWordOnOuterCircle = (
 
   weight[inter] += 1;
 
+  const maxWeight = Math.max(...weight);
+
   // substract the max to each element to promote other interval
-  weight = weight.map((a) => Math.max(...weight) - a);
+  weight = weight.map((a) => maxWeight - a);
 
   let angleInter = { x: 0, y: 360 };
 
@@ -293,7 +298,7 @@ export const boundParent = (
   return newParentBound;
 };
 
-export const getSliceOfWords = (
+export const getWordSlide = (
   parent: Rectangle,
   bound: Rectangle
 ): Coordinate => {
@@ -310,7 +315,7 @@ export const getSliceOfWords = (
   return { x: differenceX, y: differenceY };
 };
 
-export const sliceWords = (
+export const slideWords = (
   words: Rectangle[],
   slice: Coordinate
 ): Rectangle[] => {

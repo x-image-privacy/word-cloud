@@ -9,8 +9,8 @@ import {
   getDistance,
   randomInterval,
   cumulativeBins,
-  sliceWords,
-  getSliceOfWords,
+  slideWords,
+  getWordSlide,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -203,38 +203,38 @@ describe("CumulativeBins", () => {
 describe("slideWords", () => {
   describe("Slide one word", () => {
     it("On the bottom", () => {
-      expect(sliceWords([originRectangle], { x: 0, y: 2 })).toEqual([
+      expect(slideWords([originRectangle], { x: 0, y: 2 })).toEqual([
         { x: 0, y: 2, width: 1, height: 1 },
       ]);
     });
 
     it("On the top", () => {
       expect(
-        sliceWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
+        slideWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
       ).toEqual([{ x: 1, y: 2, width: 4, height: 4 }]);
     });
 
     it("On the right", () => {
       expect(
-        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
       ).toEqual([{ x: 4, y: 0, width: 1, height: 1 }]);
     });
 
     it("On the left", () => {
       expect(
-        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
       ).toEqual([{ x: 0, y: 0, width: 1, height: 1 }]);
     });
 
     it("On the right and bottom", () => {
       expect(
-        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
       ).toEqual([{ x: 4, y: 4, width: 1, height: 1 }]);
     });
 
     it("On the left and top", () => {
       expect(
-        sliceWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
+        slideWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
       ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
     });
   });
@@ -242,7 +242,7 @@ describe("slideWords", () => {
   describe("Slide multiple word", () => {
     it("On the bottom and right", () => {
       expect(
-        sliceWords(
+        slideWords(
           [
             { x: 1, y: 4, width: 4, height: 4 },
             { x: 6, y: 9, width: 4, height: 4 },
@@ -257,7 +257,7 @@ describe("slideWords", () => {
 
     it("On the top and left", () => {
       expect(
-        sliceWords(
+        slideWords(
           [
             { x: 1, y: 4, width: 4, height: 4 },
             { x: 6, y: 9, width: 4, height: 4 },
@@ -275,7 +275,7 @@ describe("slideWords", () => {
 describe("getSliceOfWords", () => {
   it("No move", () => {
     expect(
-      getSliceOfWords(
+      getWordSlide(
         { x: 3, y: 3, width: 4, height: 4 },
         { x: 1, y: 1, width: 4, height: 4 }
       )
@@ -284,7 +284,7 @@ describe("getSliceOfWords", () => {
 
   it("Move on the right", () => {
     expect(
-      getSliceOfWords(
+      getWordSlide(
         { x: 2, y: 3, width: 4, height: 4 },
         { x: 1, y: 1, width: 4, height: 4 }
       )
@@ -293,7 +293,7 @@ describe("getSliceOfWords", () => {
 
   it("Move on the left and top", () => {
     expect(
-      getSliceOfWords(
+      getWordSlide(
         { x: 7, y: 8, width: 4, height: 4 },
         { x: 3, y: 5, width: 4, height: 4 }
       )
