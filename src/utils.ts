@@ -24,17 +24,17 @@ export type Coordinate = {
   y: number;
 };
 
+export type Bound = {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+};
+
 export type Circle = {
   x: number;
   y: number;
   radius: number;
-};
-
-export type Bound = {
-  topX: number;
-  topY: number;
-  bottomX: number;
-  bottomY: number;
 };
 
 export const getBoundingRect = (
@@ -249,54 +249,22 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
-export const boundParent = (
-  passRect: Rectangle[],
-  parent: Rectangle
-): Rectangle => {
-  console.log("max", Math.min(...passRect.map((w) => w.x - w.width / 2)));
-  const newParentBound = passRect.reduce(
-    (bound, rect) => {
-      const topLeftRect = {
-        x: rect.x - rect.width / 2,
-        y: rect.y - rect.height / 2,
-      };
+export const boundParent = (rects: Rectangle[]): Rectangle => {
+  const topLeftPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x - r.width / 2,
+    y: r.y - r.height / 2,
+  }));
+  const bottomRightPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x + r.width / 2,
+    y: r.y + r.height / 2,
+  }));
 
-      const bottomRightRect = {
-        x: rect.x + rect.width / 2,
-        y: rect.y + rect.height / 2,
-      };
+  const xMin = Math.min(...topLeftPoints.map((r) => r.x));
+  const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
+  const yMin = Math.min(...topLeftPoints.map((r) => r.y));
+  const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
 
-      // value on left
-      if (topLeftRect.x < bound.x) {
-        bound.x = topLeftRect.x;
-      }
-
-      // value on top
-      if (topLeftRect.y < bound.y) {
-        bound.y = topLeftRect.y;
-      }
-
-      // value on right
-      if (bottomRightRect.x > bound.width) {
-        bound.width = bottomRightRect.x;
-      }
-
-      // value on bottom
-      if (bottomRightRect.y > bound.height) {
-        bound.height = bottomRightRect.y;
-      }
-
-      return bound;
-    },
-    {
-      x: parent.x - parent.width / 2,
-      y: parent.y - parent.height / 2,
-      width: parent.width,
-      height: parent.height,
-    }
-  );
-
-  return newParentBound;
+  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
 
 export const getWordSlide = (

@@ -9,6 +9,7 @@ import {
 import * as React from "react";
 
 import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
+import { defaultWords1 } from "./data";
 
 const CUT_OFF = 0.5;
 
@@ -65,12 +66,19 @@ const Wordcloud = ({
     });
   };
 
-  const parent = boundParent(
-    words.filter((w) => Boolean(w.rect)).map((w) => w.rect) as Rectangle[],
-    rectParent
-  );
+  // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
+  const rects = words.map((w) => w.rect).filter(Boolean) as Rectangle[];
 
-  console.log("bound", parent);
+  const bound = rects.length
+    ? boundParent(rects)
+    : {
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+      };
+
+  console.log("bound", bound);
 
   React.useEffect(() => {
     updateWords();
@@ -83,7 +91,7 @@ const Wordcloud = ({
       width={width}
       height={height}
       style={{ outline: "1px solid green" }}
-      viewBox={`${parent.x} ${parent.y} ${parent.width} ${parent.height}`}
+      viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
     >
       {words.map((word) => {
         const fontSize =
@@ -126,6 +134,18 @@ const Wordcloud = ({
         stroke="orange"
         strokeWidth="1"
       />
+      <g>
+        <text
+          style={{ fill: "blue" }}
+          x={bound.x}
+          y={bound.y + 10}
+          fontSize={10}
+          textAnchor="start"
+        >
+          viewBox
+        </text>
+        <rect {...bound} stroke="blue" strokeWidth="1" fill="none" />
+      </g>
     </svg>
   );
 };
