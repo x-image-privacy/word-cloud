@@ -65,14 +65,10 @@ const Wordcloud = ({
     });
   };
 
-  console.log("before", rectParent);
-
   const parent = boundParent(
     words.filter((w) => Boolean(w.rect)).map((w) => w.rect) as Rectangle[],
     rectParent
   );
-
-  console.log("after", parent);
 
   React.useEffect(() => {
     updateWords();

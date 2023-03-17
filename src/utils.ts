@@ -255,14 +255,10 @@ export const boundParent = (
         y: rect.y - rect.height / 2,
       };
 
-      // console.log(topLeftRect);
-
       const bottomRightRect = {
         x: rect.x + rect.width / 2,
         y: rect.y + rect.height / 2,
       };
-
-      // const distX = topLeftRect.x < bound.x;
 
       // value on left
       if (topLeftRect.x < bound.x) {
@@ -273,13 +269,13 @@ export const boundParent = (
       if (topLeftRect.y < bound.y) {
         bound.y = topLeftRect.y;
       }
-      // value on right
 
+      // value on right
       if (bottomRightRect.x > bound.width) {
         bound.width = bottomRightRect.x;
       }
-      // value on bottom
 
+      // value on bottom
       if (bottomRightRect.y > bound.height) {
         bound.height = bottomRightRect.y;
       }
