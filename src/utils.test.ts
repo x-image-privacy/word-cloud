@@ -9,6 +9,8 @@ import {
   getDistance,
   randomInterval,
   cumulativeBins,
+  sliceWords,
+  getSliceOfWords,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -195,5 +197,106 @@ describe("CumulativeBins", () => {
 
   it("With negative value", () => {
     expect(cumulativeBins([4, -2, 1, 3])).toEqual([4, 2, 3, 6]);
+  });
+});
+
+describe("slideWords", () => {
+  describe("Slide one word", () => {
+    it("On the bottom", () => {
+      expect(sliceWords([originRectangle], { x: 0, y: 2 })).toEqual([
+        { x: 0, y: 2, width: 1, height: 1 },
+      ]);
+    });
+
+    it("On the top", () => {
+      expect(
+        sliceWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
+      ).toEqual([{ x: 1, y: 2, width: 4, height: 4 }]);
+    });
+
+    it("On the right", () => {
+      expect(
+        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
+      ).toEqual([{ x: 4, y: 0, width: 1, height: 1 }]);
+    });
+
+    it("On the left", () => {
+      expect(
+        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
+      ).toEqual([{ x: 0, y: 0, width: 1, height: 1 }]);
+    });
+
+    it("On the right and bottom", () => {
+      expect(
+        sliceWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
+      ).toEqual([{ x: 4, y: 4, width: 1, height: 1 }]);
+    });
+
+    it("On the left and top", () => {
+      expect(
+        sliceWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
+      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
+    });
+  });
+
+  describe("Slide multiple word", () => {
+    it("On the bottom and right", () => {
+      expect(
+        sliceWords(
+          [
+            { x: 1, y: 4, width: 4, height: 4 },
+            { x: 6, y: 9, width: 4, height: 4 },
+          ],
+          { x: 1, y: 2 }
+        )
+      ).toEqual([
+        { x: 2, y: 6, width: 4, height: 4 },
+        { x: 7, y: 11, width: 4, height: 4 },
+      ]);
+    });
+
+    it("On the top and left", () => {
+      expect(
+        sliceWords(
+          [
+            { x: 1, y: 4, width: 4, height: 4 },
+            { x: 6, y: 9, width: 4, height: 4 },
+          ],
+          { x: -1, y: -2 }
+        )
+      ).toEqual([
+        { x: 0, y: 2, width: 4, height: 4 },
+        { x: 5, y: 7, width: 4, height: 4 },
+      ]);
+    });
+  });
+});
+
+describe("getSliceOfWords", () => {
+  it("No move", () => {
+    expect(
+      getSliceOfWords(
+        { x: 3, y: 3, width: 4, height: 4 },
+        { x: 1, y: 1, width: 4, height: 4 }
+      )
+    ).toEqual({ x: 0, y: 0 });
+  });
+
+  it("Move on the right", () => {
+    expect(
+      getSliceOfWords(
+        { x: 2, y: 3, width: 4, height: 4 },
+        { x: 1, y: 1, width: 4, height: 4 }
+      )
+    ).toEqual({ x: 1, y: 0 });
+  });
+
+  it("Move on the left and top", () => {
+    expect(
+      getSliceOfWords(
+        { x: 7, y: 8, width: 4, height: 4 },
+        { x: 3, y: 5, width: 4, height: 4 }
+      )
+    ).toEqual({ x: -2, y: -1 });
   });
 });

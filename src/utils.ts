@@ -1,4 +1,4 @@
-import { R } from "vitest/dist/types-7cd96283";
+import { p, R } from "vitest/dist/types-7cd96283";
 import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
@@ -291,4 +291,33 @@ export const boundParent = (
   );
 
   return newParentBound;
+};
+
+export const getSliceOfWords = (
+  parent: Rectangle,
+  bound: Rectangle
+): Coordinate => {
+  const boundCentered: Rectangle = {
+    x: bound.x + bound.width / 2,
+    y: bound.y + bound.height / 2,
+    width: bound.width,
+    height: bound.height,
+  };
+
+  const differenceX = boundCentered.x - parent.x;
+  const differenceY = boundCentered.y - parent.y;
+
+  return { x: differenceX, y: differenceY };
+};
+
+export const sliceWords = (
+  words: Rectangle[],
+  slice: Coordinate
+): Rectangle[] => {
+  words.map((w) => {
+    w.x = w.x + slice.x;
+    w.y = w.y + slice.y;
+  });
+
+  return words;
 };
