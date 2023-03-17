@@ -67,10 +67,12 @@ export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
   return { x: 0, y: 0, width: 50, height: 20 };
 };
 
+// This function return the distance between a rectangle and a cartesian coordinate
 export const getDistance = (point: Coordinate, word: Rectangle): number => {
   return Math.sqrt((point.x - word.x) ** 2 + (point.y - word.y) ** 2);
 };
 
+// This function return the center of mass of multiple rectangle
 export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
   const centerMass: Coordinate = passRect.reduce(
     (acc, word) => {
@@ -88,6 +90,7 @@ export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
   return centerMass;
 };
 
+// This function get a circle with centre the center of mass and radius the distance the farthest point from the centre
 export const getTheCircle = (passRect: Rectangle[]): Circle => {
   const centerMass = centerOfMass(passRect);
 
@@ -120,7 +123,7 @@ export const cumulativeBins = (bin: number[]): number[] => {
   );
 };
 
-// This function put the word in a random place
+// This function put the word in a random place on a circle
 export const placeWordOnOuterCircle = (
   w: Rectangle,
   passRect: Rectangle[],
@@ -164,6 +167,7 @@ export const placeWordOnOuterCircle = (
   return newPosition;
 };
 
+// This function allows to obtain the direction of movement of a rectangle in the direction of the rectangles already placed.
 export const getMoveDirection = (
   pastWords: Rectangle[],
   currentWord: Rectangle
@@ -180,6 +184,7 @@ export const getMoveDirection = (
   );
 };
 
+// This function returns the futur position of a rectangle, without collision, in direction of already placed rectangles
 export const futurPosition = (
   word: Rectangle,
   passRect: Rectangle[],
@@ -228,6 +233,7 @@ export const futurPosition = (
   return movedWord;
 };
 
+// This function indicates whether rectangles are in a collision
 export const areCentersTooClose = (
   centerA: Coordinate,
   centerB: Coordinate,
@@ -237,6 +243,7 @@ export const areCentersTooClose = (
   Math.abs(centerA.x - centerB.x) < minX &&
   Math.abs(centerA.y - centerB.y) < minY;
 
+// This function computes the collisions
 export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
   passRect
     .map((rect) =>
@@ -249,6 +256,7 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
+// This function returns the bound of the word cloud
 export const boundParent = (rects: Rectangle[]): Rectangle => {
   const topLeftPoints: Coordinate[] = rects.map((r) => ({
     x: r.x - r.width / 2,
@@ -267,6 +275,7 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
 
+// This function get the slide of the word cloud
 export const getWordSlide = (
   parent: Rectangle,
   bound: Rectangle
@@ -284,6 +293,7 @@ export const getWordSlide = (
   return { x: differenceX, y: differenceY };
 };
 
+// This function slides a rectangle
 export const slideWords = (
   words: Rectangle[],
   slice: Coordinate
