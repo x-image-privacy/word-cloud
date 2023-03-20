@@ -24,13 +24,6 @@ export type Coordinate = {
   y: number;
 };
 
-export type Bound = {
-  xMin: number;
-  xMax: number;
-  yMin: number;
-  yMax: number;
-};
-
 export type Circle = {
   x: number;
   y: number;
@@ -90,7 +83,7 @@ export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
   return centerMass;
 };
 
-// This function get a circle with centre the center of mass and radius the distance the farthest point from the centre
+// This function computes the circle which centre is the center of mass of the rectangle list passed in argument and which radius is equal to the farthest point from the centre
 export const getTheCircle = (passRect: Rectangle[]): Circle => {
   const centerMass = centerOfMass(passRect);
 
@@ -123,26 +116,29 @@ export const cumulativeBins = (bin: number[]): number[] => {
   );
 };
 
-// This function put the word in a random place on a circle
+// This function puts the word in a random place on a circle
 export const placeWordOnOuterCircle = (
   w: Rectangle,
   passRect: Rectangle[],
   weight: number[]
 ): Rectangle => {
-  // Chose the parent face
+  // The cumulative weight allows to define intervals to select a random portion of circle to put our current rectangle, with
+  // different probabilities (here we want to favour portions of the circle with less rectangles already put)
   const cumulativeWeight = cumulativeBins(weight);
 
   const randomInter = randomInterval(
     0,
     cumulativeWeight[cumulativeWeight.length - 1]
   );
+
   const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
 
+  // Add to weights the position that has just been drawn
   weight[inter] += 1;
 
   const maxWeight = Math.max(...weight);
 
-  // substract the max to each element to promote other interval
+  // Substract the max to each element to promote other interval
   weight = weight.map((a) => maxWeight - a);
 
   let angleInter = { x: 0, y: 360 };
@@ -275,7 +271,7 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
 
-// This function get the slide of the word cloud
+// This function gets the slide of the word cloud
 export const getWordSlide = (
   parent: Rectangle,
   bound: Rectangle
@@ -293,7 +289,7 @@ export const getWordSlide = (
   return { x: differenceX, y: differenceY };
 };
 
-// This function slides a rectangle
+// This function slides an array of rectangles
 export const slideWords = (
   words: Rectangle[],
   slice: Coordinate

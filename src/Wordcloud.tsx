@@ -29,12 +29,8 @@ const Wordcloud = ({
 }: Props) => {
   const [words, setWords] = React.useState(data);
 
-  const rectParent = {
-    x: width / 2,
-    y: height / 2,
-    width: width,
-    height: height,
-  };
+  const centerX = width / 2;
+  const centerY = height / 2;
 
   const updateWords = () => {
     setWords((prevWords) => {
@@ -46,8 +42,8 @@ const Wordcloud = ({
       const centeredRect = {
         width: firstRect.width,
         height: firstRect.height,
-        x: width / 2,
-        y: height / 2,
+        x: centerX,
+        y: centerY,
       };
 
       const weight = [1, 1, 1, 1];
@@ -78,8 +74,6 @@ const Wordcloud = ({
         height: height,
       };
 
-  console.log("bound", bound);
-
   React.useEffect(() => {
     updateWords();
   }, []);
@@ -108,17 +102,17 @@ const Wordcloud = ({
             fontSize={fontSize}
             style={{ outline: "1px solid rgba(255, 0, 0, 0.1)" }}
             id={word.id}
-            x={(word.rect?.x || width / 2).toString()}
+            x={(word.rect?.x || centerX).toString()}
             // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-            y={((word.rect?.y || height / 2) + fontSize / 3).toString()}
+            y={((word.rect?.y || centerY) + fontSize / 3).toString()}
           >
             {word.text}
           </text>
         );
       })}
       <line
-        x1={width / 2}
-        x2={width / 2}
+        x1={centerX}
+        x2={centerX}
         y1="0"
         y2={height}
         opacity={0.1}
@@ -128,8 +122,8 @@ const Wordcloud = ({
       <line
         x1="0"
         x2={width}
-        y1={height / 2}
-        y2={height / 2}
+        y1={centerY}
+        y2={centerY}
         opacity={0.1}
         stroke="orange"
         strokeWidth="1"
