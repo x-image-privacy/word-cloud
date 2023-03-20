@@ -7,6 +7,11 @@ import {
   getMoveDirection,
   getTheCircle,
   getDistance,
+  randomInterval,
+  cumulativeBins,
+  slideWords,
+  getWordSlide,
+  boundParent,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -170,5 +175,138 @@ describe("Get the circle", () => {
       y: 0,
       radius: 300,
     });
+  });
+});
+
+describe("Random interval", () => {
+  it("Less than or equal of max of interval", () => {
+    expect(randomInterval(1, 4)).toBeLessThanOrEqual(4);
+  });
+  it("Greater than or equal of min of interval", () => {
+    expect(randomInterval(1, 4)).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("CumulativeBins", () => {
+  it("With same value", () => {
+    expect(cumulativeBins([1, 1, 1, 1])).toEqual([1, 2, 3, 4]);
+  });
+
+  it("With different value", () => {
+    expect(cumulativeBins([4, 2, 1, 3])).toEqual([4, 6, 7, 10]);
+  });
+
+  it("With negative value", () => {
+    expect(cumulativeBins([4, -2, 1, 3])).toEqual([4, 2, 3, 6]);
+  });
+});
+
+describe("slideWords", () => {
+  describe("Slide one word", () => {
+    it("No move", () => {
+      expect(slideWords([originRectangle], { x: 0, y: 0 })).toEqual([
+        originRectangle,
+      ]);
+    });
+    it("On one direction", () => {
+      expect(
+        slideWords([{ x: 0, y: 0, width: 1, height: 1 }], { x: 0, y: 2 })
+      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
+      expect(
+        slideWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
+      ).toEqual([{ x: 1, y: 2, width: 4, height: 4 }]);
+      expect(
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
+      ).toEqual([{ x: 4, y: 0, width: 1, height: 1 }]);
+      expect(
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
+      ).toEqual([{ x: 0, y: 0, width: 1, height: 1 }]);
+    });
+
+    it("On multiple direction", () => {
+      expect(
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
+      ).toEqual([{ x: 4, y: 4, width: 1, height: 1 }]);
+      expect(
+        slideWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
+      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
+      expect(
+        slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -1, y: 4 })
+      ).toEqual([{ x: 1, y: 4, width: 1, height: 1 }]);
+    });
+  });
+
+  describe("Slide multiple word", () => {
+    it("On the bottom and right", () => {
+      expect(
+        slideWords(
+          [
+            { x: 1, y: 4, width: 4, height: 4 },
+            { x: 6, y: 9, width: 4, height: 4 },
+          ],
+          { x: 1, y: 2 }
+        )
+      ).toEqual([
+        { x: 2, y: 6, width: 4, height: 4 },
+        { x: 7, y: 11, width: 4, height: 4 },
+      ]);
+      expect(
+        slideWords(
+          [
+            { x: 1, y: 4, width: 4, height: 4 },
+            { x: 6, y: 9, width: 4, height: 4 },
+          ],
+          { x: -1, y: -2 }
+        )
+      ).toEqual([
+        { x: 0, y: 2, width: 4, height: 4 },
+        { x: 5, y: 7, width: 4, height: 4 },
+      ]);
+    });
+  });
+});
+
+describe("getSliceOfWords", () => {
+  it("No move", () => {
+    expect(
+      getWordSlide(
+        { x: 3, y: 3, width: 4, height: 4 },
+        { x: 1, y: 1, width: 4, height: 4 }
+      )
+    ).toEqual({ x: 0, y: 0 });
+  });
+
+  it("Move on the right", () => {
+    expect(
+      getWordSlide(
+        { x: 2, y: 3, width: 4, height: 4 },
+        { x: 1, y: 1, width: 4, height: 4 }
+      )
+    ).toEqual({ x: 1, y: 0 });
+    expect(
+      getWordSlide(
+        { x: 7, y: 8, width: 4, height: 4 },
+        { x: 3, y: 5, width: 4, height: 4 }
+      )
+    ).toEqual({ x: -2, y: -1 });
+  });
+});
+
+describe("BoundParent", () => {
+  it("With one rectangle", () => {
+    expect(boundParent([{ x: 2, y: 2, width: 2, height: 2 }])).toEqual({
+      x: 1,
+      y: 1,
+      width: 2,
+      height: 2,
+    });
+  });
+  it("With two rectangles", () => {
+    expect(
+      boundParent([
+        { x: 7, y: 8, width: 4, height: 4 },
+        { x: 3, y: 5, width: 4, height: 4 },
+      ])
+    ).toEqual({ x: 1, y: 3, width: 8, height: 7 });
   });
 });

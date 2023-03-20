@@ -1,17 +1,14 @@
 import "./App.css";
 import {
+  boundParent,
   futurPosition,
   getBoundingRect,
-  placeWordOnOuterCircle,
+  Rectangle,
+  Word,
 } from "./utils";
 import * as React from "react";
-import {
-  CENTER_X,
-  CENTER_Y,
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
-  DEFAULT_RECT,
-} from "./constants";
+
+import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
 import { defaultWords1 } from "./data";
 
 const CUT_OFF = 0.5;
@@ -19,8 +16,21 @@ const CUT_OFF = 0.5;
 export const MAX_FONT_SIZE = 20;
 export const MIN_FONT_SIZE = 6;
 
-const Wordcloud = () => {
-  const [words, setWords] = React.useState(defaultWords1);
+type Props = {
+  data: Word[];
+  width?: number;
+  height?: number;
+};
+
+const Wordcloud = ({
+  data,
+  width = CONTAINER_WIDTH,
+  height = CONTAINER_HEIGHT,
+}: Props) => {
+  const [words, setWords] = React.useState(data);
+
+  const centerX = width / 2;
+  const centerY = height / 2;
 
   const updateWords = () => {
     setWords((prevWords) => {
@@ -32,13 +42,14 @@ const Wordcloud = () => {
       const centeredRect = {
         width: firstRect.width,
         height: firstRect.height,
-        x: CENTER_X,
-        y: CENTER_Y,
+        x: centerX,
+        y: centerY,
       };
+
+      const weight = [1, 1, 1, 1];
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
-          // move the word
-          const futureWord = futurPosition(rect, placedElements, 3);
+          const futureWord = futurPosition(rect, placedElements, 3, weight);
           return [...placedElements, futureWord];
         },
         [centeredRect]
@@ -51,6 +62,18 @@ const Wordcloud = () => {
     });
   };
 
+  // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
+  const rects = words.map((w) => w.rect).filter(Boolean) as Rectangle[];
+
+  const bound = rects.length
+    ? boundParent(rects)
+    : {
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+      };
+
   React.useEffect(() => {
     updateWords();
   }, []);
@@ -59,9 +82,10 @@ const Wordcloud = () => {
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      width={CONTAINER_WIDTH}
-      height={CONTAINER_HEIGHT}
+      width={width}
+      height={height}
       style={{ outline: "1px solid green" }}
+      viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
     >
       {words.map((word) => {
         const fontSize =
@@ -78,32 +102,44 @@ const Wordcloud = () => {
             fontSize={fontSize}
             style={{ outline: "1px solid rgba(255, 0, 0, 0.1)" }}
             id={word.id}
-            x={(word.rect?.x || CENTER_X).toString()}
+            x={(word.rect?.x || centerX).toString()}
             // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-            y={((word.rect?.y || CENTER_Y) + fontSize / 3).toString()}
+            y={((word.rect?.y || centerY) + fontSize / 3).toString()}
           >
             {word.text}
           </text>
         );
       })}
       <line
-        x1={CENTER_X}
-        x2={CENTER_X}
+        x1={centerX}
+        x2={centerX}
         y1="0"
-        y2={CONTAINER_HEIGHT}
+        y2={height}
         opacity={0.1}
         stroke="orange"
         strokeWidth="1"
       />
       <line
         x1="0"
-        x2={CONTAINER_WIDTH}
-        y1={CENTER_Y}
-        y2={CENTER_Y}
+        x2={width}
+        y1={centerY}
+        y2={centerY}
         opacity={0.1}
         stroke="orange"
         strokeWidth="1"
       />
+      <g>
+        <text
+          style={{ fill: "blue" }}
+          x={bound.x}
+          y={bound.y + 10}
+          fontSize={10}
+          textAnchor="start"
+        >
+          viewBox
+        </text>
+        <rect {...bound} stroke="blue" strokeWidth="1" fill="none" />
+      </g>
     </svg>
   );
 };
