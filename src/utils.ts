@@ -122,9 +122,14 @@ export const placeWordOnOuterCircle = (
   passRect: Rectangle[],
   weight: number[]
 ): Rectangle => {
+  const maxWeight = Math.max(...weight);
+
+  // Substract the max to each element to promote other interval
+  const invertedWeight = weight.map((a) => maxWeight - a);
+
   // The cumulative weight allows to define intervals to select a random portion of circle to put our current rectangle, with
   // different probabilities (here we want to favour portions of the circle with less rectangles already put)
-  const cumulativeWeight = cumulativeBins(weight);
+  const cumulativeWeight = cumulativeBins(invertedWeight);
 
   const randomInter = randomInterval(
     0,
@@ -135,11 +140,6 @@ export const placeWordOnOuterCircle = (
 
   // Add to weights the position that has just been drawn
   weight[inter] += 1;
-
-  const maxWeight = Math.max(...weight);
-
-  // Substract the max to each element to promote other interval
-  weight = weight.map((a) => maxWeight - a);
 
   let angleInter = { x: 0, y: 360 };
 
@@ -189,7 +189,7 @@ export const futurPosition = (
 ): Rectangle => {
   let isCollision = false;
 
-  // put the word in random place around the parent
+  // Put the word in random place around the parent
   let movedWord = placeWordOnOuterCircle(word, passRect, weight);
   let iter = 0;
   let displacement = 0;
@@ -204,7 +204,7 @@ export const futurPosition = (
       y: movedWord.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
     };
 
-    // test if the word can be move over the hypotenuse
+    // Test if the word can be move over the hypotenuse
     if (allCollision(futurPosition, passRect)) {
       const onlyMoveOverX = { ...futurPosition, y: movedWord.y };
       const onlyMoveOverY = { ...futurPosition, x: movedWord.x };
@@ -212,7 +212,7 @@ export const futurPosition = (
       const yColl = allCollision(onlyMoveOverY, passRect);
       if (xColl) {
         if (yColl) {
-          // do not move anymore
+          // Do not move anymore
           isCollision = true;
         } else {
           movedWord = { ...onlyMoveOverY };
