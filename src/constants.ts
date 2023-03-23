@@ -17,3 +17,5 @@ export const INTERVAL = {
   c: { x: 180, y: 269 },
   d: { x: 270, y: 360 },
 };
+
+export const NUMBER_OF_INTERVALS = 6;

@@ -8,8 +8,12 @@ import {
 } from "./utils";
 import * as React from "react";
 
-import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
-import { defaultWords1 } from "./data";
+import {
+  CONTAINER_HEIGHT,
+  CONTAINER_WIDTH,
+  DEFAULT_RECT,
+  NUMBER_OF_INTERVALS,
+} from "./constants";
 
 const CUT_OFF = 0.5;
 
@@ -46,7 +50,9 @@ const Wordcloud = ({
         y: centerY,
       };
 
-      const weight = [1, 1, 1, 1];
+      // Initialize the weights with the value 1, of the size of the number of intervals
+      const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
+
       const newPositions = rectsToPlace.slice(1).reduce(
         (placedElements, rect) => {
           const futureWord = futurPosition(rect, placedElements, 3, weight);
