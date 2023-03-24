@@ -12,6 +12,7 @@ import {
   slideWords,
   getWordSlide,
   boundParent,
+  rangeWithStep,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -308,5 +309,20 @@ describe("BoundParent", () => {
         { x: 3, y: 5, width: 4, height: 4 },
       ])
     ).toEqual({ x: 1, y: 3, width: 8, height: 7 });
+  });
+});
+
+describe("Range with step", () => {
+  it("Start equal to end", () => {
+    expect(rangeWithStep(1, 1, 2)).toEqual([1]);
+  });
+  it("End bigger than start", () => {
+    expect(rangeWithStep(4, 1, 2)).toEqual([]);
+  });
+  it("No step", () => {
+    expect(rangeWithStep(0, 10, 1)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  });
+  it("Step of 2", () => {
+    expect(rangeWithStep(0, 9, 2)).toEqual([0, 2, 4, 6, 8]);
   });
 });

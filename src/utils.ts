@@ -118,8 +118,19 @@ export const cumulativeBins = (bin: number[]): number[] => {
 
 // https://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only
 // range(0, 9, 2) => [0, 2, 4, 6, 8]
-export const range = (from: number, to: number, step: number) =>
-  [...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
+// No negative step
+export const rangeWithStep = (
+  from: number,
+  to: number,
+  step: number
+): number[] => {
+  if (to < from) {
+    return [];
+  }
+  return [...Array(Math.floor((to - from) / step) + 1)].map(
+    (_, i) => from + i * step
+  );
+};
 
 // This function puts the word in a random place on a circle
 export const placeWordOnOuterCircle = (
@@ -150,7 +161,7 @@ export const placeWordOnOuterCircle = (
   const ratio = 360 / NUMBER_OF_INTERVALS;
 
   // create the intervals
-  const rangeInterval = range(0, 360, ratio);
+  const rangeInterval = rangeWithStep(0, 360, ratio);
 
   let angleInter;
 
