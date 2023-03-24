@@ -11,11 +11,4 @@ export const DEFAULT_RECT = {
   height: 10,
 };
 
-export const INTERVAL = {
-  a: { x: 0, y: 89 },
-  b: { x: 90, y: 179 },
-  c: { x: 180, y: 269 },
-  d: { x: 270, y: 360 },
-};
-
 export const NUMBER_OF_INTERVALS = 6;
