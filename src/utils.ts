@@ -152,20 +152,19 @@ export const placeWordOnOuterCircle = (
     cumulativeWeight[cumulativeWeight.length - 1]
   );
 
-  const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
-
-  // Add to weights the position that has just been drawn
-  weight[inter] += 1;
-
   // Calculate the size of each intervals
   const ratio = 360 / NUMBER_OF_INTERVALS;
 
   // create the intervals
   const rangeInterval = rangeWithStep(0, 360, ratio);
 
+  const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
+
   let angleInter;
 
   if (Number.isInteger(inter)) {
+    // Add to weights the position that has just been drawn
+    weight[inter] += 1;
     angleInter = {
       x: rangeInterval[inter],
       y: rangeInterval[inter + 1] - 1,
