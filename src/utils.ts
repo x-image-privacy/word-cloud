@@ -2,7 +2,7 @@ import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
   DEFAULT_RECT,
-  INTERVAL,
+  NUMBER_OF_INTERVALS,
 } from "./constants";
 
 export type Word = {
@@ -116,6 +116,22 @@ export const cumulativeBins = (bin: number[]): number[] => {
   );
 };
 
+// https://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only
+// range(0, 9, 2) => [0, 2, 4, 6, 8]
+// No negative step
+export const rangeWithStep = (
+  from: number,
+  to: number,
+  step: number
+): number[] => {
+  if (to < from) {
+    return [];
+  }
+  return [...Array(Math.floor((to - from) / step) + 1)].map(
+    (_, i) => from + i * step
+  );
+};
+
 // This function puts the word in a random place on a circle
 export const placeWordOnOuterCircle = (
   w: Rectangle,
@@ -136,21 +152,25 @@ export const placeWordOnOuterCircle = (
     cumulativeWeight[cumulativeWeight.length - 1]
   );
 
+  // Calculate the size of each intervals
+  const ratio = 360 / NUMBER_OF_INTERVALS;
+
+  // create the intervals
+  const rangeInterval = rangeWithStep(0, 360, ratio);
+
   const inter = cumulativeWeight.findIndex((el) => el >= randomInter);
 
-  // Add to weights the position that has just been drawn
-  weight[inter] += 1;
+  let angleInter;
 
-  let angleInter = { x: 0, y: 360 };
-
-  if (inter === 0) {
-    angleInter = INTERVAL.a;
-  } else if (inter === 1) {
-    angleInter = INTERVAL.b;
-  } else if (inter === 2) {
-    angleInter = INTERVAL.c;
-  } else if (inter === 3) {
-    angleInter = INTERVAL.d;
+  if (Number.isInteger(inter)) {
+    // Add to weights the position that has just been drawn
+    weight[inter] += 1;
+    angleInter = {
+      x: rangeInterval[inter],
+      y: rangeInterval[inter + 1] - 1,
+    };
+  } else {
+    angleInter = { x: 0, y: 360 };
   }
 
   const angle = randomInterval(angleInter.x, angleInter.y);
