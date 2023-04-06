@@ -24,10 +24,17 @@ A word cloud
 - Place the first word of the list in the centre of the container (so the larger word)
 
 ### Place the other words in a random position on the container
-- Define a circle with centre the centre of the container 
+- Define a circle with centre the centre of the container
+
+ ![container](https://user-images.githubusercontent.com/43374563/230428879-d447779d-c99a-4970-a109-255be626a1a2.png)
+
   - If there is already some words placed in the word cloud, the centre of the circle is the mass sum of already placed words.
 - We cut the circle in multiple intervals, each of these intervals corresponds to degrees
-  - We create a weight for each interval in the circle   
+
+![intervals](https://user-images.githubusercontent.com/43374563/230429897-7b9ae668-224d-417b-8cac-7c1986777931.png)
+
+  - We create a weight for each interval in the circle
+   
 By creating intervals in this circle, we draw an interval at random and place the word on the circle in the corresponding interval.
 Because the word will then be moved to the words already placed. This circle then allows us to make a cloud by placing uniformly the words and obtaining the shape of a word cloud.
 
@@ -44,7 +51,9 @@ So intervals with fewer words will have a better chance of being chosen.
 
 ### Move words
 Now that we have placed our words on the circle, we will move it closer to the already placed words.
+
 - We compute the move direction, by summing the differences between the already placed words and the current word.
+![wordmove](https://user-images.githubusercontent.com/43374563/230432170-79cf2a3c-cde1-4608-b343-61cdbaef8320.png)
 
 We move with the previous calculation of our word, but care must be taken to avoid collisions with other words.
 We calculate whether the move creates a collision on x and y:
