@@ -53,7 +53,14 @@ So intervals with fewer words will have a better chance of being chosen.
 Now that we have placed our words on the circle, we will move it closer to the already placed words.
 
 - We compute the move direction, by summing the differences between the already placed words and the current word.
-![wordmove](https://user-images.githubusercontent.com/43374563/230432170-79cf2a3c-cde1-4608-b343-61cdbaef8320.png)
+![moveWord](https://user-images.githubusercontent.com/43374563/232424322-d95c26d3-d313-42a9-aa91-a3920228b54e.png)
+
+We move the $(x_{1}, y_{1})$ point in the direction of the $(x_{2}, y_{2})$ of a step $step$ in the hypontenus and the new position of the word is in $(x_{3}, y_{3})$
+- $dx = \frac{step}{h}x_{2}$
+- $dy = \frac{step}{h}y_{2}$
+- $x_{3} = x_{1} + dx$
+- $y_{3} = y_{1} + dy$
+
 
 We move with the previous calculation of our word, but care must be taken to avoid collisions with other words.
 We calculate whether the move creates a collision on x and y:
