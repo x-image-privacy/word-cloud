@@ -64,11 +64,18 @@ We move the $(x_{1}, y_{1})$ point in the direction of the $(x_{2}, y_{2})$ of a
 
 We move with the previous calculation of our word, but care must be taken to avoid collisions with other words.
 We calculate whether the move creates a collision on x and y:
+
+![collision](https://user-images.githubusercontent.com/43374563/232430419-666b03f3-3abe-492f-89d8-097a596b8ee6.png)
+
+- $A_{x} - B_{x} > \frac{A_{w_{1}}}{2} + \frac{B_{w_{2}}}{2}$
+- $A_{y} - B_{y} > \frac{A_{h_{1}}}{2} + \frac{B_{h_{2}}}{2}$
+
+
   - If not, we move the current word and start again
   - If collision on x, we move the y position of the current word and start again
   - If collision on y, we move the x position of the current word and start again
-  - If collision on both sides, the word is placed and we are done
-
+  - If collision on both sides, the word is placed and we are done!
+  
 ### Collisions
 To calculate collisions, we check if the distance between the centre of the current word and the centre of already placed words are not smaller than the height and width of each word:
 
