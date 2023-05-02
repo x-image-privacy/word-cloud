@@ -102,10 +102,9 @@ const Wordcloud = ({
         return (
           <text
             key={word.id}
-            // usefull to have the anchor at the center of the word
+            // useful to have the anchor at the center of the word
             textAnchor="middle"
             fontSize={fontSize}
-            // style={{ outline: "1px solid rgba(255, 0, 0, 0.1)" }}
             id={word.id}
             x={(word.rect?.x || centerX).toString()}
             // I don't know why I have to add the third of the fontSize to center te word vertically but it works
