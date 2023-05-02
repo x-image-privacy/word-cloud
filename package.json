@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./dist/wordcloud.cjs",
   "module": "./dist/wordcloud.js",
-  "types": "./dist/Wordcloud.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build:app": "tsc && vite build",
