@@ -1,11 +1,15 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "@x-image-privacy/wordcloud",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/wordcloud.cjs",
+  "module": "./dist/wordcloud.js",
+  "types": "./dist/Wordcloud.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:app": "tsc && vite build",
+    "build": "tsc && vite build --config lib.config.ts",
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -20,6 +24,7 @@
     "typescript": "^4.9.3",
     "vite": "^4.1.4",
     "vite-plugin-checker": "^0.5.6",
+    "vite-plugin-dts": "^2.3.0",
     "vitest": "^0.29.2"
   },
   "packageManager": "yarn@3.4.1"
