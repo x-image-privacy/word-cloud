@@ -4,6 +4,7 @@ import {
   getBoundingRect,
   getBoundingWordCloud,
   Rectangle,
+  slideWords,
   Word,
 } from "./utils";
 import * as React from "react";
@@ -39,7 +40,7 @@ const Wordcloud = ({
 
   const updateWords = () => {
     setWords((prevWords) => {
-      const explanableWordCloud = Object.entries(prevWords).map(
+      const wordCloudOfWordCloud = Object.entries(prevWords).map(
         ([key, value]) => {
           const wordsToPlace = value
             .map((w) => ({ ...w, rect: getBoundingRect(w.id) || DEFAULT_RECT }))
@@ -71,13 +72,52 @@ const Wordcloud = ({
         }
       );
 
-      return explanableWordCloud;
-    });
+      const wordCloudToPlace = wordCloudOfWordCloud
+        .map((w) => ({
+          ...w,
+          rect: getBoundingWordCloud(w) || DEFAULT_RECT,
+        }))
+        .sort((a, b) => (a.coef > b.coef ? -1 : 1));
 
-    explainWordCloud.map((w) => ({
-      ...w,
-      rect: getBoundingWordCloud(w) || DEFAULT_RECT,
-    }));
+      const wordCloudRectToPlace = wordCloudToPlace.map((w) => w.rect);
+      const firstWordCloud = { ...wordCloudRectToPlace[0] };
+      const centeredWodCloud = {
+        width: firstWordCloud.width,
+        height: firstWordCloud.height,
+        x: centerX,
+        y: centerY,
+      };
+
+      const wordCloudWeight = new Array(NUMBER_OF_INTERVALS).fill(1);
+
+      const newPositionWordCloud = wordCloudRectToPlace.slice(1).reduce(
+        (placedWordCloud, wordCloud) => {
+          const futureWordCloud = futurPosition(
+            wordCloud,
+            placedWordCloud,
+            3,
+            wordCloudWeight
+          );
+          return [...placedWordCloud, futureWordCloud];
+        },
+        [centeredWodCloud]
+      );
+      
+      let  wordsPositions = {}
+
+      // slide word inside the word cloud
+      const slideCoeff = wordCloudRectToPlace.map((wordCloud, idx) => ({
+
+        wordsPositions = slideWords(wordCloud, newPositionWordCloud[idx]),
+
+        return ({
+          ...wordCloud,
+          rect: wordPosition[idx],
+      })
+      }))
+
+     
+    });
   };
 
   // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
