@@ -46,6 +46,31 @@ export const getBoundingRect = (
   };
 };
 
+// This function returns the bound of the word cloud
+export const boundParent = (rects: Rectangle[]): Rectangle => {
+  const topLeftPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x - r.width / 2,
+    y: r.y - r.height / 2,
+  }));
+  const bottomRightPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x + r.width / 2,
+    y: r.y + r.height / 2,
+  }));
+
+  const xMin = Math.min(...topLeftPoints.map((r) => r.x));
+  const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
+  const yMin = Math.min(...topLeftPoints.map((r) => r.y));
+  const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
+
+  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
+};
+
+export const getBoundingWordCloud = (word: Word[]): Rectangle => {
+  const rect = word.map((w) => getBoundingRect(w.id));
+
+  return boundParent(rect);
+};
+
 // This function put the first word in the center of the parent rectangle
 export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
   const parentElement = document.getElementsByTagName("svg").namedItem(p);
@@ -271,25 +296,6 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
       )
     )
     .some((t) => t === true);
-
-// This function returns the bound of the word cloud
-export const boundParent = (rects: Rectangle[]): Rectangle => {
-  const topLeftPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x - r.width / 2,
-    y: r.y - r.height / 2,
-  }));
-  const bottomRightPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x + r.width / 2,
-    y: r.y + r.height / 2,
-  }));
-
-  const xMin = Math.min(...topLeftPoints.map((r) => r.x));
-  const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
-  const yMin = Math.min(...topLeftPoints.map((r) => r.y));
-  const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
-
-  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
-};
 
 // This function gets the slide of the word cloud
 export const getWordSlide = (

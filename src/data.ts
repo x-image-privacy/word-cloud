@@ -17,6 +17,8 @@ export const defaultWords1: Word[] = [
   { id: "word-14", text: "finger", coef: 0.91 },
   { id: "word-15", text: "girl", coef: 0.88 },
 ];
+
+export const explainWordCloud = [{ key: "class1", value: defaultWords1 }];
 export const defaultWords2: Word[] = [
   { id: "word-1", text: "group", coef: 0.99 },
   { id: "word-2", text: "people", coef: 0.99 },

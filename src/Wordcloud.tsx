@@ -2,6 +2,7 @@ import {
   boundParent,
   futurPosition,
   getBoundingRect,
+  getBoundingWordCloud,
   Rectangle,
   Word,
 } from "./utils";
@@ -13,6 +14,7 @@ import {
   DEFAULT_RECT,
   NUMBER_OF_INTERVALS,
 } from "./constants";
+import { explainWordCloud } from "./data";
 
 const CUT_OFF = 0.5;
 
@@ -37,34 +39,45 @@ const Wordcloud = ({
 
   const updateWords = () => {
     setWords((prevWords) => {
-      const wordsToPlace = prevWords
-        .map((w) => ({ ...w, rect: getBoundingRect(w.id) || DEFAULT_RECT }))
-        .sort((a, b) => (a.coef > b.coef ? -1 : 1));
-      const rectsToPlace = wordsToPlace.map((w) => w.rect);
-      const firstRect = { ...rectsToPlace[0] };
-      const centeredRect = {
-        width: firstRect.width,
-        height: firstRect.height,
-        x: centerX,
-        y: centerY,
-      };
+      const explanableWordCloud = Object.entries(prevWords).map(
+        ([key, value]) => {
+          const wordsToPlace = value
+            .map((w) => ({ ...w, rect: getBoundingRect(w.id) || DEFAULT_RECT }))
+            .sort((a, b) => (a.coef > b.coef ? -1 : 1));
+          const rectsToPlace = wordsToPlace.map((w) => w.rect);
+          const firstRect = { ...rectsToPlace[0] };
+          const centeredRect = {
+            width: firstRect.width,
+            height: firstRect.height,
+            x: centerX,
+            y: centerY,
+          };
 
-      // Initialize the weights with the value 1, of the size of the number of intervals
-      const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
+          // Initialize the weights with the value 1, of the size of the number of intervals
+          const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
 
-      const newPositions = rectsToPlace.slice(1).reduce(
-        (placedElements, rect) => {
-          const futureWord = futurPosition(rect, placedElements, 3, weight);
-          return [...placedElements, futureWord];
-        },
-        [centeredRect]
+          const newPositions = rectsToPlace.slice(1).reduce(
+            (placedElements, rect) => {
+              const futureWord = futurPosition(rect, placedElements, 3, weight);
+              return [...placedElements, futureWord];
+            },
+            [centeredRect]
+          );
+
+          return wordsToPlace.map((word, idx) => ({
+            ...word,
+            rect: newPositions[idx],
+          }));
+        }
       );
 
-      return wordsToPlace.map((word, idx) => ({
-        ...word,
-        rect: newPositions[idx],
-      }));
+      return explanableWordCloud;
     });
+
+    explainWordCloud.map((w) => ({
+      ...w,
+      rect: getBoundingWordCloud(w) || DEFAULT_RECT,
+    }));
   };
 
   // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
@@ -89,7 +102,7 @@ const Wordcloud = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      style={{ outline: "1px solid green" }}
+      style={{ outline: "1px solid transparent" }}
       viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
     >
       {words.map((word) => {
