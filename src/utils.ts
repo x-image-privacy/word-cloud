@@ -66,7 +66,7 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
 };
 
 export const getBoundingWordCloud = (word: Word[]): Rectangle => {
-  const rect = word.map((w) => getBoundingRect(w.id));
+  const rect = word.map((w) => w.rect as Rectangle);
 
   return boundParent(rect);
 };
@@ -326,4 +326,8 @@ export const slideWords = (
   });
 
   return words;
+};
+
+export const getAreaRectangle = (rect: Rectangle): number => {
+  return rect.height * rect.width;
 };

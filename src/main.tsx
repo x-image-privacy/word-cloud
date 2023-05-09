@@ -7,6 +7,6 @@ import { defaultWords1, defaultWords2 } from "./data";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Wordcloud data={defaultWords2} />
+    <Wordcloud data={defaultWords1} />
   </React.StrictMode>
 );
