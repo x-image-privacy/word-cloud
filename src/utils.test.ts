@@ -13,6 +13,7 @@ import {
   boundParent,
   rangeWithStep,
   getAreaRectangle,
+  placeFirstWord,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -311,5 +312,16 @@ describe("Range with step", () => {
 describe("Get area rectangle", () => {
   it("Get area", () => {
     expect(getAreaRectangle(rectangle)).toEqual(50);
+  });
+});
+
+describe("Place first item", () => {
+  it("Put in centre", () => {
+    expect(placeFirstWord(rectangle, 0, 0)).toEqual({
+      x: 0,
+      y: 0,
+      width: 10,
+      height: 5,
+    });
   });
 });

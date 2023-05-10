@@ -324,6 +324,7 @@ export const getAreaRectangle = (rect: Rectangle): number => {
   return rect.height * rect.width;
 };
 
+// This function places the first word in the centre of the rectangle
 export const placeFirstWord = (
   rectToPlace: Rectangle,
   centerX: number,
