@@ -2,7 +2,11 @@ import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
   DEFAULT_RECT,
+  MARGIN_HEIGHT,
+  MARGIN_WIDTH,
   NUMBER_OF_INTERVALS,
+  WORD_CLOUD_MARGIN_HEIGHT,
+  WORD_CLOUD_MARGIN_WIDTH,
 } from "./constants";
 
 export type Word = {
@@ -41,8 +45,8 @@ export const getBoundingRect = (
   return {
     x: bbox.x,
     y: bbox.y,
-    width: bbox.width + 10,
-    height: bbox.height - 5,
+    width: bbox.width + MARGIN_WIDTH,
+    height: bbox.height + MARGIN_HEIGHT,
   };
 };
 
@@ -68,7 +72,12 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
 export const getBoundingWordCloud = (word: Word[]): Rectangle => {
   const rect = word.map((w) => w.rect as Rectangle);
 
-  return boundParent(rect);
+  const tightBound = boundParent(rect);
+  return {
+    ...tightBound,
+    width: tightBound.width + WORD_CLOUD_MARGIN_WIDTH,
+    height: tightBound.height + WORD_CLOUD_MARGIN_HEIGHT,
+  };
 };
 
 // This function put the first word in the center of the parent rectangle
@@ -310,6 +319,22 @@ export const slideWords = (
   return words;
 };
 
+// This function returns the aera of a rectangle
 export const getAreaRectangle = (rect: Rectangle): number => {
   return rect.height * rect.width;
+};
+
+export const placeFirstWord = (
+  rectToPlace: Rectangle,
+  centerX: number,
+  centerY: number
+): Rectangle => {
+  const centeredRect = {
+    width: rectToPlace.width,
+    height: rectToPlace.height,
+    x: centerX,
+    y: centerY,
+  };
+
+  return centeredRect;
 };
