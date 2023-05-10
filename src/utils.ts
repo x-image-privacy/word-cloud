@@ -266,7 +266,6 @@ export const futurPosition = (
         movedWord = { ...onlyMoveOverX };
       }
     } else {
-      console.log("no collisions");
       movedWord = { ...futurPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
@@ -298,32 +297,14 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
-// This function gets the slide of the word cloud
-export const getWordSlide = (
-  parent: Rectangle,
-  bound: Rectangle
-): Coordinate => {
-  const boundCentered: Rectangle = {
-    x: bound.x + bound.width / 2,
-    y: bound.y + bound.height / 2,
-    width: bound.width,
-    height: bound.height,
-  };
-
-  const differenceX = boundCentered.x - parent.x;
-  const differenceY = boundCentered.y - parent.y;
-
-  return { x: differenceX, y: differenceY };
-};
-
 // This function slides an array of rectangles
 export const slideWords = (
   words: Rectangle[],
   slice: Coordinate
 ): Rectangle[] => {
   words.map((w) => {
-    w.x = w.x - 12 + slice.x;
-    w.y = w.y + 7 + slice.y;
+    w.x = w.x - 10 + slice.x;
+    w.y = w.y + 5 + slice.y;
   });
 
   return words;

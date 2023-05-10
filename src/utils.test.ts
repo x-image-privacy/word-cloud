@@ -10,7 +10,6 @@ import {
   randomInterval,
   cumulativeBins,
   slideWords,
-  getWordSlide,
   boundParent,
   rangeWithStep,
   getAreaRectangle,
@@ -220,28 +219,28 @@ describe("slideWords", () => {
     it("On one direction", () => {
       expect(
         slideWords([{ x: 0, y: 0, width: 1, height: 1 }], { x: 0, y: 2 })
-      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
+      ).toEqual([{ x: -10, y: 7, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
-      ).toEqual([{ x: 1, y: 2, width: 4, height: 4 }]);
+      ).toEqual([{ x: -9, y: 7, width: 4, height: 4 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
-      ).toEqual([{ x: 4, y: 0, width: 1, height: 1 }]);
+      ).toEqual([{ x: -6, y: 5, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
-      ).toEqual([{ x: 0, y: 0, width: 1, height: 1 }]);
+      ).toEqual([{ x: -10, y: 5, width: 1, height: 1 }]);
     });
 
     it("On multiple direction", () => {
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
-      ).toEqual([{ x: 4, y: 4, width: 1, height: 1 }]);
+      ).toEqual([{ x: -6, y: 9, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
-      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
+      ).toEqual([{ x: -10, y: 7, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -1, y: 4 })
-      ).toEqual([{ x: 1, y: 4, width: 1, height: 1 }]);
+      ).toEqual([{ x: -9, y: 9, width: 1, height: 1 }]);
     });
   });
 
@@ -256,8 +255,8 @@ describe("slideWords", () => {
           { x: 1, y: 2 }
         )
       ).toEqual([
-        { x: 2, y: 6, width: 4, height: 4 },
-        { x: 7, y: 11, width: 4, height: 4 },
+        { x: -8, y: 11, width: 4, height: 4 },
+        { x: -3, y: 16, width: 4, height: 4 },
       ]);
       expect(
         slideWords(
@@ -268,36 +267,10 @@ describe("slideWords", () => {
           { x: -1, y: -2 }
         )
       ).toEqual([
-        { x: 0, y: 2, width: 4, height: 4 },
-        { x: 5, y: 7, width: 4, height: 4 },
+        { x: -10, y: 7, width: 4, height: 4 },
+        { x: -5, y: 12, width: 4, height: 4 },
       ]);
     });
-  });
-});
-
-describe("getSliceOfWords", () => {
-  it("No move", () => {
-    expect(
-      getWordSlide(
-        { x: 3, y: 3, width: 4, height: 4 },
-        { x: 1, y: 1, width: 4, height: 4 }
-      )
-    ).toEqual({ x: 0, y: 0 });
-  });
-
-  it("Move on the right", () => {
-    expect(
-      getWordSlide(
-        { x: 2, y: 3, width: 4, height: 4 },
-        { x: 1, y: 1, width: 4, height: 4 }
-      )
-    ).toEqual({ x: 1, y: 0 });
-    expect(
-      getWordSlide(
-        { x: 7, y: 8, width: 4, height: 4 },
-        { x: 3, y: 5, width: 4, height: 4 }
-      )
-    ).toEqual({ x: -2, y: -1 });
   });
 });
 
