@@ -79,6 +79,8 @@ const Wordcloud = ({
           getAreaRectangle(a.rect) > getAreaRectangle(b.rect) ? -1 : 1
         );
 
+      console.log(wordCloudToPlace);
+
       const wordCloudRectToPlace = wordCloudToPlace.map((w) => w.rect);
       const firstWordCloud = { ...wordCloudRectToPlace[0] };
       const centeredWodCloud = {
