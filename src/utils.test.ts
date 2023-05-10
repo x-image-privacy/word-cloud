@@ -13,6 +13,7 @@ import {
   getWordSlide,
   boundParent,
   rangeWithStep,
+  getAreaRectangle,
 } from "./utils";
 
 const origin: Coordinate = {
@@ -25,6 +26,13 @@ const originRectangle: Rectangle = {
   y: 0,
   width: 1,
   height: 1,
+};
+
+const rectangle: Rectangle = {
+  x: 1,
+  y: 0,
+  width: 10,
+  height: 5,
 };
 
 describe("areCentersTooClose", () => {
@@ -324,5 +332,11 @@ describe("Range with step", () => {
   });
   it("Step of 2", () => {
     expect(rangeWithStep(0, 9, 2)).toEqual([0, 2, 4, 6, 8]);
+  });
+});
+
+describe("Get area rectangle", () => {
+  it("Get area", () => {
+    expect(getAreaRectangle(rectangle)).toEqual(50);
   });
 });

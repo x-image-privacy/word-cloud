@@ -266,6 +266,7 @@ export const futurPosition = (
         movedWord = { ...onlyMoveOverX };
       }
     } else {
+      console.log("no collisions");
       movedWord = { ...futurPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
