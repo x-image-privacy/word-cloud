@@ -321,8 +321,8 @@ export const slideWords = (
   slice: Coordinate
 ): Rectangle[] => {
   words.map((w) => {
-    w.x = w.x + slice.x;
-    w.y = w.y + slice.y;
+    w.x = w.x - 12 + slice.x;
+    w.y = w.y + 7 + slice.y;
   });
 
   return words;
