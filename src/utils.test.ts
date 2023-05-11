@@ -14,6 +14,7 @@ import {
   rangeWithStep,
   getAreaRectangle,
   placeFirstWord,
+  getNewPositions,
 } from "./utils";
 
 const origin: Coordinate = {

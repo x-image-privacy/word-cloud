@@ -339,3 +339,18 @@ export const placeFirstWord = (
 
   return centeredRect;
 };
+
+// This function returns the new position of a list of items
+export const getNewPositions = (itemsToPlace: Rectangle[], centeredRect: Rectangle, step: number): Rectangle[] => {
+
+  // Initialize the weights with the value 1, of the size of the number of intervals
+  const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
+
+  const newPositions = itemsToPlace.slice(1).reduce((placedItems, rect) => {
+    const futureItem = futurPosition(rect, placedItems, step, weight)
+    return [...placedItems, futureItem]
+  }, [centeredRect])
+
+  return newPositions
+
+}

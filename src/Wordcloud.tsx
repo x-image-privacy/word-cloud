@@ -5,6 +5,7 @@ import {
   getBoundingRect,
   getBoundingWordCloud,
   getMoveDirection,
+  getNewPositions,
   placeFirstWord,
   Rectangle,
   slideWords,
@@ -62,16 +63,7 @@ const Wordcloud = ({
 
         const centeredRect = placeFirstWord(firstRect, centerX, centerY);
 
-        // Initialize the weights with the value 1, of the size of the number of intervals
-        const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
-
-        const newPositions = rectsToPlace.slice(1).reduce(
-          (placedElements, rect) => {
-            const futureWord = futurPosition(rect, placedElements, 3, weight);
-            return [...placedElements, futureWord];
-          },
-          [centeredRect]
-        );
+        const newPositions = getNewPositions(rectsToPlace, centeredRect, 3)
 
         return wordsToPlace.map((word, idx) => ({
           ...word,
@@ -94,20 +86,8 @@ const Wordcloud = ({
         centerY
       );
 
-      const wordCloudWeight = new Array(NUMBER_OF_INTERVALS).fill(1);
+      const newPositionWordCloud = getNewPositions(bigWordCloudsRectToPlace, centeredWordCloud, 1)
 
-      const newPositionWordCloud = bigWordCloudsRectToPlace.slice(1).reduce(
-        (placedWordCloud, wordCloud) => {
-          const futureWordCloud = futurPosition(
-            wordCloud,
-            placedWordCloud,
-            1,
-            wordCloudWeight
-          );
-          return [...placedWordCloud, futureWordCloud];
-        },
-        [centeredWordCloud]
-      );
       // slide word inside the word cloud
       const slideCoeff = wordCloudOfWordCloud.map((wordCloud, idx) =>
         slideWords(
