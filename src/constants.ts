@@ -1,5 +1,5 @@
-export const CONTAINER_WIDTH = 500;
-export const CONTAINER_HEIGHT = 300;
+export const CONTAINER_WIDTH = 700;
+export const CONTAINER_HEIGHT = 500;
 
 export const CENTER_Y = CONTAINER_HEIGHT / 2;
 export const CENTER_X = CONTAINER_WIDTH / 2;

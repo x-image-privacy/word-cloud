@@ -66,6 +66,8 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   const yMin = Math.min(...topLeftPoints.map((r) => r.y));
   const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
 
+  console.log({ x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin })
+
   return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
 
@@ -252,16 +254,16 @@ export const futurPosition = (
     const hypothenus = Math.sqrt(moveDirection.x ** 2 + moveDirection.y ** 2);
     const stepX = (step / hypothenus) * moveDirection.x;
     const stepY = (step / hypothenus) * moveDirection.y;
-    const futurPosition: Rectangle = {
+    const futurRectPosition: Rectangle = {
       ...movedWord,
       x: movedWord.x + (Math.abs(stepX) > 0.01 ? stepX : 0),
       y: movedWord.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
     };
 
     // Test if the word can be move over the hypotenuse
-    if (allCollision(futurPosition, passRect)) {
-      const onlyMoveOverX = { ...futurPosition, y: movedWord.y };
-      const onlyMoveOverY = { ...futurPosition, x: movedWord.x };
+    if (allCollision(futurRectPosition, passRect) && !areAboveBound(futurRectPosition)) {
+      const onlyMoveOverX = { ...futurRectPosition, y: movedWord.y };
+      const onlyMoveOverY = { ...futurRectPosition, x: movedWord.x };
       const xColl = allCollision(onlyMoveOverX, passRect);
       const yColl = allCollision(onlyMoveOverY, passRect);
       if (xColl) {
@@ -275,13 +277,21 @@ export const futurPosition = (
         movedWord = { ...onlyMoveOverX };
       }
     } else {
-      movedWord = { ...futurPosition };
+      movedWord = { ...futurRectPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
   } while (!isCollision && displacement > 2 && iter < 300);
   return movedWord;
 };
+
+export const areAboveBound = (rect: Rectangle): Boolean => {
+  if (rect.x + rect.width/2 > CONTAINER_WIDTH || rect.x - rect.width/2 < 0 || rect.y + rect.height/2 > CONTAINER_HEIGHT || rect.y - rect.height/2 < 0){
+    return true
+  } else {
+    return false
+  }
+}
 
 // This function indicates whether rectangles are in a collision
 export const areCentersTooClose = (

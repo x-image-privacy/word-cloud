@@ -17,7 +17,6 @@ import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
   DEFAULT_RECT,
-  NUMBER_OF_INTERVALS,
 } from "./constants";
 
 const CUT_OFF = 0.5;
@@ -63,9 +62,10 @@ const Wordcloud = ({
 
         const centeredRect = placeFirstWord(firstRect, centerX, centerY);
 
-        const newPositions = getNewPositions(rectsToPlace, centeredRect, 3)
+        const newPositions = getNewPositions(rectsToPlace, centeredRect, 7)
 
-        return wordsToPlace.map((word, idx) => ({
+        return wordsToPlace.map((word, idx) => (
+          {
           ...word,
           rect: newPositions[idx],
         }));
@@ -86,7 +86,9 @@ const Wordcloud = ({
         centerY
       );
 
-      const newPositionWordCloud = getNewPositions(bigWordCloudsRectToPlace, centeredWordCloud, 1)
+      console.log("CENTERED", centeredWordCloud)
+
+      const newPositionWordCloud = getNewPositions(bigWordCloudsRectToPlace, centeredWordCloud,1)
 
       // slide word inside the word cloud
       const slideCoeff = wordCloudOfWordCloud.map((wordCloud, idx) =>
