@@ -1,4 +1,4 @@
-import { Word } from "./utils";
+import { Word } from "./WordCloud";
 
 export const defaultWords1: { category: string; words: Word[] }[] = [
   {
@@ -43,7 +43,6 @@ export const defaultWords1: { category: string; words: Word[] }[] = [
   },
 ];
 
-export const explainWordCloud = [{ key: "class1", value: defaultWords1 }];
 export const defaultWords2: Word[] = [
   { id: "word-1", text: "group", coef: 0.99 },
   { id: "word-2", text: "people", coef: 0.99 },

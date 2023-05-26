@@ -1,23 +1,17 @@
 import {
   boundParent,
-  futurPosition,
   getAreaRectangle,
   getBoundingRect,
   getBoundingWordCloud,
   getMoveDirection,
   getNewPositions,
   placeFirstWord,
-  Rectangle,
   slideWords,
-  Word,
 } from "./utils";
-import * as React from "react";
 
-import {
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
-  DEFAULT_RECT,
-} from "./constants";
+import { CONTAINER_HEIGHT, CONTAINER_WIDTH, DEFAULT_RECT } from "./constants";
+import { useEffect, useState } from "react";
+import { ExplanationData, Rectangle } from "./types";
 
 const CUT_OFF = 0.5;
 
@@ -25,7 +19,7 @@ export const MAX_FONT_SIZE = 20;
 export const MIN_FONT_SIZE = 6;
 
 type Props = {
-  data: { category: string; words: Word[] }[];
+  data?: ExplanationData;
   width?: number;
   height?: number;
   showBounds?: boolean;
@@ -33,19 +27,20 @@ type Props = {
 };
 
 const Wordcloud = ({
-  data,
+  data = [],
   width = CONTAINER_WIDTH,
   height = CONTAINER_HEIGHT,
   showBounds = false,
   showWordBounds = false,
 }: Props) => {
-  const [words, setWords] = React.useState(data);
+  const [words, setWords] = useState(data);
 
   const centerX = width / 2;
   const centerY = height / 2;
 
   const updateWords = () => {
     setWords((prevWords) => {
+      console.log(prevWords);
       prevWords.forEach((cat) => ({
         ...cat,
         words: cat.words.sort((a, b) => (a.coef > b.coef ? -1 : 1)),
@@ -62,10 +57,9 @@ const Wordcloud = ({
 
         const centeredRect = placeFirstWord(firstRect, centerX, centerY);
 
-        const newPositions = getNewPositions(rectsToPlace, centeredRect, 7)
+        const newPositions = getNewPositions(rectsToPlace, centeredRect, 7);
 
-        return wordsToPlace.map((word, idx) => (
-          {
+        return wordsToPlace.map((word, idx) => ({
           ...word,
           rect: newPositions[idx],
         }));
@@ -86,9 +80,13 @@ const Wordcloud = ({
         centerY
       );
 
-      console.log("CENTERED", centeredWordCloud)
+      console.log("CENTERED", centeredWordCloud);
 
-      const newPositionWordCloud = getNewPositions(bigWordCloudsRectToPlace, centeredWordCloud,1)
+      const newPositionWordCloud = getNewPositions(
+        bigWordCloudsRectToPlace,
+        centeredWordCloud,
+        1
+      );
 
       // slide word inside the word cloud
       const slideCoeff = wordCloudOfWordCloud.map((wordCloud, idx) =>
@@ -128,8 +126,12 @@ const Wordcloud = ({
         height: height,
       };
 
-  React.useEffect(() => {
-    updateWords();
+  useEffect(() => {
+    console.log(data);
+    setWords(data);
+    if (data) {
+      updateWords();
+    }
   }, [data]);
 
   return (

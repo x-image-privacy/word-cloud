@@ -8,31 +8,7 @@ import {
   WORD_CLOUD_MARGIN_HEIGHT,
   WORD_CLOUD_MARGIN_WIDTH,
 } from "./constants";
-
-export type Word = {
-  id: string;
-  text: string;
-  coef: number;
-  rect?: Rectangle;
-};
-
-export type Rectangle = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-export type Coordinate = {
-  x: number;
-  y: number;
-};
-
-export type Circle = {
-  x: number;
-  y: number;
-  radius: number;
-};
+import { Circle, Coordinate, Rectangle, Word } from "./types";
 
 export const getBoundingRect = (
   id: string,
@@ -66,7 +42,7 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   const yMin = Math.min(...topLeftPoints.map((r) => r.y));
   const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
 
-  console.log({ x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin })
+  console.log({ x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin });
 
   return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
@@ -261,7 +237,10 @@ export const futurPosition = (
     };
 
     // Test if the word can be move over the hypotenuse
-    if (allCollision(futurRectPosition, passRect) && !areAboveBound(futurRectPosition)) {
+    if (
+      allCollision(futurRectPosition, passRect) &&
+      !areAboveBound(futurRectPosition)
+    ) {
       const onlyMoveOverX = { ...futurRectPosition, y: movedWord.y };
       const onlyMoveOverY = { ...futurRectPosition, x: movedWord.x };
       const xColl = allCollision(onlyMoveOverX, passRect);
@@ -286,12 +265,17 @@ export const futurPosition = (
 };
 
 export const areAboveBound = (rect: Rectangle): Boolean => {
-  if (rect.x + rect.width/2 > CONTAINER_WIDTH || rect.x - rect.width/2 < 0 || rect.y + rect.height/2 > CONTAINER_HEIGHT || rect.y - rect.height/2 < 0){
-    return true
+  if (
+    rect.x + rect.width / 2 > CONTAINER_WIDTH ||
+    rect.x - rect.width / 2 < 0 ||
+    rect.y + rect.height / 2 > CONTAINER_HEIGHT ||
+    rect.y - rect.height / 2 < 0
+  ) {
+    return true;
   } else {
-    return false
+    return false;
   }
-}
+};
 
 // This function indicates whether rectangles are in a collision
 export const areCentersTooClose = (
@@ -351,16 +335,21 @@ export const placeFirstWord = (
 };
 
 // This function returns the new position of a list of items
-export const getNewPositions = (itemsToPlace: Rectangle[], centeredRect: Rectangle, step: number): Rectangle[] => {
-
+export const getNewPositions = (
+  itemsToPlace: Rectangle[],
+  centeredRect: Rectangle,
+  step: number
+): Rectangle[] => {
   // Initialize the weights with the value 1, of the size of the number of intervals
   const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
 
-  const newPositions = itemsToPlace.slice(1).reduce((placedItems, rect) => {
-    const futureItem = futurPosition(rect, placedItems, step, weight)
-    return [...placedItems, futureItem]
-  }, [centeredRect])
+  const newPositions = itemsToPlace.slice(1).reduce(
+    (placedItems, rect) => {
+      const futureItem = futurPosition(rect, placedItems, step, weight);
+      return [...placedItems, futureItem];
+    },
+    [centeredRect]
+  );
 
-  return newPositions
-
-}
+  return newPositions;
+};

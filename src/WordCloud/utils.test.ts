@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   areCentersTooClose,
-  Coordinate,
   allCollision,
-  Rectangle,
   getMoveDirection,
   getTheCircle,
   getDistance,
@@ -14,8 +12,8 @@ import {
   rangeWithStep,
   getAreaRectangle,
   placeFirstWord,
-  getNewPositions,
 } from "./utils";
+import { Coordinate, Rectangle } from "./types";
 
 const origin: Coordinate = {
   x: 0,
