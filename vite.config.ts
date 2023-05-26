@@ -10,7 +10,9 @@ export default defineConfig({
     }),
     react(),
   ],
-
+  build: {
+    outDir: "build",
+  },
   test: {
     includeSource: ["src/**/*.{js,ts}"],
   },

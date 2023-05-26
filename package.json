@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build:app": "tsc && vite build",
-    "build": "tsc && vite build --config lib.config.ts",
+    "build": "tsc && vite build --config vite-lib.config.ts",
     "prepack": "yarn build",
     "preview": "vite preview",
     "test": "vitest"
@@ -31,5 +31,5 @@
   "files": [
     "dist"
   ],
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.1"
 }
