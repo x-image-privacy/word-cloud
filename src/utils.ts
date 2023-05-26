@@ -2,7 +2,11 @@ import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
   DEFAULT_RECT,
+  MARGIN_HEIGHT,
+  MARGIN_WIDTH,
   NUMBER_OF_INTERVALS,
+  WORD_CLOUD_MARGIN_HEIGHT,
+  WORD_CLOUD_MARGIN_WIDTH,
 } from "./constants";
 
 export type Word = {
@@ -41,8 +45,40 @@ export const getBoundingRect = (
   return {
     x: bbox.x,
     y: bbox.y,
-    width: bbox.width + 10,
-    height: bbox.height - 5,
+    width: bbox.width + MARGIN_WIDTH,
+    height: bbox.height + MARGIN_HEIGHT,
+  };
+};
+
+// This function returns the bound of the word cloud
+export const boundParent = (rects: Rectangle[]): Rectangle => {
+  const topLeftPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x - r.width / 2,
+    y: r.y - r.height / 2,
+  }));
+  const bottomRightPoints: Coordinate[] = rects.map((r) => ({
+    x: r.x + r.width / 2,
+    y: r.y + r.height / 2,
+  }));
+
+  const xMin = Math.min(...topLeftPoints.map((r) => r.x));
+  const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
+  const yMin = Math.min(...topLeftPoints.map((r) => r.y));
+  const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
+
+  console.log({ x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin })
+
+  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
+};
+
+export const getBoundingWordCloud = (word: Word[]): Rectangle => {
+  const rect = word.map((w) => w.rect as Rectangle);
+
+  const tightBound = boundParent(rect);
+  return {
+    ...tightBound,
+    width: tightBound.width + WORD_CLOUD_MARGIN_WIDTH,
+    height: tightBound.height + WORD_CLOUD_MARGIN_HEIGHT,
   };
 };
 
@@ -218,16 +254,16 @@ export const futurPosition = (
     const hypothenus = Math.sqrt(moveDirection.x ** 2 + moveDirection.y ** 2);
     const stepX = (step / hypothenus) * moveDirection.x;
     const stepY = (step / hypothenus) * moveDirection.y;
-    const futurPosition: Rectangle = {
+    const futurRectPosition: Rectangle = {
       ...movedWord,
       x: movedWord.x + (Math.abs(stepX) > 0.01 ? stepX : 0),
       y: movedWord.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
     };
 
     // Test if the word can be move over the hypotenuse
-    if (allCollision(futurPosition, passRect)) {
-      const onlyMoveOverX = { ...futurPosition, y: movedWord.y };
-      const onlyMoveOverY = { ...futurPosition, x: movedWord.x };
+    if (allCollision(futurRectPosition, passRect) && !areAboveBound(futurRectPosition)) {
+      const onlyMoveOverX = { ...futurRectPosition, y: movedWord.y };
+      const onlyMoveOverY = { ...futurRectPosition, x: movedWord.x };
       const xColl = allCollision(onlyMoveOverX, passRect);
       const yColl = allCollision(onlyMoveOverY, passRect);
       if (xColl) {
@@ -241,13 +277,21 @@ export const futurPosition = (
         movedWord = { ...onlyMoveOverX };
       }
     } else {
-      movedWord = { ...futurPosition };
+      movedWord = { ...futurRectPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
   } while (!isCollision && displacement > 2 && iter < 300);
   return movedWord;
 };
+
+export const areAboveBound = (rect: Rectangle): Boolean => {
+  if (rect.x + rect.width/2 > CONTAINER_WIDTH || rect.x - rect.width/2 < 0 || rect.y + rect.height/2 > CONTAINER_HEIGHT || rect.y - rect.height/2 < 0){
+    return true
+  } else {
+    return false
+  }
+}
 
 // This function indicates whether rectangles are in a collision
 export const areCentersTooClose = (
@@ -272,52 +316,51 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
     )
     .some((t) => t === true);
 
-// This function returns the bound of the word cloud
-export const boundParent = (rects: Rectangle[]): Rectangle => {
-  const topLeftPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x - r.width / 2,
-    y: r.y - r.height / 2,
-  }));
-  const bottomRightPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x + r.width / 2,
-    y: r.y + r.height / 2,
-  }));
-
-  const xMin = Math.min(...topLeftPoints.map((r) => r.x));
-  const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
-  const yMin = Math.min(...topLeftPoints.map((r) => r.y));
-  const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
-
-  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
-};
-
-// This function gets the slide of the word cloud
-export const getWordSlide = (
-  parent: Rectangle,
-  bound: Rectangle
-): Coordinate => {
-  const boundCentered: Rectangle = {
-    x: bound.x + bound.width / 2,
-    y: bound.y + bound.height / 2,
-    width: bound.width,
-    height: bound.height,
-  };
-
-  const differenceX = boundCentered.x - parent.x;
-  const differenceY = boundCentered.y - parent.y;
-
-  return { x: differenceX, y: differenceY };
-};
-
 // This function slides an array of rectangles
 export const slideWords = (
   words: Rectangle[],
   slice: Coordinate
 ): Rectangle[] => {
   words.map((w) => {
-    w.x = w.x + slice.x;
-    w.y = w.y + slice.y;
+    w.x = w.x - 10 + slice.x;
+    w.y = w.y + 5 + slice.y;
   });
 
   return words;
 };
+
+// This function returns the aera of a rectangle
+export const getAreaRectangle = (rect: Rectangle): number => {
+  return rect.height * rect.width;
+};
+
+// This function places the first word in the centre of the rectangle
+export const placeFirstWord = (
+  rectToPlace: Rectangle,
+  centerX: number,
+  centerY: number
+): Rectangle => {
+  const centeredRect = {
+    width: rectToPlace.width,
+    height: rectToPlace.height,
+    x: centerX,
+    y: centerY,
+  };
+
+  return centeredRect;
+};
+
+// This function returns the new position of a list of items
+export const getNewPositions = (itemsToPlace: Rectangle[], centeredRect: Rectangle, step: number): Rectangle[] => {
+
+  // Initialize the weights with the value 1, of the size of the number of intervals
+  const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
+
+  const newPositions = itemsToPlace.slice(1).reduce((placedItems, rect) => {
+    const futureItem = futurPosition(rect, placedItems, step, weight)
+    return [...placedItems, futureItem]
+  }, [centeredRect])
+
+  return newPositions
+
+}
