@@ -20,23 +20,23 @@ export const MIN_FONT_SIZE = 6;
 
 type Props = {
   data?: ExplanationData;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   showBounds?: boolean;
   showWordBounds?: boolean;
 };
 
 const Wordcloud = ({
   data = [],
-  width = CONTAINER_WIDTH,
-  height = CONTAINER_HEIGHT,
+  height = "100%",
+  width = "100%",
   showBounds = false,
   showWordBounds = false,
 }: Props) => {
   const [words, setWords] = useState(data);
 
-  const centerX = width / 2;
-  const centerY = height / 2;
+  const centerX = CONTAINER_WIDTH / 2;
+  const centerY = CONTAINER_HEIGHT / 2;
 
   const updateWords = () => {
     setWords((prevWords) => {
@@ -122,8 +122,8 @@ const Wordcloud = ({
     : {
         x: 0,
         y: 0,
-        width: width,
-        height: height,
+        width: CONTAINER_WIDTH,
+        height: CONTAINER_HEIGHT,
       };
 
   useEffect(() => {
@@ -159,9 +159,9 @@ const Wordcloud = ({
                 textAnchor="middle"
                 fontSize={fontSize}
                 id={word.id}
-                x={(word.rect?.x || centerX).toString()}
+                x={(word.rect?.x || 0).toString()}
                 // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-                y={((word.rect?.y || centerY) + fontSize / 3).toString()}
+                y={((word.rect?.y || 0) + fontSize / 3).toString()}
               >
                 {word.text}
               </text>

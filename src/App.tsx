@@ -3,8 +3,8 @@ import Wordcloud, { ExplanationData } from "./WordCloud";
 import { defaultWords1 } from "./data";
 
 const presetData = [
-  { label: "empty", value: undefined },
   { label: "default1", value: defaultWords1 },
+  { label: "empty", value: [{ category: "hello", words: [] }] },
 ];
 
 const convertToString = (obj?: any): string => {
@@ -15,12 +15,37 @@ const convertFromString = (obj?: any): any => {
   return JSON.parse(obj);
 };
 
+const updateParams = (params: { [key: string]: boolean | string }) => {
+  const url = new URL(window.location.href);
+  const queryString = new URLSearchParams(url.search);
+  Object.entries(params).forEach(([key, value]) => {
+    if (typeof value === "boolean") {
+      // when value is a boolean we add and remove the value from the url
+      value ? queryString.set(key, "true") : queryString.delete(key);
+    } else {
+      // when value is a string we set it on the search
+      queryString.set(key, value);
+    }
+  });
+  url.search = queryString.toString();
+  window.history.replaceState({}, "", url.toString());
+};
+
+const PRESET_DATA_KEY = "presetData";
+const SHOW_BOUNDS_KEY = "showBounds";
+const SHOW_WORD_BOUNDS_KEY = "showWordBounds";
+
 const App = () => {
-  const [showBounds, setShowBounds] = useState(false);
-  const [showWordBounds, setShowWordBounds] = useState(false);
-  const [data, setData] = useState<ExplanationData>();
-  const [selectedPresetValue, setSelectedPresetValue] = useState(
-    presetData[0].label
+  const params = new URLSearchParams(window.location.search);
+  const [showBounds, setShowBounds] = useState(params.has(SHOW_BOUNDS_KEY));
+  const [showWordBounds, setShowWordBounds] = useState(
+    params.has(SHOW_WORD_BOUNDS_KEY)
+  );
+  const presetDataLabel = params.get(PRESET_DATA_KEY) ?? presetData[0].label;
+  const [selectedPresetValue, setSelectedPresetValue] =
+    useState(presetDataLabel);
+  const [data, setData] = useState<ExplanationData>(
+    (presetData.find((p) => p.label === presetDataLabel) ?? presetData[0]).value
   );
   const [explanationData, setExplanationData] = useState(
     convertToString(presetData[0].value)
@@ -40,7 +65,15 @@ const App = () => {
   };
 
   return (
-    <div style={{ flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        margin: "12px",
+        gap: "5px",
+      }}
+    >
       <fieldset>
         <legend>Data</legend>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -49,6 +82,7 @@ const App = () => {
             <select
               value={selectedPresetValue}
               onChange={({ target: { value: chosenLabel } }) => {
+                updateParams({ [PRESET_DATA_KEY]: chosenLabel });
                 setSelectedPresetValue(chosenLabel);
                 setExplanationData(
                   convertToString(
@@ -90,8 +124,12 @@ const App = () => {
               id="showBounds"
               name="showBounds"
               type="checkbox"
-              value={showBounds.toString()}
-              onChange={() => setShowBounds((p) => !p)}
+              checked={showBounds}
+              onChange={() => {
+                // add params to url
+                updateParams({ [SHOW_BOUNDS_KEY]: !showBounds });
+                setShowBounds((p) => !p);
+              }}
             />
             <label htmlFor="showBounds">Show bounds</label>
           </div>
@@ -101,22 +139,39 @@ const App = () => {
               id="showWordBounds"
               name="showWordBounds"
               type="checkbox"
-              value={showWordBounds.toString()}
-              onChange={() => setShowWordBounds((p) => !p)}
+              checked={showWordBounds}
+              onChange={() => {
+                updateParams({ [SHOW_WORD_BOUNDS_KEY]: !showWordBounds });
+
+                setShowWordBounds((p) => !p);
+              }}
             />
             <label htmlFor="showWordBounds">Show Word bounds</label>
           </div>
 
           <div>
-            <button onClick={() => window.location.reload()}>Update</button>
+            <button onClick={() => window.location.reload()}>Reload</button>
           </div>
         </div>
       </fieldset>
-      <Wordcloud
-        data={data}
-        showBounds={showBounds}
-        showWordBounds={showWordBounds}
-      />
+      <div
+        style={{
+          resize: "both",
+          overflow: "auto",
+          border: "solid #eee 1px",
+          maxWidth: "100vw",
+          boxSizing: "border-box",
+          backgroundColor: "aliceblue",
+        }}
+      >
+        <Wordcloud
+          data={data}
+          height="100%"
+          width="100%"
+          showBounds={showBounds}
+          showWordBounds={showWordBounds}
+        />
+      </div>
     </div>
   );
 };
