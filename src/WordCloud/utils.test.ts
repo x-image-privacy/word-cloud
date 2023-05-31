@@ -14,6 +14,7 @@ import {
   placeFirstWord,
 } from "./utils";
 import { Coordinate, Rectangle } from "./types";
+import { CONTAINER_WIDTH } from "./constants";
 
 const origin: Coordinate = {
   x: 0,
@@ -153,7 +154,7 @@ describe("Get the circle", () => {
     expect(getTheCircle([{ x: 1, y: 1, width: 4, height: 4 }])).toEqual({
       x: 1,
       y: 1,
-      radius: 250,
+      radius: CONTAINER_WIDTH / 2,
     });
   });
 
@@ -168,7 +169,7 @@ describe("Get the circle", () => {
     ).toEqual({
       x: 1,
       y: 2,
-      radius: 250,
+      radius: CONTAINER_WIDTH / 2,
     });
   });
 
@@ -176,12 +177,12 @@ describe("Get the circle", () => {
     expect(
       getTheCircle([
         { x: 0, y: 0, width: 4, height: 4 },
-        { x: 600, y: 0, width: 4, height: 4 },
+        { x: 800, y: 0, width: 4, height: 4 },
       ])
     ).toEqual({
-      x: 300,
+      x: 400,
       y: 0,
-      radius: 300,
+      radius: 400,
     });
   });
 });
