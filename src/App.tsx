@@ -4,6 +4,26 @@ import { defaultWords1 } from "./data";
 
 const presetData = [
   { label: "default1", value: defaultWords1 },
+  {
+    label: "single word",
+    value: [
+      {
+        category: "cat2",
+        words: [{ id: "2", text: "World", coef: 0.6 }],
+      },
+      {
+        category: "cat1",
+        words: [
+          { id: "1", text: "Hello", coef: 1 },
+          { id: "2", text: "CatWoman", coef: 0.8 },
+        ],
+      },
+      {
+        category: "cat3",
+        words: [{ id: "3", text: "Helllo", coef: 0.55 }],
+      },
+    ],
+  },
   { label: "empty", value: [{ category: "hello", words: [] }] },
 ];
 
@@ -92,7 +112,9 @@ const App = () => {
               }}
             >
               {presetData.map((d) => (
-                <option value={d.label}>{d.label}</option>
+                <option key={d.label} value={d.label}>
+                  {d.label}
+                </option>
               ))}
             </select>
           </div>

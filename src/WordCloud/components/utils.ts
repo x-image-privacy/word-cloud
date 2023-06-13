@@ -1,9 +1,12 @@
 import {
   CONTAINER_HEIGHT,
   CONTAINER_WIDTH,
+  CUT_OFF,
   DEFAULT_RECT,
   MARGIN_HEIGHT,
   MARGIN_WIDTH,
+  MAX_FONT_SIZE,
+  MIN_FONT_SIZE,
   NUMBER_OF_INTERVALS,
   WORD_CLOUD_MARGIN_HEIGHT,
   WORD_CLOUD_MARGIN_WIDTH,
@@ -26,6 +29,15 @@ export const getBoundingRect = (
   };
 };
 
+export const computeFontSize = (coef: number): number => {
+  return (
+    (coef - CUT_OFF) *
+      (1 / (1 - CUT_OFF)) ** 2 *
+      (MAX_FONT_SIZE - MIN_FONT_SIZE) +
+    MIN_FONT_SIZE
+  );
+};
+
 // This function returns the bound of the word cloud
 export const boundParent = (rects: Rectangle[]): Rectangle => {
   const topLeftPoints: Coordinate[] = rects.map((r) => ({
@@ -41,8 +53,6 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   const xMax = Math.max(...bottomRightPoints.map((r) => r.x));
   const yMin = Math.min(...topLeftPoints.map((r) => r.y));
   const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
-
-  console.log({ x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin });
 
   return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
 };
@@ -73,8 +83,8 @@ export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
 };
 
 // This function return the distance between a rectangle and a cartesian coordinate
-export const getDistance = (point: Coordinate, word: Rectangle): number => {
-  return Math.sqrt((point.x - word.x) ** 2 + (point.y - word.y) ** 2);
+export const getDistance = (point: Coordinate, rect: Rectangle): number => {
+  return Math.sqrt((point.x - rect.x) ** 2 + (point.y - rect.y) ** 2);
 };
 
 // This function return the center of mass of multiple rectangle
@@ -99,8 +109,8 @@ export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
 export const getTheCircle = (passRect: Rectangle[]): Circle => {
   const centerMass = centerOfMass(passRect);
 
-  const distance: number[] = passRect.map((word) =>
-    getDistance(centerMass, word)
+  const distance: number[] = passRect.map((rect) =>
+    getDistance(centerMass, rect)
   );
 
   const radius = Math.max(
@@ -152,7 +162,7 @@ export const placeWordOnOuterCircle = (
 ): Rectangle => {
   const maxWeight = Math.max(...weight);
 
-  // Substract the max to each element to promote other interval
+  // Subtract the max to each element to promote other interval
   const invertedWeight = weight.map((a) => maxWeight - a);
 
   // The cumulative weight allows to define intervals to select a random portion of circle to put our current rectangle, with
@@ -198,13 +208,13 @@ export const placeWordOnOuterCircle = (
 // This function allows to obtain the direction of movement of a rectangle in the direction of the rectangles already placed.
 export const getMoveDirection = (
   pastWords: Rectangle[],
-  currentWord: Rectangle
+  currentRect: Rectangle
 ): Coordinate => {
   return pastWords.reduce(
     (acc, word) => {
       const differences = {
-        x: word.x - currentWord.x,
-        y: word.y - currentWord.y,
+        x: word.x - currentRect.x,
+        y: word.y - currentRect.y,
       };
       return { x: acc.x + differences.x, y: acc.y + differences.y };
     },
@@ -215,53 +225,51 @@ export const getMoveDirection = (
 // This function returns the futur position of a rectangle, without collision, in direction of already placed rectangles
 export const futurPosition = (
   word: Rectangle,
-  passRect: Rectangle[],
+  placedRects: Rectangle[],
   step: number,
   weight: number[]
 ): Rectangle => {
   let isCollision = false;
 
   // Put the word in random place around the parent
-  let movedWord = placeWordOnOuterCircle(word, passRect, weight);
+  let movedRect = placeWordOnOuterCircle(word, placedRects, weight);
   let iter = 0;
   let displacement = 0;
   do {
-    const moveDirection = getMoveDirection(passRect, movedWord);
+    const moveDirection = getMoveDirection(placedRects, movedRect);
     const hypothenus = Math.sqrt(moveDirection.x ** 2 + moveDirection.y ** 2);
     const stepX = (step / hypothenus) * moveDirection.x;
     const stepY = (step / hypothenus) * moveDirection.y;
     const futurRectPosition: Rectangle = {
-      ...movedWord,
-      x: movedWord.x + (Math.abs(stepX) > 0.01 ? stepX : 0),
-      y: movedWord.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
+      ...movedRect,
+      x: movedRect.x + (Math.abs(stepX) > 0.01 ? stepX : 0),
+      y: movedRect.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
     };
-
     // Test if the word can be move over the hypotenuse
-    if (
-      allCollision(futurRectPosition, passRect) &&
-      !areAboveBound(futurRectPosition)
-    ) {
-      const onlyMoveOverX = { ...futurRectPosition, y: movedWord.y };
-      const onlyMoveOverY = { ...futurRectPosition, x: movedWord.x };
-      const xColl = allCollision(onlyMoveOverX, passRect);
-      const yColl = allCollision(onlyMoveOverY, passRect);
+    if (allCollision(futurRectPosition, placedRects)) {
+      const onlyMoveOverX = { ...futurRectPosition, y: movedRect.y };
+      const onlyMoveOverY = { ...futurRectPosition, x: movedRect.x };
+      const xColl = allCollision(onlyMoveOverX, placedRects);
+      const yColl = allCollision(onlyMoveOverY, placedRects);
       if (xColl) {
         if (yColl) {
           // Do not move anymore
           isCollision = true;
+          // console.log("stop!");
         } else {
-          movedWord = { ...onlyMoveOverY };
+          movedRect = { ...onlyMoveOverY };
         }
       } else {
-        movedWord = { ...onlyMoveOverX };
+        movedRect = { ...onlyMoveOverX };
       }
     } else {
-      movedWord = { ...futurRectPosition };
+      movedRect = { ...futurRectPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
-  } while (!isCollision && displacement > 2 && iter < 300);
-  return movedWord;
+    // console.log("step", stepX, stepY, "moved", movedRect);
+  } while (!isCollision && displacement > 2 && iter < 200);
+  return movedRect;
 };
 
 export const areAboveBound = (rect: Rectangle): Boolean => {
@@ -303,11 +311,11 @@ export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
 // This function slides an array of rectangles
 export const slideWords = (
   words: Rectangle[],
-  slice: Coordinate
+  sliding: Coordinate
 ): Rectangle[] => {
   words.map((w) => {
-    w.x = w.x - 10 + slice.x;
-    w.y = w.y + 5 + slice.y;
+    w.x = w.x + sliding.x;
+    w.y = w.y + sliding.y;
   });
 
   return words;
@@ -335,21 +343,21 @@ export const placeFirstWord = (
 };
 
 // This function returns the new position of a list of items
-export const getNewPositions = (
-  itemsToPlace: Rectangle[],
-  centeredRect: Rectangle,
-  step: number
-): Rectangle[] => {
-  // Initialize the weights with the value 1, of the size of the number of intervals
-  const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
+// export const getNewPositions = (
+//   itemsToPlace: Word[],
+//   centeredRect: Rectangle,
+//   step: number
+// ): Rectangle[] => {
+//   // Initialize the weights with the value 1, of the size of the number of intervals
+//   const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
 
-  const newPositions = itemsToPlace.slice(1).reduce(
-    (placedItems, rect) => {
-      const futureItem = futurPosition(rect, placedItems, step, weight);
-      return [...placedItems, futureItem];
-    },
-    [centeredRect]
-  );
+//   const newPositions = itemsToPlace.slice(1).reduce(
+//     (placedItems, rect) => {
+//       const futureItem = futurPosition(rect, placedItems, step, weight);
+//       return [...placedItems, futureItem];
+//     },
+//     [centeredRect]
+//   );
 
-  return newPositions;
-};
+//   return newPositions;
+// };

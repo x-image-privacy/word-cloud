@@ -1,26 +1,9 @@
-export type Rectangle = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
+import { CategoryCloud } from "./components/types";
 
-export type Coordinate = {
-  x: number;
-  y: number;
-};
-
-export type Circle = {
-  x: number;
-  y: number;
-  radius: number;
-};
-
-export type Word = {
+export type InputNode = {
   id: string;
   text: string;
   coef: number;
-  rect?: Rectangle;
 };
 
-export type ExplanationData = { category: string; words: Word[] }[];
+export type ExplanationData = CategoryCloud<InputNode, never>[];
