@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   areCentersTooClose,
-  Coordinate,
   allCollision,
-  Rectangle,
   getMoveDirection,
   getTheCircle,
   getDistance,
@@ -14,8 +12,9 @@ import {
   rangeWithStep,
   getAreaRectangle,
   placeFirstWord,
-  getNewPositions,
 } from "./utils";
+import { Coordinate, Rectangle } from "./types";
+import { CONTAINER_WIDTH } from "./constants";
 
 const origin: Coordinate = {
   x: 0,
@@ -155,7 +154,7 @@ describe("Get the circle", () => {
     expect(getTheCircle([{ x: 1, y: 1, width: 4, height: 4 }])).toEqual({
       x: 1,
       y: 1,
-      radius: 250,
+      radius: CONTAINER_WIDTH / 2,
     });
   });
 
@@ -170,7 +169,7 @@ describe("Get the circle", () => {
     ).toEqual({
       x: 1,
       y: 2,
-      radius: 250,
+      radius: CONTAINER_WIDTH / 2,
     });
   });
 
@@ -178,12 +177,12 @@ describe("Get the circle", () => {
     expect(
       getTheCircle([
         { x: 0, y: 0, width: 4, height: 4 },
-        { x: 600, y: 0, width: 4, height: 4 },
+        { x: 800, y: 0, width: 4, height: 4 },
       ])
     ).toEqual({
-      x: 300,
+      x: 400,
       y: 0,
-      radius: 300,
+      radius: 400,
     });
   });
 });
@@ -221,28 +220,28 @@ describe("slideWords", () => {
     it("On one direction", () => {
       expect(
         slideWords([{ x: 0, y: 0, width: 1, height: 1 }], { x: 0, y: 2 })
-      ).toEqual([{ x: -10, y: 7, width: 1, height: 1 }]);
+      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 1, y: 4, width: 4, height: 4 }], { x: 0, y: -2 })
-      ).toEqual([{ x: -9, y: 7, width: 4, height: 4 }]);
+      ).toEqual([{ x: 1, y: 2, width: 4, height: 4 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 0 })
-      ).toEqual([{ x: -6, y: 5, width: 1, height: 1 }]);
+      ).toEqual([{ x: 4, y: 0, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -2, y: 0 })
-      ).toEqual([{ x: -10, y: 5, width: 1, height: 1 }]);
+      ).toEqual([{ x: 0, y: 0, width: 1, height: 1 }]);
     });
 
     it("On multiple direction", () => {
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: 2, y: 4 })
-      ).toEqual([{ x: -6, y: 9, width: 1, height: 1 }]);
+      ).toEqual([{ x: 4, y: 4, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 4, width: 1, height: 1 }], { x: -2, y: -2 })
-      ).toEqual([{ x: -10, y: 7, width: 1, height: 1 }]);
+      ).toEqual([{ x: 0, y: 2, width: 1, height: 1 }]);
       expect(
         slideWords([{ x: 2, y: 0, width: 1, height: 1 }], { x: -1, y: 4 })
-      ).toEqual([{ x: -9, y: 9, width: 1, height: 1 }]);
+      ).toEqual([{ x: 1, y: 4, width: 1, height: 1 }]);
     });
   });
 
@@ -257,8 +256,8 @@ describe("slideWords", () => {
           { x: 1, y: 2 }
         )
       ).toEqual([
-        { x: -8, y: 11, width: 4, height: 4 },
-        { x: -3, y: 16, width: 4, height: 4 },
+        { x: 2, y: 6, width: 4, height: 4 },
+        { x: 7, y: 11, width: 4, height: 4 },
       ]);
       expect(
         slideWords(
@@ -269,8 +268,8 @@ describe("slideWords", () => {
           { x: -1, y: -2 }
         )
       ).toEqual([
-        { x: -10, y: 7, width: 4, height: 4 },
-        { x: -5, y: 12, width: 4, height: 4 },
+        { x: 0, y: 2, width: 4, height: 4 },
+        { x: 5, y: 7, width: 4, height: 4 },
       ]);
     });
   });
