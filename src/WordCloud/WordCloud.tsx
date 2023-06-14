@@ -2,22 +2,16 @@ import {
   boundParent,
   computeFontSize,
   futurPosition,
-  getAreaRectangle,
-  getBoundingRect,
-  getBoundingWordCloud,
   getMoveDirection,
-  placeFirstWord,
   slideWords,
 } from "./components/utils";
 
 import {
-  CONTAINER_HEIGHT,
-  CONTAINER_WIDTH,
   MARGIN_HEIGHT,
   MARGIN_WIDTH,
   NUMBER_OF_INTERVALS,
 } from "./components/constants";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ExplanationData } from "./types";
 import WordBounds from "./WordBounds";
 import { Rectangle, Word, WordCloudData } from "./components/types";
@@ -54,8 +48,6 @@ const useWordCloudLayout = (wordClouds: WordCloudData): WordCloudData => {
       : 1;
   });
 
-  console.log("Wbounds", wordClouds);
-
   // Initialize the weights with the value 1, of the size of the number of intervals
   const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
   wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
@@ -70,7 +62,6 @@ const useWordCloudLayout = (wordClouds: WordCloudData): WordCloudData => {
       4,
       weight
     );
-    console.log("future cloud", futurePos);
     const slidedWordRectangles = slideWords(
       originalWordClouds[cloudIdx].words.map(({ rect }) => rect),
       getMoveDirection([originalWordClouds[0].bound as Rectangle], futurePos)
@@ -81,38 +72,12 @@ const useWordCloudLayout = (wordClouds: WordCloudData): WordCloudData => {
         rect: slidedWordRectangles[idx],
       })
     );
-    console.log("slided", cloud.category, slidedWordRectangles);
     const newBound = boundParent(slidedWordRectangles);
     console.log(newBound);
     originalWordClouds[cloudIdx].bound = newBound;
   });
-  console.log("final", wordClouds);
 
   return wordClouds;
-  // const bigWordCloudsToPlace = wordCloudOfWordCloud.map((w) => ({
-  //   rect: getBoundingWordCloud(w),
-  // }));
-  // bigWordCloudsToPlace.sort((a, b) =>
-  //   getAreaRectangle(a.rect) > getAreaRectangle(b.rect) ? -1 : 1
-  // );
-
-  // const bigWordCloudsRectToPlace = bigWordCloudsToPlace.map((w) => w.rect);
-  // const firstWordCloud = { ...bigWordCloudsRectToPlace[0] };
-  // const centeredWordCloud = placeFirstWord(firstWordCloud, centerX, centerY);
-
-  // const newPositionWordCloud = getNewPositions(
-  //   bigWordCloudsRectToPlace,
-  //   centeredWordCloud,
-  //   1
-  // );
-
-  // // slide word inside the word cloud
-  // const slideCoeff = wordCloudOfWordCloud.map((wordCloud, idx) =>
-  //   slideWords(
-  //     wordCloud.map((w) => w.rect),
-  //     getMoveDirection([centeredWordCloud], newPositionWordCloud[idx])
-  //   )
-  // );
 };
 
 const getHiddenElementId = (id: string) => `hidden-${id}`;
@@ -132,65 +97,7 @@ const Wordcloud = ({
   showBounds = false,
   showWordBounds = false,
 }: Props) => {
-  // const rectRefs = useRef<Map<string, SVGTextElement> | null>(null);
   const [wordClouds, setWordClouds] = useState<WordCloudData>();
-
-  // const updateWords = () => {
-  //   if (rectangles) {
-  //     wordClouds.forEach(({ category, words }) => {
-  //       // sort words by coefficient
-  //       words.sort((a, b) => (a.coef > b.coef ? -1 : 1));
-
-  //       const rectsToPlace = words.map((w) => ({
-  //         id: w.id,
-  //         rect: rectangles?.[category][w.id],
-  //       }));
-
-  //       const newPositions = getNewPositions(rectsToPlace, rectsToPlace[0], 7);
-
-  //       return words.map((word, idx) => ({
-  //         ...word,
-  //         rect: newPositions[idx],
-  //       }));
-  //     });
-
-  //     const bigWordCloudsToPlace = wordCloudOfWordCloud.map((w) => ({
-  //       rect: getBoundingWordCloud(w),
-  //     }));
-  //     bigWordCloudsToPlace.sort((a, b) =>
-  //       getAreaRectangle(a.rect) > getAreaRectangle(b.rect) ? -1 : 1
-  //     );
-
-  //     const bigWordCloudsRectToPlace = bigWordCloudsToPlace.map((w) => w.rect);
-  //     const firstWordCloud = { ...bigWordCloudsRectToPlace[0] };
-  //     const centeredWordCloud = placeFirstWord(
-  //       firstWordCloud,
-  //       centerX,
-  //       centerY
-  //     );
-
-  //     const newPositionWordCloud = getNewPositions(
-  //       bigWordCloudsRectToPlace,
-  //       centeredWordCloud,
-  //       1
-  //     );
-
-  //     // slide word inside the word cloud
-  //     const slideCoeff = wordCloudOfWordCloud.map((wordCloud, idx) =>
-  //       slideWords(
-  //         wordCloud.map((w) => w.rect),
-  //         getMoveDirection([centeredWordCloud], newPositionWordCloud[idx])
-  //       )
-  //     );
-  //     return prevWords.map((wordCloud, idx) => ({
-  //       ...wordCloud,
-  //       words: wordCloud.words.map((w, idxw) => ({
-  //         ...w,
-  //         rect: slideCoeff[idx][idxw],
-  //       })),
-  //     }));
-  //   }
-  // };
 
   // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
   const rects = wordClouds
@@ -273,8 +180,12 @@ const Wordcloud = ({
         style={{ outline: "1px solid transparent" }}
         viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
       >
-        <line x1={-100} x2={100} y={0} stroke="blue" />
-        <line y1={-100} y2={100} x={0} stroke="blue" />
+        {showBounds && (
+          <>
+            <line x1={-100} x2={100} y={0} stroke="blue" />
+            <line y1={-100} y2={100} x={0} stroke="blue" />
+          </>
+        )}
         {wordClouds?.map((wordCloud) => (
           <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
             {wordCloud.words.map((word) => {
