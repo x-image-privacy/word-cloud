@@ -1,5 +1,4 @@
 import {
-  archimedeanSpiral,
   boundParent,
   computeFontSize,
   futureSpiralPosition,
@@ -11,12 +10,7 @@ import { MARGIN_HEIGHT, MARGIN_WIDTH } from "./components/constants";
 import { useEffect, useState } from "react";
 import { ExplanationData } from "./types";
 import WordBounds from "./WordBounds";
-import {
-  PlacedWordCloud,
-  Rectangle,
-  Word,
-  WordCloudData,
-} from "./components/types";
+import { PlacedWordCloud, Word, WordCloudData } from "./components/types";
 
 const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
   wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
@@ -192,6 +186,9 @@ const Wordcloud = ({
         {bounds?.map(({ id, bound: b }) => (
           <>
             <rect
+              className={
+                showBounds ? "stroke-blue-500 dark:stroke-green-200" : ""
+              }
               style={{ cursor: "pointer" }}
               key={`bounds-${id}`}
               x={b.x}
@@ -201,10 +198,9 @@ const Wordcloud = ({
               width={b.width}
               height={b.height}
               fill="transparent"
-              stroke={showBounds ? "blue" : "none"}
               strokeWidth={1}
             >
-              <title>{id}</title>
+              <title>Category: {id}; Score: TBA</title>
             </rect>
           </>
         ))}
@@ -227,6 +223,9 @@ const Wordcloud = ({
                     y={(word.rect.y + word.rect.height / 2).toString()}
                   >
                     {word.text}
+                    <title>
+                      Word: {word.text}; Score: {word.coef}
+                    </title>
                   </text>
                 );
               })}
