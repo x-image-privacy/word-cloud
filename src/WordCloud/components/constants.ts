@@ -13,8 +13,8 @@ export const DEFAULT_RECT = {
 export const MARGIN_WIDTH = 10;
 export const MARGIN_HEIGHT = -5;
 
-export const WORD_CLOUD_MARGIN_WIDTH = 10;
-export const WORD_CLOUD_MARGIN_HEIGHT = 10;
+export const WORD_CLOUD_MARGIN_WIDTH = 40;
+export const WORD_CLOUD_MARGIN_HEIGHT = 40;
 
 export const NUMBER_OF_INTERVALS = 6;
 

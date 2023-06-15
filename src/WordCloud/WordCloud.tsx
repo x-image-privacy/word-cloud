@@ -1,83 +1,77 @@
 import {
   boundParent,
   computeFontSize,
-  futurPosition,
-  getMoveDirection,
+  futureSpiralPosition,
+  getBoundingWordCloud,
   slideWords,
 } from "./components/utils";
 
-import {
-  MARGIN_HEIGHT,
-  MARGIN_WIDTH,
-  NUMBER_OF_INTERVALS,
-} from "./components/constants";
+import { MARGIN_HEIGHT, MARGIN_WIDTH } from "./components/constants";
 import { useEffect, useState } from "react";
 import { ExplanationData } from "./types";
 import WordBounds from "./WordBounds";
-import { Rectangle, Word, WordCloudData } from "./components/types";
+import { PlacedWordCloud, Word, WordCloudData } from "./components/types";
 
-const useWordCloudLayout = (wordClouds: WordCloudData): WordCloudData => {
+const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
   wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
-    // Initialize the weights with the value 1, of the size of the number of intervals
-    const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
-
     const newWordCloud = cloud.words.slice(1).reduce<Word[]>(
       (placedWords, word) => {
-        const futureItem = futurPosition(
+        const futureItem = futureSpiralPosition(
           word.rect,
-          placedWords.map(({ rect }) => rect),
-          3,
-          weight
+          placedWords.map(({ rect }) => rect)
         );
         return [...placedWords, { ...word, rect: futureItem }];
       },
       [cloud.words[0]]
     );
     originalWordClouds[cloudIdx].words = newWordCloud;
-    originalWordClouds[cloudIdx].bound = boundParent(
-      newWordCloud.map(({ rect }) => rect)
-    );
   });
 
-  wordClouds.sort((cloudA, cloudB) => {
-    return cloudA.bound &&
-      cloudB.bound &&
-      cloudA.bound.width * cloudA.bound.height >=
-        cloudB.bound.width * cloudB.bound.height
+  const placedWordCloud: PlacedWordCloud = wordClouds.map((cloud) => ({
+    ...cloud,
+    bound: getBoundingWordCloud(cloud.words),
+  }));
+
+  placedWordCloud.sort((cloudA, cloudB) => {
+    return cloudA.bound.width * cloudA.bound.height >=
+      cloudB.bound.width * cloudB.bound.height
       ? -1
       : 1;
   });
 
-  // Initialize the weights with the value 1, of the size of the number of intervals
-  const weight = new Array(NUMBER_OF_INTERVALS).fill(1);
-  wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
-    if (cloudIdx === 0 || !cloud.bound) {
-      return;
-    }
-    const futurePos = futurPosition(
-      cloud.bound,
-      originalWordClouds
-        .slice(0, cloudIdx)
-        .map(({ bound }) => bound as Rectangle),
-      4,
-      weight
-    );
-    const slidedWordRectangles = slideWords(
-      originalWordClouds[cloudIdx].words.map(({ rect }) => rect),
-      getMoveDirection([originalWordClouds[0].bound as Rectangle], futurePos)
-    );
-    originalWordClouds[cloudIdx].words = originalWordClouds[cloudIdx].words.map(
-      (w, idx) => ({
-        ...w,
-        rect: slidedWordRectangles[idx],
-      })
-    );
-    const newBound = boundParent(slidedWordRectangles);
-    console.log(newBound);
-    originalWordClouds[cloudIdx].bound = newBound;
-  });
+  const newWordClouds = placedWordCloud.reduce<PlacedWordCloud>(
+    (accWordClouds, cloud, cloudIdx) => {
+      if (cloudIdx === 0) {
+        accWordClouds.push({
+          ...cloud,
+          bound: {
+            ...cloud.bound,
+            x: -cloud.bound.width / 2,
+            y: -cloud.bound.height / 2,
+          },
+        });
+        return accWordClouds;
+      }
+      const previousBounds = accWordClouds.map(({ bound }) => bound);
 
-  return wordClouds;
+      const futurePos = futureSpiralPosition(cloud.bound, previousBounds);
+
+      const newCloud = {
+        ...cloud,
+        bound: futurePos,
+        words: slideWords(cloud.words, {
+          x: futurePos.x - cloud.bound.x,
+          y: futurePos.y - cloud.bound.y,
+        }),
+      };
+      accWordClouds.push(newCloud);
+      return accWordClouds;
+    },
+    []
+  );
+
+  return newWordClouds;
+  // return placedWordCloud;
 };
 
 const getHiddenElementId = (id: string) => `hidden-${id}`;
@@ -86,7 +80,7 @@ type Props = {
   data?: ExplanationData;
   width?: string;
   height?: string;
-  showWords?: boolean;
+  hideWords?: boolean;
   showOrigin?: boolean;
   showBounds?: boolean;
   showWordBounds?: boolean;
@@ -96,7 +90,7 @@ const Wordcloud = ({
   data,
   height = "100%",
   width = "100%",
-  showWords = true,
+  hideWords = false,
   showOrigin = false,
   showBounds = false,
   showWordBounds = false,
@@ -112,7 +106,7 @@ const Wordcloud = ({
     bound: boundParent(wordCloud.words.map((w) => w.rect)),
   }));
   const bound = rects?.length
-    ? boundParent(rects as Rectangle[])
+    ? boundParent(rects)
     : {
         x: -100,
         y: -100,
@@ -130,15 +124,16 @@ const Wordcloud = ({
             const rect = document
               .getElementById(getHiddenElementId(w.id))
               ?.getBoundingClientRect() || { x: 0, y: 0, width: 0, height: 0 };
-
+            const width = rect?.width + MARGIN_WIDTH;
+            const height = rect?.height + MARGIN_HEIGHT;
             return {
               ...w,
               rect: {
                 // center rect in the middle
-                x: 0,
-                y: 0,
-                width: rect?.width + MARGIN_WIDTH,
-                height: rect?.height + MARGIN_HEIGHT,
+                x: -width / 2,
+                y: -height / 2,
+                width,
+                height,
               },
             };
           });
@@ -159,15 +154,13 @@ const Wordcloud = ({
     }
   }, [data]);
 
-  console.log("wordClouds", wordClouds);
-
   return (
     <>
       <svg visibility="hidden" style={{ position: "absolute" }}>
         {data?.map((c) =>
           c.words.map((w) => (
             <text
-              key={w.id}
+              key={`${c.category}-${w.id}`}
               id={getHiddenElementId(w.id)}
               fontSize={computeFontSize(w.coef)}
             >
@@ -186,11 +179,32 @@ const Wordcloud = ({
       >
         {showOrigin && (
           <>
-            <line x1={-100} x2={100} y={0} stroke="blue" />
-            <line y1={-100} y2={100} x={0} stroke="blue" />
+            <line x1={-100} x2={100} y={0} stroke="red" />
+            <line y1={-100} y2={100} x={0} stroke="red" />
           </>
         )}
-        {showWords &&
+        {bounds?.map(({ id, bound: b }) => (
+          <>
+            <rect
+              className={
+                showBounds ? "stroke-blue-500 dark:stroke-green-200" : ""
+              }
+              style={{ cursor: "pointer" }}
+              key={`bounds-${id}`}
+              x={b.x}
+              y={b.y}
+              rx={10}
+              ry={10}
+              width={b.width}
+              height={b.height}
+              fill="transparent"
+              strokeWidth={1}
+            >
+              <title>Category: {id}; Score: TBA</title>
+            </rect>
+          </>
+        ))}
+        {!hideWords &&
           wordClouds?.map((wordCloud) => (
             <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
               {wordCloud.words.map((word) => {
@@ -204,28 +218,18 @@ const Wordcloud = ({
                     dominantBaseline="middle"
                     fontSize={fontSize}
                     id={word.id}
-                    x={word.rect.x.toString()}
+                    x={(word.rect.x + word.rect.width / 2).toString()}
                     // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-                    y={word.rect.y.toString()}
+                    y={(word.rect.y + word.rect.height / 2).toString()}
                   >
                     {word.text}
+                    <title>
+                      Word: {word.text}; Score: {word.coef}
+                    </title>
                   </text>
                 );
               })}
             </g>
-          ))}
-        {showBounds &&
-          bounds?.map(({ id, bound: b }) => (
-            <rect
-              key={`bounds-${id}`}
-              x={b.x}
-              y={b.y}
-              width={b.width}
-              height={b.height}
-              fill="none"
-              stroke="blue"
-              strokeWidth={1}
-            />
           ))}
         <WordBounds showWordBounds={showWordBounds} wordClouds={wordClouds} />
       </svg>

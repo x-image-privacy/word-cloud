@@ -25,7 +25,7 @@ const SuccessButton = ({
 }: SuccessButtonProps) => {
   return (
     <button
-      className={`btn inline-flex justify-items-center items-center btn-${
+      className={`btn inline-flex justify-center items-center btn-${
         isSuccess ? "green" : "blue"
       }`}
       onClick={onClick}
@@ -77,7 +77,6 @@ const DataFileButton = <T,>({
       reader.onload = (evt) => {
         try {
           const data = JSON.parse(evt?.target?.result as string);
-          console.log(data);
           setError(undefined);
           setData(data);
         } catch (e) {
@@ -119,6 +118,7 @@ type Props = {
 const ExplanationDataImporter = ({ onSubmit }: Props) => {
   const [nodeData, setNodeData] = useState<Node[]>();
   const [categoryData, setCategoryData] = useState<Category[]>();
+  const [submitted, setSubmitted] = useState<boolean>();
 
   const handleTransform = () => {
     if (nodeData && categoryData) {
@@ -132,8 +132,8 @@ const ExplanationDataImporter = ({ onSubmit }: Props) => {
           return words;
         }, []),
       }));
-      console.log(xData);
       onSubmit(xData);
+      setSubmitted(true);
     }
   };
 
@@ -145,9 +145,9 @@ const ExplanationDataImporter = ({ onSubmit }: Props) => {
       <DataFileButton data={categoryData} setData={setCategoryData}>
         Load Categories
       </DataFileButton>
-      <button className="btn btn-blue" onClick={handleTransform}>
+      <SuccessButton isSuccess={!!submitted} onClick={handleTransform}>
         Transform
-      </button>
+      </SuccessButton>
     </>
   );
 };
