@@ -1,6 +1,9 @@
 import { ChangeEventHandler, useState } from "react";
 import Wordcloud, { ExplanationData } from "./WordCloud";
 import { defaultWords1 } from "./data";
+import SettingsWrapper from "./components/SettingsWrapper";
+import CheckBoxSetting from "./components/CheckBoxSetting";
+import ExplanationDataImporter from "./components/ExplanationDataImporter";
 
 const presetData = [
   { label: "default1", value: defaultWords1 },
@@ -41,7 +44,7 @@ const updateParams = (params: { [key: string]: boolean | string }) => {
   Object.entries(params).forEach(([key, value]) => {
     if (typeof value === "boolean") {
       // when value is a boolean we add and remove the value from the url
-      value ? queryString.set(key, "true") : queryString.delete(key);
+      value ? queryString.set(key, "true") : queryString.set(key, "false");
     } else {
       // when value is a string we set it on the search
       queryString.set(key, value);
@@ -52,15 +55,21 @@ const updateParams = (params: { [key: string]: boolean | string }) => {
 };
 
 const PRESET_DATA_KEY = "presetData";
+const SHOW_WORDS_KEY = "showWords";
 const SHOW_BOUNDS_KEY = "showBounds";
 const SHOW_WORD_BOUNDS_KEY = "showWordBounds";
+const SHOW_ORIGIN_KEY = "showOrigin";
 
 const App = () => {
   const params = new URLSearchParams(window.location.search);
-  const [showBounds, setShowBounds] = useState(params.has(SHOW_BOUNDS_KEY));
-  const [showWordBounds, setShowWordBounds] = useState(
-    params.has(SHOW_WORD_BOUNDS_KEY)
-  );
+  const [settings, setSettings] = useState({
+    [SHOW_WORDS_KEY]: !params.has(SHOW_WORDS_KEY),
+    [SHOW_ORIGIN_KEY]: params.has(SHOW_ORIGIN_KEY),
+    [SHOW_BOUNDS_KEY]:
+      params.has(SHOW_BOUNDS_KEY) && params.get(SHOW_BOUNDS_KEY) === "true",
+    [SHOW_WORD_BOUNDS_KEY]: params.has(SHOW_WORD_BOUNDS_KEY),
+  });
+
   const presetDataLabel = params.get(PRESET_DATA_KEY) ?? presetData[0].label;
   const [selectedPresetValue, setSelectedPresetValue] =
     useState(presetDataLabel);
@@ -84,114 +93,110 @@ const App = () => {
     }
   };
 
+  const handleCheckbox = (key: keyof typeof settings) => {
+    updateParams({ [key]: !settings[key] });
+    setSettings((p) => ({ ...p, [key]: !p[key] }));
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        margin: "12px",
-        gap: "5px",
-      }}
-    >
-      <fieldset>
-        <legend>Data</legend>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <div>
-            <label htmlFor="preset-data">Preset Data</label>
-            <select
-              value={selectedPresetValue}
-              onChange={({ target: { value: chosenLabel } }) => {
-                updateParams({ [PRESET_DATA_KEY]: chosenLabel });
-                setSelectedPresetValue(chosenLabel);
-                setExplanationData(
-                  convertToString(
-                    presetData.find((p) => p.label === chosenLabel)?.value
-                  )
-                );
-              }}
-            >
-              {presetData.map((d) => (
-                <option key={d.label} value={d.label}>
-                  {d.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="data">Explanation Data</label>
-            <textarea
-              id="data"
-              name="data"
-              value={explanationData}
-              onChange={handleInputData}
+    <div className="flex flex-col m-2 gap-2">
+      <div className="flex flex-row justify-center gap-2">
+        <SettingsWrapper title="Data">
+          <SettingsWrapper title="From Files">
+            <ExplanationDataImporter
+              onSubmit={(d) => setExplanationData(convertToString(d))}
             />
-          </div>
+          </SettingsWrapper>
+          <SettingsWrapper title="From Presets">
+            <div>
+              <label htmlFor="preset-data">Preset Data</label>
+              <select
+                value={selectedPresetValue}
+                onChange={({ target: { value: chosenLabel } }) => {
+                  updateParams({ [PRESET_DATA_KEY]: chosenLabel });
+                  setSelectedPresetValue(chosenLabel);
+                  setExplanationData(
+                    convertToString(
+                      presetData.find((p) => p.label === chosenLabel)?.value
+                    )
+                  );
+                }}
+              >
+                {presetData.map((d) => (
+                  <option key={d.label} value={d.label}>
+                    {d.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {errorMessage && <div>Error: {errorMessage}</div>}
+            <div>
+              <label htmlFor="data">Explanation Data</label>
+              <textarea
+                id="data"
+                name="data"
+                value={explanationData}
+                onChange={handleInputData}
+              />
+            </div>
 
-          <div>
-            <button onClick={() => setData(convertFromString(explanationData))}>
+            {errorMessage ? <div>Error: {errorMessage}</div> : null}
+          </SettingsWrapper>
+          <div className="flex grow justify-end">
+            <button
+              className="btn btn-blue self-end"
+              onClick={() => setData(convertFromString(explanationData))}
+            >
               Display Data
             </button>
           </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Settings</legend>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <div>
-            <input
-              id="showBounds"
-              name="showBounds"
-              type="checkbox"
-              checked={showBounds}
-              onChange={() => {
-                // add params to url
-                updateParams({ [SHOW_BOUNDS_KEY]: !showBounds });
-                setShowBounds((p) => !p);
-              }}
-            />
-            <label htmlFor="showBounds">Show bounds</label>
-          </div>
+        </SettingsWrapper>
+        <SettingsWrapper title="Settings">
+          <CheckBoxSetting
+            id={SHOW_WORDS_KEY}
+            value={settings[SHOW_WORDS_KEY]}
+            label="Show words"
+            onChange={() => handleCheckbox(SHOW_WORDS_KEY)}
+          />
+          <CheckBoxSetting
+            id={SHOW_BOUNDS_KEY}
+            value={settings[SHOW_BOUNDS_KEY]}
+            label="Show bounds"
+            onChange={() => handleCheckbox(SHOW_BOUNDS_KEY)}
+          />
 
-          <div>
-            <input
-              id="showWordBounds"
-              name="showWordBounds"
-              type="checkbox"
-              checked={showWordBounds}
-              onChange={() => {
-                updateParams({ [SHOW_WORD_BOUNDS_KEY]: !showWordBounds });
+          <CheckBoxSetting
+            id={SHOW_WORD_BOUNDS_KEY}
+            value={settings[SHOW_WORD_BOUNDS_KEY]}
+            onChange={() => handleCheckbox(SHOW_WORD_BOUNDS_KEY)}
+            label="Show word bounds"
+          />
+          <CheckBoxSetting
+            id={SHOW_ORIGIN_KEY}
+            value={settings[SHOW_ORIGIN_KEY]}
+            onChange={() => handleCheckbox(SHOW_ORIGIN_KEY)}
+            label="Show origin"
+          />
 
-                setShowWordBounds((p) => !p);
-              }}
-            />
-            <label htmlFor="showWordBounds">Show Word bounds</label>
+          <div className="flex grow justify-end">
+            <button
+              className="btn btn-blue self-end"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </button>
           </div>
-
-          <div>
-            <button onClick={() => window.location.reload()}>Reload</button>
-          </div>
-        </div>
-      </fieldset>
-      <div
-        style={{
-          resize: "both",
-          overflow: "auto",
-          border: "solid #eee 1px",
-          maxWidth: "100vw",
-          boxSizing: "border-box",
-          backgroundColor: "aliceblue",
-        }}
-      >
+        </SettingsWrapper>
+      </div>
+      <div className="resize box-border overflow-auto border border-gray-300 max-w-screen m-auto bg-blue-50 dark:bg-blue-900">
         <Wordcloud
           data={data}
           height="100%"
           width="100%"
-          showBounds={showBounds}
-          showWordBounds={showWordBounds}
+          showWords={settings[SHOW_WORDS_KEY]}
+          showOrigin={settings[SHOW_ORIGIN_KEY]}
+          showBounds={settings[SHOW_BOUNDS_KEY]}
+          showWordBounds={settings[SHOW_WORD_BOUNDS_KEY]}
         />
       </div>
     </div>

@@ -86,6 +86,8 @@ type Props = {
   data?: ExplanationData;
   width?: string;
   height?: string;
+  showWords?: boolean;
+  showOrigin?: boolean;
   showBounds?: boolean;
   showWordBounds?: boolean;
 };
@@ -94,6 +96,8 @@ const Wordcloud = ({
   data,
   height = "100%",
   width = "100%",
+  showWords = true,
+  showOrigin = false,
   showBounds = false,
   showWordBounds = false,
 }: Props) => {
@@ -180,35 +184,36 @@ const Wordcloud = ({
         style={{ outline: "1px solid transparent" }}
         viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
       >
-        {showBounds && (
+        {showOrigin && (
           <>
             <line x1={-100} x2={100} y={0} stroke="blue" />
             <line y1={-100} y2={100} x={0} stroke="blue" />
           </>
         )}
-        {wordClouds?.map((wordCloud) => (
-          <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
-            {wordCloud.words.map((word) => {
-              const fontSize = computeFontSize(word.coef);
-              return (
-                <text
-                  key={word.id}
-                  // useful to have the anchor at the center of the word
-                  textAnchor="middle"
-                  // y centering
-                  alignmentBaseline="central"
-                  fontSize={fontSize}
-                  id={word.id}
-                  x={word.rect.x.toString()}
-                  // I don't know why I have to add the third of the fontSize to center te word vertically but it works
-                  y={word.rect.y.toString()}
-                >
-                  {word.text}
-                </text>
-              );
-            })}
-          </g>
-        ))}
+        {showWords &&
+          wordClouds?.map((wordCloud) => (
+            <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
+              {wordCloud.words.map((word) => {
+                const fontSize = computeFontSize(word.coef);
+                return (
+                  <text
+                    key={`${wordCloud.category}-${word.id}`}
+                    // useful to have the anchor at the center of the word
+                    textAnchor="middle"
+                    // y centering
+                    dominantBaseline="middle"
+                    fontSize={fontSize}
+                    id={word.id}
+                    x={word.rect.x.toString()}
+                    // I don't know why I have to add the third of the fontSize to center te word vertically but it works
+                    y={word.rect.y.toString()}
+                  >
+                    {word.text}
+                  </text>
+                );
+              })}
+            </g>
+          ))}
         {showBounds &&
           bounds?.map(({ id, bound: b }) => (
             <rect
