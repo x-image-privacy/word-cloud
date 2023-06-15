@@ -6,9 +6,9 @@ import CheckBoxSetting from "./components/CheckBoxSetting";
 import ExplanationDataImporter from "./components/ExplanationDataImporter";
 
 const presetData = [
-  { label: "default1", value: defaultWords1 },
+  { label: "3 word-clouds", value: defaultWords1 },
   {
-    label: "single word",
+    label: "single word word-clouds",
     value: [
       {
         category: "cat2",
@@ -16,10 +16,7 @@ const presetData = [
       },
       {
         category: "cat1",
-        words: [
-          { id: "1", text: "Hello", coef: 1 },
-          { id: "2", text: "CatWoman", coef: 0.8 },
-        ],
+        words: [{ id: "1", text: "Hello", coef: 1 }],
       },
       {
         category: "cat3",
@@ -27,7 +24,6 @@ const presetData = [
       },
     ],
   },
-  { label: "empty", value: [{ category: "hello", words: [] }] },
 ];
 
 const convertToString = (obj?: any): string => {
@@ -44,7 +40,7 @@ const updateParams = (params: { [key: string]: boolean | string }) => {
   Object.entries(params).forEach(([key, value]) => {
     if (typeof value === "boolean") {
       // when value is a boolean we add and remove the value from the url
-      value ? queryString.set(key, "true") : queryString.set(key, "false");
+      value ? queryString.set(key, "true") : queryString.delete(key);
     } else {
       // when value is a string we set it on the search
       queryString.set(key, value);
@@ -55,7 +51,7 @@ const updateParams = (params: { [key: string]: boolean | string }) => {
 };
 
 const PRESET_DATA_KEY = "presetData";
-const SHOW_WORDS_KEY = "showWords";
+const HIDE_WORDS_KEY = "hideWords";
 const SHOW_BOUNDS_KEY = "showBounds";
 const SHOW_WORD_BOUNDS_KEY = "showWordBounds";
 const SHOW_ORIGIN_KEY = "showOrigin";
@@ -63,10 +59,9 @@ const SHOW_ORIGIN_KEY = "showOrigin";
 const App = () => {
   const params = new URLSearchParams(window.location.search);
   const [settings, setSettings] = useState({
-    [SHOW_WORDS_KEY]: !params.has(SHOW_WORDS_KEY),
+    [HIDE_WORDS_KEY]: params.has(HIDE_WORDS_KEY),
     [SHOW_ORIGIN_KEY]: params.has(SHOW_ORIGIN_KEY),
-    [SHOW_BOUNDS_KEY]:
-      params.has(SHOW_BOUNDS_KEY) && params.get(SHOW_BOUNDS_KEY) === "true",
+    [SHOW_BOUNDS_KEY]: params.has(SHOW_BOUNDS_KEY),
     [SHOW_WORD_BOUNDS_KEY]: params.has(SHOW_WORD_BOUNDS_KEY),
   });
 
@@ -102,46 +97,54 @@ const App = () => {
     <div className="flex flex-col m-2 gap-2">
       <div className="flex flex-row justify-center gap-2">
         <SettingsWrapper title="Data">
-          <SettingsWrapper title="From Files">
-            <ExplanationDataImporter
-              onSubmit={(d) => setExplanationData(convertToString(d))}
-            />
-          </SettingsWrapper>
-          <SettingsWrapper title="From Presets">
-            <div>
-              <label htmlFor="preset-data">Preset Data</label>
-              <select
-                value={selectedPresetValue}
-                onChange={({ target: { value: chosenLabel } }) => {
-                  updateParams({ [PRESET_DATA_KEY]: chosenLabel });
-                  setSelectedPresetValue(chosenLabel);
-                  setExplanationData(
-                    convertToString(
-                      presetData.find((p) => p.label === chosenLabel)?.value
-                    )
-                  );
-                }}
-              >
-                {presetData.map((d) => (
-                  <option key={d.label} value={d.label}>
-                    {d.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="data">Explanation Data</label>
-              <textarea
-                id="data"
-                name="data"
-                value={explanationData}
-                onChange={handleInputData}
+          <div className="flex flex-row gap-2">
+            <SettingsWrapper title="From Files">
+              <ExplanationDataImporter
+                onSubmit={(d) => setExplanationData(convertToString(d))}
               />
-            </div>
+            </SettingsWrapper>
+            <SettingsWrapper title="From Presets">
+              <div>
+                <label className="mr-2" htmlFor="preset-data">
+                  Preset Data
+                </label>
+                <select
+                  className="p-1 border border-gray-300 rounded bg-transparent"
+                  value={selectedPresetValue}
+                  onChange={({ target: { value: chosenLabel } }) => {
+                    updateParams({ [PRESET_DATA_KEY]: chosenLabel });
+                    setSelectedPresetValue(chosenLabel);
+                    setExplanationData(
+                      convertToString(
+                        presetData.find((p) => p.label === chosenLabel)?.value
+                      )
+                    );
+                  }}
+                >
+                  {presetData.map((d) => (
+                    <option key={d.label} value={d.label}>
+                      {d.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            {errorMessage ? <div>Error: {errorMessage}</div> : null}
-          </SettingsWrapper>
+              <div className="flex flex-col">
+                <label className="mb-1" htmlFor="data">
+                  Explanation Data
+                </label>
+                <textarea
+                  className="bg-transparent rounded border border-gray-300"
+                  id="data"
+                  name="data"
+                  value={explanationData}
+                  onChange={handleInputData}
+                />
+              </div>
+
+              {errorMessage ? <div>Error: {errorMessage}</div> : null}
+            </SettingsWrapper>
+          </div>
           <div className="flex grow justify-end">
             <button
               className="btn btn-blue self-end"
@@ -151,12 +154,25 @@ const App = () => {
             </button>
           </div>
         </SettingsWrapper>
+      </div>
+      <div className="resize box-border overflow-auto border border-gray-300 max-w-screen m-auto bg-blue-50 dark:bg-blue-900">
+        <Wordcloud
+          data={data}
+          height="100%"
+          width="100%"
+          hideWords={settings[HIDE_WORDS_KEY]}
+          showOrigin={settings[SHOW_ORIGIN_KEY]}
+          showBounds={settings[SHOW_BOUNDS_KEY]}
+          showWordBounds={settings[SHOW_WORD_BOUNDS_KEY]}
+        />
+      </div>
+      <div className="m-auto">
         <SettingsWrapper title="Settings">
           <CheckBoxSetting
-            id={SHOW_WORDS_KEY}
-            value={settings[SHOW_WORDS_KEY]}
-            label="Show words"
-            onChange={() => handleCheckbox(SHOW_WORDS_KEY)}
+            id={HIDE_WORDS_KEY}
+            value={settings[HIDE_WORDS_KEY]}
+            label="Hide words"
+            onChange={() => handleCheckbox(HIDE_WORDS_KEY)}
           />
           <CheckBoxSetting
             id={SHOW_BOUNDS_KEY}
@@ -177,27 +193,7 @@ const App = () => {
             onChange={() => handleCheckbox(SHOW_ORIGIN_KEY)}
             label="Show origin"
           />
-
-          <div className="flex grow justify-end">
-            <button
-              className="btn btn-blue self-end"
-              onClick={() => window.location.reload()}
-            >
-              Reload
-            </button>
-          </div>
         </SettingsWrapper>
-      </div>
-      <div className="resize box-border overflow-auto border border-gray-300 max-w-screen m-auto bg-blue-50 dark:bg-blue-900">
-        <Wordcloud
-          data={data}
-          height="100%"
-          width="100%"
-          showWords={settings[SHOW_WORDS_KEY]}
-          showOrigin={settings[SHOW_ORIGIN_KEY]}
-          showBounds={settings[SHOW_BOUNDS_KEY]}
-          showWordBounds={settings[SHOW_WORD_BOUNDS_KEY]}
-        />
       </div>
     </div>
   );

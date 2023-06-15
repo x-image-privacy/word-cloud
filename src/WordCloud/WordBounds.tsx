@@ -15,13 +15,7 @@ const WordBounds = ({
   return (
     <>
       {wordClouds?.map((wordCloud) =>
-        wordCloud.words.map(({ id, text, rect: initRect }) => {
-          const rect = {
-            width: initRect.width,
-            height: initRect.height,
-            x: initRect.x - initRect.width / 2,
-            y: initRect.y - initRect.height / 2,
-          };
+        wordCloud.words.map(({ id, text, rect }) => {
           return (
             <g opacity={0.5} key={`${wordCloud.category}-${id}`}>
               <rect

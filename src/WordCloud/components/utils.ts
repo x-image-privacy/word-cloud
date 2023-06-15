@@ -11,23 +11,7 @@ import {
   WORD_CLOUD_MARGIN_HEIGHT,
   WORD_CLOUD_MARGIN_WIDTH,
 } from "./constants";
-import { Circle, Coordinate, Rectangle, Word } from "./types";
-
-export const getBoundingRect = (
-  id: string,
-  tagName: "svg" | "text" = "text"
-): Rectangle => {
-  const bbox =
-    (
-      document.getElementsByTagName(tagName).namedItem(id) || undefined
-    )?.getBoundingClientRect() || DEFAULT_RECT;
-  return {
-    x: bbox.x,
-    y: bbox.y,
-    width: bbox.width + MARGIN_WIDTH,
-    height: bbox.height + MARGIN_HEIGHT,
-  };
-};
+import { CenterCoordinate, Circle, Coordinate, Rectangle, Word } from "./types";
 
 export const computeFontSize = (coef: number): number => {
   return (
@@ -41,12 +25,12 @@ export const computeFontSize = (coef: number): number => {
 // This function returns the bound of the word cloud
 export const boundParent = (rects: Rectangle[]): Rectangle => {
   const topLeftPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x - r.width / 2,
-    y: r.y - r.height / 2,
+    x: r.x,
+    y: r.y,
   }));
   const bottomRightPoints: Coordinate[] = rects.map((r) => ({
-    x: r.x + r.width / 2,
-    y: r.y + r.height / 2,
+    x: r.x + r.width,
+    y: r.y + r.height,
   }));
 
   const xMin = Math.min(...topLeftPoints.map((r) => r.x));
@@ -54,18 +38,174 @@ export const boundParent = (rects: Rectangle[]): Rectangle => {
   const yMin = Math.min(...topLeftPoints.map((r) => r.y));
   const yMax = Math.max(...bottomRightPoints.map((r) => r.y));
 
-  return { x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin };
+  return {
+    x: xMin,
+    y: yMin,
+    width: Math.abs(xMax - xMin),
+    height: Math.abs(yMax - yMin),
+  };
 };
 
 export const getBoundingWordCloud = (word: Word[]): Rectangle => {
-  const rect = word.map((w) => w.rect as Rectangle);
+  const rect = word.map((w) => w.rect);
 
   const tightBound = boundParent(rect);
   return {
-    ...tightBound,
+    x: tightBound.x - WORD_CLOUD_MARGIN_WIDTH / 2,
+    y: tightBound.y - WORD_CLOUD_MARGIN_HEIGHT / 2,
     width: tightBound.width + WORD_CLOUD_MARGIN_WIDTH,
     height: tightBound.height + WORD_CLOUD_MARGIN_HEIGHT,
   };
+};
+
+// This function indicates whether rectangles are in a collision
+export const areCentersTooClose = (
+  centerA: CenterCoordinate,
+  centerB: CenterCoordinate,
+  minX: number,
+  minY: number
+): boolean =>
+  Math.abs(centerA.cx - centerB.cx) <= minX &&
+  Math.abs(centerA.cy - centerB.cy) <= minY;
+
+// This function computes the collisions
+export const allCollision = (
+  word: Rectangle,
+  passRect: Rectangle[]
+): boolean => {
+  return passRect
+    .map((rect) =>
+      areCentersTooClose(
+        { cx: rect.x + rect.width / 2, cy: rect.y + rect.height / 2 },
+        { cx: word.x + word.width / 2, cy: word.y + word.height / 2 },
+        (rect.width + word.width) / 2,
+        (rect.height + word.height) / 2
+      )
+    )
+    .some((t) => t === true);
+};
+
+// This function slides an array of words
+export const slideWords = (words: Word[], sliding: Coordinate): Word[] => {
+  return words.map((w) => ({
+    ...w,
+    rect: {
+      ...w.rect,
+      x: w.rect.x + sliding.x,
+      y: w.rect.y + sliding.y,
+    },
+  }));
+};
+
+export function archimedeanSpiral(size: [number, number]) {
+  // change the aspect of the spiral based on the ratio of width and height
+  var e = size[0] / size[1];
+  return function (t: number) {
+    return [e * (t *= 0.5) * Math.cos(t), t * Math.sin(t)];
+  };
+}
+
+export const futureSpiralPosition = (
+  rectangle: Rectangle,
+  placedRects: Rectangle[]
+) => {
+  let position = {
+    ...rectangle,
+    x: -rectangle.width / 2,
+    y: -rectangle.height / 2,
+  };
+  let t = 0;
+  const dt = Math.random() < 0.5 ? 1 : -1;
+  while (allCollision(position, placedRects) && t < 3000) {
+    // compute point on spiral
+    const spiral = archimedeanSpiral([1, 1]);
+    const [dx, dy] = spiral(t);
+    position = {
+      ...rectangle,
+      x: rectangle.x + dx,
+      y: rectangle.y + dy,
+    };
+    t += dt;
+  }
+  return position;
+};
+
+// **************************************
+// not used anymore
+
+// This function returns the futur position of a rectangle, without collision, in direction of already placed rectangles
+export const futurPosition = (
+  word: Rectangle,
+  placedRects: Rectangle[],
+  step: number,
+  weight: number[]
+): Rectangle => {
+  let isDone = false;
+
+  // Put the word in random place around the parent
+  let movedRect = placeWordOnOuterCircle(word, placedRects, weight);
+  let iter = 0;
+  let displacement = 0;
+  do {
+    const moveDirection = getMoveDirection(placedRects, movedRect);
+    const hypothenus = Math.sqrt(moveDirection.x ** 2 + moveDirection.y ** 2);
+    const stepX = (step / hypothenus) * moveDirection.x;
+    const stepY = (step / hypothenus) * moveDirection.y;
+    const futurRectPosition: Rectangle = {
+      ...movedRect,
+      x: movedRect.x + stepX,
+      y: movedRect.y + stepY,
+    };
+    // Test if the word can be move over the hypotenuse
+    if (allCollision(futurRectPosition, placedRects)) {
+      const onlyMoveOverX = { ...futurRectPosition, y: movedRect.y };
+      const onlyMoveOverY = { ...futurRectPosition, x: movedRect.x };
+      const xColl = allCollision(onlyMoveOverX, placedRects);
+      const yColl = allCollision(onlyMoveOverY, placedRects);
+      if (xColl) {
+        if (yColl) {
+          // Do not move anymore
+          isDone = true;
+        } else {
+          movedRect = { ...onlyMoveOverY };
+        }
+      } else {
+        movedRect = { ...onlyMoveOverX };
+      }
+    } else {
+      movedRect = { ...futurRectPosition };
+    }
+    displacement = Math.abs(stepX) + Math.abs(stepY);
+    iter++;
+  } while (!isDone && displacement > 2 && iter < 300);
+  return movedRect;
+};
+
+// This function return the cumulative weight of an array : for example [1, 2, 3, 4] become [1, 3, 6, 10]
+// source: https://quickref.me/create-an-array-of-cumulative-sum.html
+export const cumulativeBins = (bin: number[]): number[] => {
+  return bin.map(
+    (
+      (sum) => (value) =>
+        (sum += value)
+    )(0)
+  );
+};
+
+// https://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only
+// range(0, 9, 2) => [0, 2, 4, 6, 8]
+// No negative step
+export const rangeWithStep = (
+  from: number,
+  to: number,
+  step: number
+): number[] => {
+  if (to < from) {
+    return [];
+  }
+  return [...Array(Math.floor((to - from) / step) + 1)].map(
+    (_, i) => from + i * step
+  );
 };
 
 // This function put the first word in the center of the parent rectangle
@@ -125,33 +265,6 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
 // This function return a random float between min and max
 export const randomInterval = (min: number, max: number): number => {
   return Math.random() * (max - min) + min;
-};
-
-// This function return the cumulative weight of an array : for example [1, 2, 3, 4] become [1, 3, 6, 10]
-// source: https://quickref.me/create-an-array-of-cumulative-sum.html
-export const cumulativeBins = (bin: number[]): number[] => {
-  return bin.map(
-    (
-      (sum) => (value) =>
-        (sum += value)
-    )(0)
-  );
-};
-
-// https://stackoverflow.com/questions/36947847/how-to-generate-range-of-numbers-from-0-to-n-in-es2015-only
-// range(0, 9, 2) => [0, 2, 4, 6, 8]
-// No negative step
-export const rangeWithStep = (
-  from: number,
-  to: number,
-  step: number
-): number[] => {
-  if (to < from) {
-    return [];
-  }
-  return [...Array(Math.floor((to - from) / step) + 1)].map(
-    (_, i) => from + i * step
-  );
 };
 
 // This function puts the word in a random place on a circle
@@ -222,105 +335,6 @@ export const getMoveDirection = (
   );
 };
 
-// This function returns the futur position of a rectangle, without collision, in direction of already placed rectangles
-export const futurPosition = (
-  word: Rectangle,
-  placedRects: Rectangle[],
-  step: number,
-  weight: number[]
-): Rectangle => {
-  let isCollision = false;
-
-  // Put the word in random place around the parent
-  let movedRect = placeWordOnOuterCircle(word, placedRects, weight);
-  let iter = 0;
-  let displacement = 0;
-  do {
-    const moveDirection = getMoveDirection(placedRects, movedRect);
-    const hypothenus = Math.sqrt(moveDirection.x ** 2 + moveDirection.y ** 2);
-    const stepX = (step / hypothenus) * moveDirection.x;
-    const stepY = (step / hypothenus) * moveDirection.y;
-    const futurRectPosition: Rectangle = {
-      ...movedRect,
-      x: movedRect.x + (Math.abs(stepX) > 0.01 ? stepX : 0),
-      y: movedRect.y + (Math.abs(stepY) > 0.01 ? stepY : 0),
-    };
-    // Test if the word can be move over the hypotenuse
-    if (allCollision(futurRectPosition, placedRects)) {
-      const onlyMoveOverX = { ...futurRectPosition, y: movedRect.y };
-      const onlyMoveOverY = { ...futurRectPosition, x: movedRect.x };
-      const xColl = allCollision(onlyMoveOverX, placedRects);
-      const yColl = allCollision(onlyMoveOverY, placedRects);
-      if (xColl) {
-        if (yColl) {
-          // Do not move anymore
-          isCollision = true;
-          // console.log("stop!");
-        } else {
-          movedRect = { ...onlyMoveOverY };
-        }
-      } else {
-        movedRect = { ...onlyMoveOverX };
-      }
-    } else {
-      movedRect = { ...futurRectPosition };
-    }
-    displacement = Math.abs(stepX) + Math.abs(stepY);
-    iter++;
-    // console.log("step", stepX, stepY, "moved", movedRect);
-  } while (!isCollision && displacement > 2 && iter < 200);
-  return movedRect;
-};
-
-export const areAboveBound = (rect: Rectangle): Boolean => {
-  if (
-    rect.x + rect.width / 2 > CONTAINER_WIDTH ||
-    rect.x - rect.width / 2 < 0 ||
-    rect.y + rect.height / 2 > CONTAINER_HEIGHT ||
-    rect.y - rect.height / 2 < 0
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-// This function indicates whether rectangles are in a collision
-export const areCentersTooClose = (
-  centerA: Coordinate,
-  centerB: Coordinate,
-  minX: number,
-  minY: number
-): boolean =>
-  Math.abs(centerA.x - centerB.x) < minX &&
-  Math.abs(centerA.y - centerB.y) < minY;
-
-// This function computes the collisions
-export const allCollision = (word: Rectangle, passRect: Rectangle[]): boolean =>
-  passRect
-    .map((rect) =>
-      areCentersTooClose(
-        rect,
-        word,
-        (rect.width + word.width) / 2,
-        (rect.height + word.height) / 2
-      )
-    )
-    .some((t) => t === true);
-
-// This function slides an array of rectangles
-export const slideWords = (
-  words: Rectangle[],
-  sliding: Coordinate
-): Rectangle[] => {
-  words.map((w) => {
-    w.x = w.x + sliding.x;
-    w.y = w.y + sliding.y;
-  });
-
-  return words;
-};
-
 // This function returns the aera of a rectangle
 export const getAreaRectangle = (rect: Rectangle): number => {
   return rect.height * rect.width;
@@ -340,6 +354,22 @@ export const placeFirstWord = (
   };
 
   return centeredRect;
+};
+
+export const getBoundingRect = (
+  id: string,
+  tagName: "svg" | "text" = "text"
+): Rectangle => {
+  const bbox =
+    (
+      document.getElementsByTagName(tagName).namedItem(id) || undefined
+    )?.getBoundingClientRect() || DEFAULT_RECT;
+  return {
+    x: bbox.x,
+    y: bbox.y,
+    width: bbox.width + MARGIN_WIDTH,
+    height: bbox.height + MARGIN_HEIGHT,
+  };
 };
 
 // This function returns the new position of a list of items

@@ -12,13 +12,23 @@ export type Coordinate = {
   y: number;
 };
 
+export type CenterCoordinate = {
+  cx: number;
+  cy: number;
+};
+
 export type Circle = {
   x: number;
   y: number;
   radius: number;
 };
 
-export type CategoryCloud<T, B> = { category: string; words: T[]; bound?: B };
+export type CategoryCloud<T> = {
+  category: string;
+  words: T[];
+};
+export type PlacedCategoryCloud<T, B> = CategoryCloud<T> & { bound: B };
 
 export type Word = InputNode & { rect: Rectangle };
-export type WordCloudData = CategoryCloud<Word, Rectangle>[];
+export type WordCloudData = CategoryCloud<Word>[];
+export type PlacedWordCloud = PlacedCategoryCloud<Word, Rectangle>[];

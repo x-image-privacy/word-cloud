@@ -6,4 +6,4 @@ export type InputNode = {
   coef: number;
 };
 
-export type ExplanationData = CategoryCloud<InputNode, never>[];
+export type ExplanationData = CategoryCloud<InputNode>[];
