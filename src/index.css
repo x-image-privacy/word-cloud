@@ -1,4 +1,41 @@
-:root {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white dark:bg-gray-950 text-gray-950 dark:text-white
+}
+
+fieldset {
+  @apply rounded-lg p-3 border border-gray-300;
+}
+
+legend {
+  @apply ml-1 px-1;
+}
+
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+  @apply bg-blue-400 dark:bg-purple-400 text-white;
+}
+
+.btn-green {
+  @apply bg-green-500 dark:bg-green-700 text-white;
+}
+
+.btn-blue:hover {
+  @apply bg-blue-700 dark:bg-purple-500;
+}
+
+text {
+  @apply fill-gray-800 dark:fill-gray-200
+}
+
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -12,8 +49,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
+} */
+/*
 div#root {
   height: 100vh;
 }
@@ -45,11 +82,11 @@ h1 {
 
 
  /* set fill color for svg text element */
-text {
+/* text {
   fill: rgba(255, 255, 255, 0.87);
-}
+} */
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -61,7 +98,7 @@ text {
     background-color: #f9f9f9;
   }
   /* set fill color for svg element */
-  text {
+  /* text {
     fill: #213547
-  }
-}
+  } */
+/* } */
