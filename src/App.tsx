@@ -55,13 +55,11 @@ const PRESET_DATA_KEY = "presetData";
 const HIDE_WORDS_KEY = "hideWords";
 const SHOW_BOUNDS_KEY = "showBounds";
 const SHOW_WORD_BOUNDS_KEY = "showWordBounds";
-const SHOW_ORIGIN_KEY = "showOrigin";
 
 const App = () => {
   const params = new URLSearchParams(window.location.search);
   const [settings, setSettings] = useState({
     [HIDE_WORDS_KEY]: params.has(HIDE_WORDS_KEY),
-    [SHOW_ORIGIN_KEY]: params.has(SHOW_ORIGIN_KEY),
     [SHOW_BOUNDS_KEY]: params.has(SHOW_BOUNDS_KEY),
     [SHOW_WORD_BOUNDS_KEY]: params.has(SHOW_WORD_BOUNDS_KEY),
   });
@@ -171,7 +169,6 @@ const App = () => {
           height="100%"
           width="100%"
           hideWords={settings[HIDE_WORDS_KEY]}
-          showOrigin={settings[SHOW_ORIGIN_KEY]}
           showBounds={settings[SHOW_BOUNDS_KEY]}
           showWordBounds={settings[SHOW_WORD_BOUNDS_KEY]}
         />
@@ -181,13 +178,13 @@ const App = () => {
           <CheckBoxSetting
             id={HIDE_WORDS_KEY}
             value={settings[HIDE_WORDS_KEY]}
-            label="Hide words"
+            label="Show Categories"
             onChange={() => handleCheckbox(HIDE_WORDS_KEY)}
           />
           <CheckBoxSetting
             id={SHOW_BOUNDS_KEY}
             value={settings[SHOW_BOUNDS_KEY]}
-            label="Show bounds"
+            label="Show Category bounds"
             onChange={() => handleCheckbox(SHOW_BOUNDS_KEY)}
           />
 
@@ -196,12 +193,6 @@ const App = () => {
             value={settings[SHOW_WORD_BOUNDS_KEY]}
             onChange={() => handleCheckbox(SHOW_WORD_BOUNDS_KEY)}
             label="Show word bounds"
-          />
-          <CheckBoxSetting
-            id={SHOW_ORIGIN_KEY}
-            value={settings[SHOW_ORIGIN_KEY]}
-            onChange={() => handleCheckbox(SHOW_ORIGIN_KEY)}
-            label="Show origin"
           />
         </SettingsWrapper>
       </div>
