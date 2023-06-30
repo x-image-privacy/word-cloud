@@ -2,45 +2,6 @@ import { useState } from "react";
 import { ExplanationData } from "../WordCloud";
 import { transformGPipelineData } from "./utils/transformations";
 
-type UseCaseButtonProps = {
-  isSelected: boolean;
-  children: string;
-  onClick: () => void;
-};
-
-const UseCaseButton = ({
-  isSelected,
-  onClick,
-  children,
-}: UseCaseButtonProps) => {
-  return (
-    <button
-      className={`btn inline-flex justify-center items-center btn-${
-        isSelected ? "green" : "blue"
-      }`}
-      onClick={onClick}
-    >
-      {isSelected && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6 mr-2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      )}
-      <span>{children}</span>
-    </button>
-  );
-};
-
 type Props = {
   label: string;
   description: string;
@@ -64,7 +25,6 @@ const UseCase = ({
     const nodes = await nodesFileData.json();
     const categoriesFileData = await fetch(categoriesFile);
     const categories = await categoriesFileData.json();
-    console.log(nodes, categories);
     const xData = transformGPipelineData(nodes, categories);
     onSubmit(xData);
     setLoadingData(false);
