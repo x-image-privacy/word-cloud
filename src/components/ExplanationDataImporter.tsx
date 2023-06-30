@@ -1,16 +1,7 @@
 import { useRef, useState } from "react";
 import { ExplanationData } from "../WordCloud";
-import { InputNode } from "../WordCloud/types";
-
-type Node = {
-  id: string;
-  name: string;
-  score: number;
-};
-
-type Category = {
-  elements: string[];
-} & Node;
+import { transformGPipelineData } from "./utils/transformations";
+import { Category, ExplainabilityNode } from "./types";
 
 type SuccessButtonProps = {
   isSuccess: boolean;
@@ -116,22 +107,13 @@ type Props = {
 };
 
 const ExplanationDataImporter = ({ onSubmit }: Props) => {
-  const [nodeData, setNodeData] = useState<Node[]>();
+  const [nodeData, setNodeData] = useState<ExplainabilityNode[]>();
   const [categoryData, setCategoryData] = useState<Category[]>();
   const [submitted, setSubmitted] = useState<boolean>();
 
   const handleTransform = () => {
     if (nodeData && categoryData) {
-      const xData = categoryData?.map((c) => ({
-        category: c.name,
-        words: c.elements.reduce<InputNode[]>((words, e) => {
-          const el = nodeData.find((n) => n.id === e);
-          if (el) {
-            words.push({ id: el.id, text: el.name, coef: el.score });
-          }
-          return words;
-        }, []),
-      }));
+      const xData = transformGPipelineData(nodeData, categoryData);
       onSubmit(xData);
       setSubmitted(true);
     }
