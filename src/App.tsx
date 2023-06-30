@@ -4,6 +4,7 @@ import { defaultWords1 } from "./data";
 import SettingsWrapper from "./components/SettingsWrapper";
 import CheckBoxSetting from "./components/CheckBoxSetting";
 import ExplanationDataImporter from "./components/ExplanationDataImporter";
+import UseCase from "./components/UseCase";
 
 const presetData = [
   { label: "3 word-clouds", value: defaultWords1 },
@@ -103,6 +104,15 @@ const App = () => {
                 onSubmit={(d) => setExplanationData(convertToString(d))}
               />
             </SettingsWrapper>
+            <SettingsWrapper title="From Use-Cases">
+              <UseCase
+                label="Privacy"
+                description="The Privacy use case categorizes concepts extracted from images into clusters of interest."
+                nodesFile="/privacy-use-case/nodes.json"
+                categoriesFile="/privacy-use-case/categories.json"
+                onSubmit={(d) => setExplanationData(convertToString(d))}
+              />
+            </SettingsWrapper>
             <SettingsWrapper title="From Presets">
               <div>
                 <label className="mr-2" htmlFor="preset-data">
@@ -150,7 +160,7 @@ const App = () => {
               className="btn btn-blue self-end"
               onClick={() => setData(convertFromString(explanationData))}
             >
-              Display Data
+              Update View
             </button>
           </div>
         </SettingsWrapper>
