@@ -108,8 +108,8 @@ const App = () => {
               <UseCase
                 label="Privacy"
                 description="The Privacy use case categorizes concepts extracted from images into clusters of interest."
-                nodesFile="/privacy-use-case/nodes.json"
-                categoriesFile="/privacy-use-case/categories.json"
+                nodesFile="./privacy-use-case/nodes.json"
+                categoriesFile="./privacy-use-case/categories.json"
                 onSubmit={(d) => setExplanationData(convertToString(d))}
               />
             </SettingsWrapper>
