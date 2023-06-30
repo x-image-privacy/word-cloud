@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { ExplanationData } from "./types";
 import WordBounds from "./WordBounds";
 import { PlacedWordCloud, Word, WordCloudData } from "./components/types";
+import CategoryCloudDisplay from "./components/CategoryCloudDisplay";
 
 const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
   wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
@@ -204,10 +205,12 @@ const Wordcloud = ({
             </rect>
           </>
         ))}
-        {!hideWords &&
-          wordClouds?.map((wordCloud) => (
-            <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
-              {wordCloud.words.map((word) => {
+        {wordClouds?.map((wordCloud) => (
+          <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
+            {hideWords ? (
+              <CategoryCloudDisplay wordCloud={wordCloud} />
+            ) : (
+              wordCloud.words.map((word) => {
                 const fontSize = computeFontSize(word.coef);
                 return (
                   <text
@@ -219,7 +222,6 @@ const Wordcloud = ({
                     fontSize={fontSize}
                     id={word.id}
                     x={(word.rect.x + word.rect.width / 2).toString()}
-                    // I don't know why I have to add the third of the fontSize to center te word vertically but it works
                     y={(word.rect.y + word.rect.height / 2).toString()}
                   >
                     {word.text}
@@ -228,9 +230,10 @@ const Wordcloud = ({
                     </title>
                   </text>
                 );
-              })}
-            </g>
-          ))}
+              })
+            )}
+          </g>
+        ))}
         <WordBounds showWordBounds={showWordBounds} wordClouds={wordClouds} />
       </svg>
     </>
