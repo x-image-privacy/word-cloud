@@ -11,15 +11,14 @@ import {
   WORD_CLOUD_MARGIN_HEIGHT,
   WORD_CLOUD_MARGIN_WIDTH,
 } from "./constants";
-import { CenterCoordinate, Circle, Coordinate, Rectangle, Word } from "./types";
+import {CenterCoordinate, Circle, Coordinate, Rectangle, Word} from "./types";
 
-export const computeFontSize = (coef: number): number => {
-  return (
-    (coef - CUT_OFF) *
-      (1 / (1 - CUT_OFF)) ** 2 *
-      (MAX_FONT_SIZE - MIN_FONT_SIZE) +
-    MIN_FONT_SIZE
-  );
+// linear interpolation (https://math.stackexchange.com/questions/914823/shift-numbers-into-a-different-range)
+export const computeFontSize = (coef: number, maxCoef: number, minCoef: number, minFontSize: number, maxFontSize: number): number => {
+  const fontInterval = maxFontSize - minFontSize;
+  const coefInterval = maxCoef - minCoef;
+
+  return minFontSize + fontInterval / coefInterval * (coef - minCoef);
 };
 
 // This function returns the bound of the word cloud
@@ -76,8 +75,8 @@ export const allCollision = (
   return passRect
     .map((rect) =>
       areCentersTooClose(
-        { cx: rect.x + rect.width / 2, cy: rect.y + rect.height / 2 },
-        { cx: word.x + word.width / 2, cy: word.y + word.height / 2 },
+        {cx: rect.x + rect.width / 2, cy: rect.y + rect.height / 2},
+        {cx: word.x + word.width / 2, cy: word.y + word.height / 2},
         (rect.width + word.width) / 2,
         (rect.height + word.height) / 2
       )
@@ -158,8 +157,8 @@ export const futurPosition = (
     };
     // Test if the word can be move over the hypotenuse
     if (allCollision(futurRectPosition, placedRects)) {
-      const onlyMoveOverX = { ...futurRectPosition, y: movedRect.y };
-      const onlyMoveOverY = { ...futurRectPosition, x: movedRect.x };
+      const onlyMoveOverX = {...futurRectPosition, y: movedRect.y};
+      const onlyMoveOverY = {...futurRectPosition, x: movedRect.x};
       const xColl = allCollision(onlyMoveOverX, placedRects);
       const yColl = allCollision(onlyMoveOverY, placedRects);
       if (xColl) {
@@ -167,13 +166,13 @@ export const futurPosition = (
           // Do not move anymore
           isDone = true;
         } else {
-          movedRect = { ...onlyMoveOverY };
+          movedRect = {...onlyMoveOverY};
         }
       } else {
-        movedRect = { ...onlyMoveOverX };
+        movedRect = {...onlyMoveOverX};
       }
     } else {
-      movedRect = { ...futurRectPosition };
+      movedRect = {...futurRectPosition};
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
@@ -217,9 +216,9 @@ export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
 
     const newX = (parent.width - word.width) / 2;
     const newY = (parent.height - word.height) / 2;
-    return { x: newX, y: newY, width: word.width, height: word.height };
+    return {x: newX, y: newY, width: word.width, height: word.height};
   }
-  return { x: 0, y: 0, width: 50, height: 20 };
+  return {x: 0, y: 0, width: 50, height: 20};
 };
 
 // This function return the distance between a rectangle and a cartesian coordinate
@@ -237,7 +236,7 @@ export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
       };
       return sum;
     },
-    { x: 0, y: 0 }
+    {x: 0, y: 0}
   );
   centerMass.x /= passRect.length;
   centerMass.y /= passRect.length;
@@ -259,7 +258,7 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
     CONTAINER_WIDTH / 2
   );
 
-  return { x: centerMass.x, y: centerMass.y, radius };
+  return {x: centerMass.x, y: centerMass.y, radius};
 };
 
 // This function return a random float between min and max
@@ -305,7 +304,7 @@ export const placeWordOnOuterCircle = (
       y: rangeInterval[inter + 1] - 1,
     };
   } else {
-    angleInter = { x: 0, y: 360 };
+    angleInter = {x: 0, y: 360};
   }
 
   const angle = randomInterval(angleInter.x, angleInter.y);
@@ -329,9 +328,9 @@ export const getMoveDirection = (
         x: word.x - currentRect.x,
         y: word.y - currentRect.y,
       };
-      return { x: acc.x + differences.x, y: acc.y + differences.y };
+      return {x: acc.x + differences.x, y: acc.y + differences.y};
     },
-    { x: 0, y: 0 }
+    {x: 0, y: 0}
   );
 };
 

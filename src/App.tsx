@@ -1,27 +1,28 @@
-import { ChangeEventHandler, useState } from "react";
-import Wordcloud, { ExplanationData } from "./WordCloud";
-import { defaultWords1 } from "./data";
+import {ChangeEventHandler, useState} from "react";
+import Wordcloud, {ExplanationData} from "./WordCloud";
+import {defaultWords1} from "./data";
 import SettingsWrapper from "./components/SettingsWrapper";
 import CheckBoxSetting from "./components/CheckBoxSetting";
 import ExplanationDataImporter from "./components/ExplanationDataImporter";
 import UseCase from "./components/UseCase";
+import {MAX_FONT_SIZE, MIN_FONT_SIZE} from "./WordCloud/components/constants";
 
 const presetData = [
-  { label: "3 word-clouds", value: defaultWords1 },
+  {label: "3 word-clouds", value: defaultWords1},
   {
     label: "single word word-clouds",
     value: [
       {
         category: "cat2",
-        words: [{ id: "2", text: "World", coef: 0.6 }],
+        words: [{id: "2", text: "World", coef: 0.6}],
       },
       {
         category: "cat1",
-        words: [{ id: "1", text: "Hello", coef: 1 }],
+        words: [{id: "1", text: "Hello", coef: 1}],
       },
       {
         category: "cat3",
-        words: [{ id: "3", text: "Helllo", coef: 0.55 }],
+        words: [{id: "3", text: "Helllo", coef: 0.55}],
       },
     ],
   },
@@ -74,6 +75,8 @@ const App = () => {
     convertToString(presetData[0].value)
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [minFontSize, setMinFontSize] = useState(MIN_FONT_SIZE);
+  const [maxFontSize, setMaxFontSize] = useState(MAX_FONT_SIZE);
 
   const handleInputData: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     const newValue = event.target.value;
@@ -88,8 +91,8 @@ const App = () => {
   };
 
   const handleCheckbox = (key: keyof typeof settings) => {
-    updateParams({ [key]: !settings[key] });
-    setSettings((p) => ({ ...p, [key]: !p[key] }));
+    updateParams({[key]: !settings[key]});
+    setSettings((p) => ({...p, [key]: !p[key]}));
   };
 
   return (
@@ -119,8 +122,8 @@ const App = () => {
                 <select
                   className="p-1 border border-gray-300 rounded bg-transparent"
                   value={selectedPresetValue}
-                  onChange={({ target: { value: chosenLabel } }) => {
-                    updateParams({ [PRESET_DATA_KEY]: chosenLabel });
+                  onChange={({target: {value: chosenLabel}}) => {
+                    updateParams({[PRESET_DATA_KEY]: chosenLabel});
                     setSelectedPresetValue(chosenLabel);
                     setExplanationData(
                       convertToString(
@@ -163,7 +166,55 @@ const App = () => {
           </div>
         </SettingsWrapper>
       </div>
-      <div className="resize box-border overflow-auto border border-gray-300 max-w-screen m-auto bg-blue-50 dark:bg-blue-900">
+      <div className="flex flex-row justify-center gap-2">
+        <SettingsWrapper title="Visualization">
+          <div className="flex flex-col">
+            <label className="mb-1" htmlFor="minFont">
+              Minimum Font Size
+            </label>
+            <input
+              className="bg-transparent rounded border border-gray-300"
+              id="data"
+              name="data"
+              type="number"
+              step={1}
+              value={minFontSize}
+              onChange={(event) => {
+                const v = parseInt(event.target.value);
+                setMinFontSize(v);
+                if (v > maxFontSize) {
+                  setMinFontSize(maxFontSize);
+                } else {
+                  setMinFontSize(v);
+                }
+              }}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="mb-1" htmlFor="minFont">
+              Maximum Font Size
+            </label>
+            <input
+              className="bg-transparent rounded border border-gray-300"
+              id="data"
+              name="data"
+              type="number"
+              step={1}
+              value={maxFontSize}
+              onChange={(event) => {
+                const v = parseInt(event.target.value);
+                if (v < minFontSize) {
+                  setMaxFontSize(minFontSize);
+                } else {
+                  setMaxFontSize(v);
+                }
+              }}
+            />
+          </div>
+        </SettingsWrapper>
+      </div>
+      <div
+        className="resize box-border overflow-auto border border-gray-300 max-w-screen m-auto bg-blue-50 dark:bg-blue-900">
         <Wordcloud
           data={data}
           height="100%"
@@ -171,6 +222,8 @@ const App = () => {
           hideWords={settings[HIDE_WORDS_KEY]}
           showBounds={settings[SHOW_BOUNDS_KEY]}
           showWordBounds={settings[SHOW_WORD_BOUNDS_KEY]}
+          minFontSize={minFontSize}
+          maxFontSize={maxFontSize}
         />
       </div>
       <div className="m-auto">

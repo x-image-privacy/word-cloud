@@ -20,5 +20,5 @@ export const NUMBER_OF_INTERVALS = 6;
 
 export const CUT_OFF = 0.5;
 
-export const MAX_FONT_SIZE = 20;
-export const MIN_FONT_SIZE = 6;
+export const MAX_FONT_SIZE = 50;
+export const MIN_FONT_SIZE = 10;
