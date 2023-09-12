@@ -1,0 +1,98 @@
+[
+    {
+        "data": {
+            "name": "kitchen",
+            "score": 0.036130096244321175,
+            "id": "c0",
+            "color": "#ae02e2"
+        }
+    },
+    {
+        "data": {
+            "name": "vehicle",
+            "score": 0.7918275929910786,
+            "id": "c1",
+            "color": "#003d5b"
+        }
+    },
+    {
+        "data": {
+            "name": "food",
+            "score": 0.09470090119799135,
+            "id": "c2",
+            "color": "#dd9d13"
+        }
+    },
+    {
+        "data": {
+            "name": "accessory",
+            "score": 0.2571571585102601,
+            "id": "c3",
+            "color": "#b20e31"
+        }
+    },
+    {
+        "data": {
+            "name": "sports",
+            "score": 0.7913268668078243,
+            "id": "c4",
+            "color": "#069b67"
+        }
+    },
+    {
+        "data": {
+            "name": "electronic",
+            "score": 0.9939624780369383,
+            "id": "c5",
+            "color": "#0d2893"
+        }
+    },
+    {
+        "data": {
+            "name": "indoor",
+            "score": 0.9562275883265232,
+            "id": "c6",
+            "color": "#d6d604"
+        }
+    },
+    {
+        "data": {
+            "name": "outdoor",
+            "score": 0.30679977637448674,
+            "id": "c7",
+            "color": "#137003"
+        }
+    },
+    {
+        "data": {
+            "name": "appliance",
+            "score": 0.060329260950528374,
+            "id": "c8",
+            "color": "#300875"
+        }
+    },
+    {
+        "data": {
+            "name": "furniture",
+            "score": 0.8125364179111876,
+            "id": "c9",
+            "color": "#ea1277"
+        }
+    },
+    {
+        "data": {
+            "name": "animal",
+            "score": 0.8665025102191475,
+            "id": "c10",
+            "color": "#d7db02"
+        }
+    },
+    {
+        "data": {
+            "name": "person",
+            "score": 0.577010028326078,
+            "id": "c11",
+            "color": "#01138c"
+        }
+    }
+]

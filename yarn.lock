@@ -890,6 +890,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.198":
+  version: 4.14.198
+  resolution: "@types/lodash@npm:4.14.198"
+  checksum: b290e4480707151bcec738bca40527915defe52a0d8e26c83685c674163a265e1a88cb2ee56b0fb587a89819d0cd5df86ada836aec3e9c2e4bf516e7d348d524
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 20.1.1
   resolution: "@types/node@npm:20.1.1"
@@ -901,6 +908,13 @@ __metadata:
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
+  languageName: node
+  linkType: hard
+
+"@types/randomcolor@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "@types/randomcolor@npm:0.5.7"
+  checksum: dd00a7ecbd58ce1539eb83640d1cfa2a0526911f8c4fffed538bbf0d8d94eaad698fda6bffd09d74bf904a35a8782b1474491dedeb366512b993812503fa2edf
   languageName: node
   linkType: hard
 
@@ -1025,6 +1039,8 @@ __metadata:
   resolution: "@x-image-privacy/wordcloud@workspace:."
   dependencies:
     "@trivago/prettier-plugin-sort-imports": ^4.2.0
+    "@types/lodash": ^4.14.198
+    "@types/randomcolor": ^0.5.7
     "@types/react": ^18.2.12
     "@types/react-cytoscapejs": ^1.2.2
     "@types/react-dom": ^18.2.5
@@ -1032,13 +1048,19 @@ __metadata:
     autoprefixer: ^10.4.14
     cytoscape: ^3.26.0
     cytoscape-avsdf: ^1.0.0
+    cytoscape-cise: ^1.0.0
     cytoscape-cola: ^2.5.1
+    cytoscape-compound-drag-and-drop: ^1.1.0
+    cytoscape-edgehandles: ^4.0.1
     cytoscape-fcose: ^2.2.0
+    lodash: ^4.17.21
     postcss: ^8.4.24
     prettier: ^3.0.3
+    randomcolor: ^0.6.2
     react: ^18.2.0
     react-cytoscapejs: ^2.0.0
     react-dom: ^18.2.0
+    rgb-hex: ^4.1.0
     tailwindcss: ^3.3.2
     typescript: ^5.1.3
     vite: ^4.3.9
@@ -1558,6 +1580,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cose-base@npm:^1.0.0":
+  version: 1.0.3
+  resolution: "cose-base@npm:1.0.3"
+  dependencies:
+    layout-base: ^1.0.0
+  checksum: 3f3d592316df74adb215ca91e430f1c22b6e890bc0025b32ae1f6464c73fdb9614816cb40a8d38b40c6a3e9e7b8c64eda90d53fb9a4a6948abec17dad496f30b
+  languageName: node
+  linkType: hard
+
 "cose-base@npm:^2.2.0":
   version: 2.2.0
   resolution: "cose-base@npm:2.2.0"
@@ -1594,6 +1625,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cytoscape-cise@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "cytoscape-cise@npm:1.0.0"
+  dependencies:
+    avsdf-base: ^1.0.0
+    cose-base: ^1.0.0
+  peerDependencies:
+    cytoscape: ^3.2.0
+  checksum: f43362484afaafab88a2141a48358e94803ad467dd3030aa7e18d02f4dc513214fac809867e1ca130abf5f41a82cddfb6e7388881c79df179ef0a1f595640bce
+  languageName: node
+  linkType: hard
+
 "cytoscape-cola@npm:^2.5.1":
   version: 2.5.1
   resolution: "cytoscape-cola@npm:2.5.1"
@@ -1602,6 +1645,27 @@ __metadata:
   peerDependencies:
     cytoscape: ^3.2.0
   checksum: 3a41a535919c42164adca6720d3d23a18e58dfdf92fe1c51fc2c5a636317a89bdedf00e5521bfa4f1e6673efec0e6db43957c0e9484f026c6cde168be344bffd
+  languageName: node
+  linkType: hard
+
+"cytoscape-compound-drag-and-drop@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "cytoscape-compound-drag-and-drop@npm:1.1.0"
+  peerDependencies:
+    cytoscape: ^3.4.0
+  checksum: 940db7feb5896531297d0479018f70ba38a377a2d6410b9c3bf0f5b16eee272cd5ed23d85d94d1dac4489013a0ae3c3d62902132584a80b33a588a54925721a9
+  languageName: node
+  linkType: hard
+
+"cytoscape-edgehandles@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "cytoscape-edgehandles@npm:4.0.1"
+  dependencies:
+    lodash.memoize: ^4.1.2
+    lodash.throttle: ^4.1.1
+  peerDependencies:
+    cytoscape: ^3.2.0
+  checksum: 758851cc2e2fcc375fd28106b82d4f540f64121edde6381dff07beac17bb49b9ecc6950f428c086cabadb48996d164f6deee662fbfc467a670d15db7220bd339
   languageName: node
   linkType: hard
 
@@ -2471,10 +2535,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.memoize@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.memoize@npm:4.1.2"
+  checksum: 9ff3942feeccffa4f1fafa88d32f0d24fdc62fd15ded5a74a5f950ff5f0c6f61916157246744c620173dddf38d37095a92327d5fd3861e2063e736a5c207d089
+  languageName: node
+  linkType: hard
+
 "lodash.pick@npm:^4.4.0":
   version: 4.4.0
   resolution: "lodash.pick@npm:4.4.0"
   checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
+  languageName: node
+  linkType: hard
+
+"lodash.throttle@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.throttle@npm:4.1.1"
+  checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
   languageName: node
   linkType: hard
 
@@ -3129,6 +3207,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"randomcolor@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "randomcolor@npm:0.6.2"
+  checksum: 539345c0289f7c52ffd8486e61231e19ccc40b1c4ab9c15594f20a2773b71a9317e0cc8b756160fc8a678ace9ed1e96a8ac90346b2c34c64dfd5acad91f9a73d
+  languageName: node
+  linkType: hard
+
 "react-cytoscapejs@npm:^2.0.0":
   version: 2.0.0
   resolution: "react-cytoscapejs@npm:2.0.0"
@@ -3269,6 +3354,13 @@ __metadata:
   version: 1.0.4
   resolution: "reusify@npm:1.0.4"
   checksum: c3076ebcc22a6bc252cb0b9c77561795256c22b757f40c0d8110b1300723f15ec0fc8685e8d4ea6d7666f36c79ccc793b1939c748bf36f18f542744a4e379fcc
+  languageName: node
+  linkType: hard
+
+"rgb-hex@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "rgb-hex@npm:4.1.0"
+  checksum: 662dcc1e9016852a0cd28250edc68a6bcf5ad07bf0ab92c2419da79b3ad6880cf94cdf93412f035c88662e2b8482d6852171a3c015ed5eec031613740edd791e
   languageName: node
   linkType: hard
 

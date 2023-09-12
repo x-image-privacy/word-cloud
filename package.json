@@ -17,14 +17,22 @@
   "dependencies": {
     "cytoscape": "^3.26.0",
     "cytoscape-avsdf": "^1.0.0",
+    "cytoscape-cise": "^1.0.0",
     "cytoscape-cola": "^2.5.1",
+    "cytoscape-compound-drag-and-drop": "^1.1.0",
+    "cytoscape-edgehandles": "^4.0.1",
     "cytoscape-fcose": "^2.2.0",
+    "lodash": "^4.17.21",
+    "randomcolor": "^0.6.2",
     "react": "^18.2.0",
     "react-cytoscapejs": "^2.0.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "rgb-hex": "^4.1.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/lodash": "^4.14.198",
+    "@types/randomcolor": "^0.5.7",
     "@types/react": "^18.2.12",
     "@types/react-cytoscapejs": "^1.2.2",
     "@types/react-dom": "^18.2.5",

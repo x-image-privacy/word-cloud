@@ -1,9 +1,10 @@
 import { ElementDefinition } from 'cytoscape';
 
 export type NodeData = {
-  id: number;
+  id: string;
   name: string;
   score: number;
+  parent?: string;
 };
 
 export type EdgeData = {

@@ -1,13 +1,22 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
-import Cytoscape from 'cytoscape';
+import Cytoscape, { ElementDefinition, NodeSingular } from 'cytoscape';
 // @ts-ignore
 import avsdf from 'cytoscape-avsdf';
 // @ts-ignore
+import cise from 'cytoscape-cise';
+// @ts-ignore
 import cola from 'cytoscape-cola';
 // @ts-ignore
+import compoundDragAndDrop from 'cytoscape-compound-drag-and-drop';
+// @ts-ignore
+import edgehandles from 'cytoscape-edgehandles';
+// @ts-ignore
 import fcose from 'cytoscape-fcose';
+import _ from 'lodash';
+import randomColor from 'randomcolor';
+import rgbHex from 'rgb-hex';
 
 import { ExplanationData } from './WordCloud';
 import CheckBoxSetting from './components/CheckBoxSetting';
@@ -15,11 +24,30 @@ import ExplanationDataImporter from './components/ExplanationDataImporter';
 import SettingsWrapper from './components/SettingsWrapper';
 import UseCase from './components/UseCase';
 import { defaultWords1 } from './data';
-import elements from './data/graph';
+import graph from './data/graph';
 
 Cytoscape.use(fcose);
 Cytoscape.use(cola);
 Cytoscape.use(avsdf);
+Cytoscape.use(cise);
+Cytoscape.use(compoundDragAndDrop);
+Cytoscape.use(edgehandles);
+
+// todo: figure out how to uncache for nodes that change color
+// const selectTextOutlineColor = _.memoize(function (ele: NodeSingular) {
+//   if (ele.isParent()) {
+//     return ele.data()['color'];
+//   }
+//
+//   if (ele.isChild()) {
+//     return randomColor({
+//       luminosity: 'dark',
+//       hue: ele.parent().data()['color'],
+//     });
+//   }
+//
+//   return 'gray';
+// });
 
 const presetData = [
   { label: '3 word-clouds', value: defaultWords1 },
@@ -72,6 +100,14 @@ const SHOW_BOUNDS_KEY = 'showBounds';
 const SHOW_WORD_BOUNDS_KEY = 'showWordBounds';
 
 const App = () => {
+  // todo: for mounting/unmounting
+  // useEffect(() => {
+  //   // anything in here is fired on component mount.
+  //   return () => {
+  //     // anything in here is fired on component unmount.
+  //   };
+  // }, []);
+
   const params = new URLSearchParams(window.location.search);
   const [settings, setSettings] = useState({
     [HIDE_WORDS_KEY]: params.has(HIDE_WORDS_KEY),
@@ -91,6 +127,11 @@ const App = () => {
   );
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [nodes, setNodes] = useState<ElementDefinition[]>(graph.nodes);
+  const [edges, setEdges] = useState<ElementDefinition[]>(graph.edges);
+
+  const elements = { nodes, edges };
+
   const handleInputData: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     const newValue = event.target.value;
     setExplanationData(newValue);
@@ -108,40 +149,71 @@ const App = () => {
     setSettings((p) => ({ ...p, [key]: !p[key] }));
   };
 
+  const scores = elements.nodes.map((node) => node.data.score);
+  const minScore = Math.min(...scores);
+  const maxScore = Math.max(...scores);
+
   const stylesheet = [
     {
-      selector: 'node',
+      selector: 'node[score][name]',
       style: {
-        // width: "label",
-        // height: "data(height)",
-        // shape: 'none',
         label: 'data(name)',
         backgroundOpacity: 0,
-        fontSize: 'mapData(score, 0, 1, 10, 20)',
+        fontSize: `mapData(score, ${minScore}, ${maxScore}, 1, 20)`,
         color: 'white',
         textHalign: 'center',
         textValign: 'center',
-        textOutlineColor: 'mapData(score, 0, 1, blue, red)',
+        // textOutlineColor: `mapData(score, ${minScore}, ${maxScore}, blue, red)`,
+        textOutlineOpacity: 0,
         textOutlineWidth: 5,
+      },
+    },
+    {
+      selector: 'node:orphan',
+      style: {
+        textOutlineColor: 'gray',
+        textOutlineOpacity: 1,
       },
     },
     {
       selector: 'edge',
       style: {
         width: 1,
+        opacity: 0.5,
+      },
+    },
+    {
+      selector: 'node:parent[color]',
+      style: {
+        borderColor: 'data(color)',
+        backgroundColor: 'data(color)',
+        textOutlineColor: 'data(color)',
+        textOutlineOpacity: 1,
+        backgroundOpacity: 0.75,
+        shape: 'roundrectangle',
+        textHalign: 'center',
+        textValign: 'top',
+        compoundSizingWrtLabels: 'include',
+      },
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        textOutlineOpacity: 1,
+        textOutlineColor: 'red',
       },
     },
   ];
 
-  // const elements = [
-  //     {data: {id: 'one', label: 'Node 1', score: 0.5}, position: {x: 100, y: 100} },
-  //     {data: {id: 'two', label: 'Node 2', score: 0.9}, position: {x: 50, y: 50}},
-  //     {data: {source: 'one', target: 'two', label: 'Edge from Node1 to Node2'}}
-  // ];
-
   // const layout = { name: 'fcose' };
-  // const layout = { name: 'cola' };
-  const layout = { name: 'random' };
+  const layout = { name: 'cola' };
+  // const layout = { name: 'random' };
+  // const layout = { name: 'cose' };
+  // const layout = { name: 'circle' };
+  // const layout = { name: 'concentric' };
+  // const layout = { name: 'grid' };
+  // const layout = { name: 'avsdf' };
+  // const layout = { name: 'cise' };
 
   return (
     <div className="flex flex-col m-2 gap-2">
@@ -220,6 +292,65 @@ const App = () => {
           stylesheet={stylesheet}
           style={{ width: '1500px', height: '1500px' }}
           layout={layout}
+          cy={(cy) => {
+            // todo: enable edge drawing
+            // // @ts-ignore
+            // const eh = cy.edgehandles();
+            // eh.enable();
+            // const enableDrawingEdges = (event: KeyboardEvent) => {
+            //   console.log(event.shiftKey, event.code);
+            //   if (event.shiftKey && event.code === 'KeyD') {
+            //     const elem = cy.$('node:selected');
+            //     console.log(elem);
+            //     eh.start();
+            //   }
+            // };
+            // removeEventListener('keypress', enableDrawingEdges);
+            // addEventListener('keypress', enableDrawingEdges);
+
+            const options = {
+              newParentNode: () => {
+                const parentColor = randomColor({
+                  luminosity: 'dark',
+                });
+                const data = {
+                  color: parentColor,
+                  name: 'New Parent',
+                  score: 0.5,
+                };
+                return { data };
+              },
+            };
+            // @ts-ignore
+            const cdnd = cy.compoundDragAndDrop(options);
+            cdnd.enable();
+
+            cy.on('dblclick', function (event) {
+              if (event.target === cy) {
+                cy.add({
+                  group: 'nodes',
+                  data: {
+                    id: randomColor(),
+                    name: 'New Node',
+                    score: 0.5,
+                  },
+                  position: event.position,
+                });
+              }
+            });
+            cy.on('cxttap', 'node', function (event) {
+              const ele = event.target;
+              if (ele !== cy) {
+                ele.remove();
+              }
+            });
+            cy.on('cxttap', 'edge', function (event) {
+              const ele = event.target;
+              if (ele !== cy) {
+                ele.remove();
+              }
+            });
+          }}
         />
       </div>
       <div className="m-auto">
