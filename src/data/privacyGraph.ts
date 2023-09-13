@@ -20,36 +20,23 @@ import { GraphData, GraphNode, NodeData } from './types';
 // });
 // console.log(newNodes);
 
-const coloredCategories = categories.map((category) => {
-  return {
-    data: {
-      name: category.data.name,
-      score: category.data.score,
-      id: category.data.id.toString(),
-      color: randomColor({
-        luminosity: 'dark',
-      }),
-    },
-  };
-});
-
-export function getElements(showCategories: Boolean): GraphData {
-  if (showCategories) {
-    return {
-      nodes: [...nodes, ...coloredCategories],
-      edges,
-    };
-  }
-  return {
-    nodes,
-    edges,
-  };
-}
+// const coloredNodes = nodes.map((category) => {
+//   return {
+//     data: {
+//       ...category.data,
+//       color: randomColor({
+//         luminosity: 'dark',
+//         hue: category.data.parent,
+//       }),
+//     },
+//   };
+// });
+// console.log(coloredNodes);
 
 const elems: GraphData = {
-  nodes: [...nodes, ...coloredCategories],
-  // nodes,
+  nodes,
   edges,
+  parentNodes: categories,
 };
 
 export default elems;

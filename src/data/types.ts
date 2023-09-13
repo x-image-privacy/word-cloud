@@ -24,4 +24,5 @@ export type GraphEdge = {
 export type GraphData = {
   nodes: ElementDefinition[];
   edges: ElementDefinition[];
+  parentNodes: ElementDefinition[];
 };

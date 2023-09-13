@@ -3,14 +3,16 @@
     "data": {
       "id": "0",
       "name": "private",
-      "score": 0.3997
+      "score": 0.3997,
+      "color": "#a8030b"
     }
   },
   {
     "data": {
       "id": "1",
       "name": "public",
-      "score": 0.0925
+      "score": 0.0925,
+      "color": "#aa0dbf"
     }
   },
   {
@@ -18,7 +20,8 @@
       "id": "2",
       "name": "person",
       "score": 0.8306,
-      "parent": "c11"
+      "parent": "c11",
+      "color": "#890604"
     }
   },
   {
@@ -26,7 +29,8 @@
       "id": "3",
       "name": "bicycle",
       "score": 0.5445,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#057387"
     }
   },
   {
@@ -34,7 +38,8 @@
       "id": "4",
       "name": "car",
       "score": 0.8041,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#307f06"
     }
   },
   {
@@ -42,7 +47,8 @@
       "id": "5",
       "name": "motorbike",
       "score": 0.8976,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#f9ea18"
     }
   },
   {
@@ -50,7 +56,8 @@
       "id": "6",
       "name": "aeroplane",
       "score": 0.0568,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#e2c400"
     }
   },
   {
@@ -58,7 +65,8 @@
       "id": "7",
       "name": "bus",
       "score": 0.2308,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#e202df"
     }
   },
   {
@@ -66,7 +74,8 @@
       "id": "8",
       "name": "train",
       "score": 0.285,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#8c0414"
     }
   },
   {
@@ -74,7 +83,8 @@
       "id": "9",
       "name": "truck",
       "score": 0.5052,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#2ca009"
     }
   },
   {
@@ -82,7 +92,8 @@
       "id": "10",
       "name": "boat",
       "score": 0.156,
-      "parent": "c1"
+      "parent": "c1",
+      "color": "#b304ed"
     }
   },
   {
@@ -90,7 +101,8 @@
       "id": "11",
       "name": "traffic light",
       "score": 0.251,
-      "parent": "c7"
+      "parent": "c7",
+      "color": "#a81906"
     }
   },
   {
@@ -98,7 +110,8 @@
       "id": "12",
       "name": "fire hydrant",
       "score": 0.155,
-      "parent": "c7"
+      "parent": "c7",
+      "color": "#217f0c"
     }
   },
   {
@@ -106,7 +119,8 @@
       "id": "13",
       "name": "stop sign",
       "score": 0.1279,
-      "parent": "c7"
+      "parent": "c7",
+      "color": "#a83200"
     }
   },
   {
@@ -114,7 +128,8 @@
       "id": "14",
       "name": "parking meter",
       "score": 0.4257,
-      "parent": "c7"
+      "parent": "c7",
+      "color": "#4e7a08"
     }
   },
   {
@@ -122,7 +137,8 @@
       "id": "15",
       "name": "bench",
       "score": 0.6162,
-      "parent": "c7"
+      "parent": "c7",
+      "color": "#a80f3f"
     }
   },
   {
@@ -130,7 +146,8 @@
       "id": "16",
       "name": "bird",
       "score": 0.6427,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#870d02"
     }
   },
   {
@@ -138,7 +155,8 @@
       "id": "17",
       "name": "cat",
       "score": 0.2701,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#b51507"
     }
   },
   {
@@ -146,7 +164,8 @@
       "id": "18",
       "name": "dog",
       "score": 0.1785,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#9e170b"
     }
   },
   {
@@ -154,7 +173,8 @@
       "id": "19",
       "name": "horse",
       "score": 0.0419,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#a31c10"
     }
   },
   {
@@ -162,7 +182,8 @@
       "id": "20",
       "name": "sheep",
       "score": 0.1666,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#a3190d"
     }
   },
   {
@@ -170,7 +191,8 @@
       "id": "21",
       "name": "cow",
       "score": 0.4187,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#a51609"
     }
   },
   {
@@ -178,7 +200,8 @@
       "id": "22",
       "name": "elephant",
       "score": 0.916,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#910d01"
     }
   },
   {
@@ -186,7 +209,8 @@
       "id": "23",
       "name": "bear",
       "score": 0.0699,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#b71405"
     }
   },
   {
@@ -194,7 +218,8 @@
       "id": "24",
       "name": "zebra",
       "score": 0.6559,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#9b1407"
     }
   },
   {
@@ -202,7 +227,8 @@
       "id": "25",
       "name": "giraffe",
       "score": 0.4271,
-      "parent": "c10"
+      "parent": "c10",
+      "color": "#a01609"
     }
   },
   {
@@ -210,7 +236,8 @@
       "id": "26",
       "name": "backpack",
       "score": 0.2111,
-      "parent": "c3"
+      "parent": "c3",
+      "color": "#c40b64"
     }
   },
   {
@@ -218,7 +245,8 @@
       "id": "27",
       "name": "umbrella",
       "score": 0.7296,
-      "parent": "c3"
+      "parent": "c3",
+      "color": "#ccbc0e"
     }
   },
   {
@@ -226,7 +254,8 @@
       "id": "28",
       "name": "handbag",
       "score": 0.2427,
-      "parent": "c3"
+      "parent": "c3",
+      "color": "#c6a109"
     }
   },
   {
@@ -234,7 +263,8 @@
       "id": "29",
       "name": "tie",
       "score": 0.392,
-      "parent": "c3"
+      "parent": "c3",
+      "color": "#0c588e"
     }
   },
   {
@@ -242,7 +272,8 @@
       "id": "30",
       "name": "suitcase",
       "score": 0.8415,
-      "parent": "c3"
+      "parent": "c3",
+      "color": "#0faf3f"
     }
   },
   {
@@ -250,7 +281,8 @@
       "id": "31",
       "name": "frisbee",
       "score": 0.2431,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#580b84"
     }
   },
   {
@@ -258,7 +290,8 @@
       "id": "32",
       "name": "skis",
       "score": 0.1585,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#002f60"
     }
   },
   {
@@ -266,7 +299,8 @@
       "id": "33",
       "name": "snowboard",
       "score": 0.8859,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#b7124e"
     }
   },
   {
@@ -274,7 +308,8 @@
       "id": "34",
       "name": "sports ball",
       "score": 0.819,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#360a9b"
     }
   },
   {
@@ -282,7 +317,8 @@
       "id": "35",
       "name": "kite",
       "score": 0.0196,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#04897a"
     }
   },
   {
@@ -290,7 +326,8 @@
       "id": "36",
       "name": "baseball bat",
       "score": 0.2863,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#9b2909"
     }
   },
   {
@@ -298,7 +335,8 @@
       "id": "37",
       "name": "baseball glove",
       "score": 0.4496,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#650c8e"
     }
   },
   {
@@ -306,7 +344,8 @@
       "id": "38",
       "name": "skateboard",
       "score": 0.1255,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#bc106f"
     }
   },
   {
@@ -314,7 +353,8 @@
       "id": "39",
       "name": "surfboard",
       "score": 0.4843,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#910433"
     }
   },
   {
@@ -322,7 +362,8 @@
       "id": "40",
       "name": "tennis racket",
       "score": 0.4433,
-      "parent": "c4"
+      "parent": "c4",
+      "color": "#3e057f"
     }
   },
   {
@@ -330,7 +371,8 @@
       "id": "41",
       "name": "bottle",
       "score": 0.8865,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#6a9107"
     }
   },
   {
@@ -338,7 +380,8 @@
       "id": "42",
       "name": "wine glass",
       "score": 0.3414,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#1c0063"
     }
   },
   {
@@ -346,7 +389,8 @@
       "id": "43",
       "name": "cup",
       "score": 0.3147,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#0a2e72"
     }
   },
   {
@@ -354,7 +398,8 @@
       "id": "44",
       "name": "fork",
       "score": 0.2458,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#c60174"
     }
   },
   {
@@ -362,7 +407,8 @@
       "id": "45",
       "name": "knife",
       "score": 0.3125,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#46990f"
     }
   },
   {
@@ -370,7 +416,8 @@
       "id": "46",
       "name": "spoon",
       "score": 0.3645,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#007571"
     }
   },
   {
@@ -378,7 +425,8 @@
       "id": "47",
       "name": "bowl",
       "score": 0.1657,
-      "parent": "c0"
+      "parent": "c0",
+      "color": "#019155"
     }
   },
   {
@@ -386,7 +434,8 @@
       "id": "48",
       "name": "banana",
       "score": 0.8322,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#ba1019"
     }
   },
   {
@@ -394,7 +443,8 @@
       "id": "49",
       "name": "apple",
       "score": 0.7334,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#02656b"
     }
   },
   {
@@ -402,7 +452,8 @@
       "id": "50",
       "name": "sandwich",
       "score": 0.6392,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#ad0118"
     }
   },
   {
@@ -410,7 +461,8 @@
       "id": "51",
       "name": "orange",
       "score": 0.1126,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#d804bc"
     }
   },
   {
@@ -418,7 +470,8 @@
       "id": "52",
       "name": "broccoli",
       "score": 0.4412,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#08047a"
     }
   },
   {
@@ -426,7 +479,8 @@
       "id": "53",
       "name": "carrot",
       "score": 0.0435,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#48840d"
     }
   },
   {
@@ -434,7 +488,8 @@
       "id": "54",
       "name": "hot dog",
       "score": 0.3056,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#5e0191"
     }
   },
   {
@@ -442,7 +497,8 @@
       "id": "55",
       "name": "pizza",
       "score": 0.0254,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#09a018"
     }
   },
   {
@@ -450,7 +506,8 @@
       "id": "56",
       "name": "donut",
       "score": 0.9916,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#09247a"
     }
   },
   {
@@ -458,7 +515,8 @@
       "id": "57",
       "name": "cake",
       "score": 0.3759,
-      "parent": "c2"
+      "parent": "c2",
+      "color": "#f7e70e"
     }
   },
   {
@@ -466,7 +524,8 @@
       "id": "58",
       "name": "chair",
       "score": 0.7682,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#bc7503"
     }
   },
   {
@@ -474,7 +533,8 @@
       "id": "59",
       "name": "sofa",
       "score": 0.6534,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#051a5e"
     }
   },
   {
@@ -482,7 +542,8 @@
       "id": "60",
       "name": "pottedplant",
       "score": 0.5422,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#961e0f"
     }
   },
   {
@@ -490,7 +551,8 @@
       "id": "61",
       "name": "bed",
       "score": 0.7645,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#279300"
     }
   },
   {
@@ -498,7 +560,8 @@
       "id": "62",
       "name": "diningtable",
       "score": 0.6762,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#064c6b"
     }
   },
   {
@@ -506,7 +569,8 @@
       "id": "63",
       "name": "toilet",
       "score": 0.8873,
-      "parent": "c9"
+      "parent": "c9",
+      "color": "#006d2d"
     }
   },
   {
@@ -514,7 +578,8 @@
       "id": "64",
       "name": "tvmonitor",
       "score": 0.5894,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#006d5f"
     }
   },
   {
@@ -522,7 +587,8 @@
       "id": "65",
       "name": "laptop",
       "score": 0.7115,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#9b043e"
     }
   },
   {
@@ -530,7 +596,8 @@
       "id": "66",
       "name": "mouse",
       "score": 0.5317,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#5e0ba3"
     }
   },
   {
@@ -538,7 +605,8 @@
       "id": "67",
       "name": "remote",
       "score": 0.2525,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#d60683"
     }
   },
   {
@@ -546,7 +614,8 @@
       "id": "68",
       "name": "keyboard",
       "score": 0.6879,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#045d60"
     }
   },
   {
@@ -554,7 +623,8 @@
       "id": "69",
       "name": "cell phone",
       "score": 0.8533,
-      "parent": "c5"
+      "parent": "c5",
+      "color": "#b5124d"
     }
   },
   {
@@ -562,7 +632,8 @@
       "id": "70",
       "name": "microwave",
       "score": 0.6426,
-      "parent": "c8"
+      "parent": "c8",
+      "color": "#270b82"
     }
   },
   {
@@ -570,7 +641,8 @@
       "id": "71",
       "name": "oven",
       "score": 0.9994,
-      "parent": "c8"
+      "parent": "c8",
+      "color": "#109e06"
     }
   },
   {
@@ -578,7 +650,8 @@
       "id": "72",
       "name": "toaster",
       "score": 0.4629,
-      "parent": "c8"
+      "parent": "c8",
+      "color": "#c10f7d"
     }
   },
   {
@@ -586,7 +659,8 @@
       "id": "73",
       "name": "sink",
       "score": 0.4069,
-      "parent": "c8"
+      "parent": "c8",
+      "color": "#9b0d44"
     }
   },
   {
@@ -594,7 +668,8 @@
       "id": "74",
       "name": "refrigerator",
       "score": 0.7855,
-      "parent": "c8"
+      "parent": "c8",
+      "color": "#33088e"
     }
   },
   {
@@ -602,7 +677,8 @@
       "id": "75",
       "name": "book",
       "score": 0.9992,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#c17a00"
     }
   },
   {
@@ -610,7 +686,8 @@
       "id": "76",
       "name": "clock",
       "score": 0.1941,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#bf1117"
     }
   },
   {
@@ -618,7 +695,8 @@
       "id": "77",
       "name": "vase",
       "score": 0.0018,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#067f34"
     }
   },
   {
@@ -626,7 +704,8 @@
       "id": "78",
       "name": "scissors",
       "score": 0.9892,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#00145e"
     }
   },
   {
@@ -634,7 +713,8 @@
       "id": "79",
       "name": "teddy bear",
       "score": 0.179,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#04186b"
     }
   },
   {
@@ -642,7 +722,8 @@
       "id": "80",
       "name": "hair drier",
       "score": 0.33,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#1f9105"
     }
   },
   {
@@ -650,7 +731,8 @@
       "id": "81",
       "name": "toothbrush",
       "score": 0.509,
-      "parent": "c6"
+      "parent": "c6",
+      "color": "#c10b6c"
     }
   }
 ]
