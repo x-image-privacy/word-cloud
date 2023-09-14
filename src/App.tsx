@@ -90,16 +90,8 @@ const App = () => {
   const [minWeight, setMinWeight] = useState<Number>(Math.min(...weights));
   const [maxWeight, setMaxWeight] = useState<Number>(Math.max(...weights));
 
-  useEffect(() => {
-    // anything in here is fired on component mount.
-
-    return () => {
-      // anything in here is fired on component unmount.
-    };
-  }, []);
-
-  // const layout = { name: 'fcose' };
-  const layout = { name: 'cola' };
+  const layout = { name: 'fcose' };
+  // const layout = { name: 'cola' };
   // const layout = { name: 'random' };
   // const layout = { name: 'cose' };
   // const layout = { name: 'circle' };
@@ -240,14 +232,14 @@ const App = () => {
           .update();
       }
 
-      if (
-        settings[SHOW_NODES_KEY] ||
-        settings[SHOW_PARENT_NODES_KEY] ||
-        settings[SHOW_EDGES_KEY]
-      ) {
-        const l = cyHandle.layout(layout);
-        l.run();
-      }
+      // if (
+      //   settings[SHOW_NODES_KEY] ||
+      //   settings[SHOW_PARENT_NODES_KEY] ||
+      //   settings[SHOW_EDGES_KEY]
+      // ) {
+      //   const l = cyHandle.layout(layout);
+      //   l.run();
+      // }
     }
 
     return () => {
