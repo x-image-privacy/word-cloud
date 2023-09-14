@@ -1,0 +1,194 @@
+[
+  {
+    "data": {
+      "id": "chrom_1",
+      "name": "chrom_1",
+      "score": 1,
+      "color": "#8f9b0a"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_10",
+      "name": "chrom_10",
+      "score": 1,
+      "color": "#021e66"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_11",
+      "name": "chrom_11",
+      "score": 1,
+      "color": "#bc0ac9"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_12",
+      "name": "chrom_12",
+      "score": 1,
+      "color": "#090468"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_13",
+      "name": "chrom_13",
+      "score": 1,
+      "color": "#063963"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_14",
+      "name": "chrom_14",
+      "score": 1,
+      "color": "#f2cb07"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_15",
+      "name": "chrom_15",
+      "score": 1,
+      "color": "#0b918c"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_16",
+      "name": "chrom_16",
+      "score": 1,
+      "color": "#6a9904"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_17",
+      "name": "chrom_17",
+      "score": 1,
+      "color": "#4910a5"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_18",
+      "name": "chrom_18",
+      "score": 1,
+      "color": "#e7ea12"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_19",
+      "name": "chrom_19",
+      "score": 1,
+      "color": "#cc0aa5"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_2",
+      "name": "chrom_2",
+      "score": 1,
+      "color": "#d60a7a"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_20",
+      "name": "chrom_20",
+      "score": 1,
+      "color": "#43009b"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_21",
+      "name": "chrom_21",
+      "score": 1,
+      "color": "#567200"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_22",
+      "name": "chrom_22",
+      "score": 1,
+      "color": "#074270"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_3",
+      "name": "chrom_3",
+      "score": 1,
+      "color": "#d60cb1"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_4",
+      "name": "chrom_4",
+      "score": 1,
+      "color": "#064b7c"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_5",
+      "name": "chrom_5",
+      "score": 1,
+      "color": "#267001"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_6",
+      "name": "chrom_6",
+      "score": 1,
+      "color": "#00236b"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_7",
+      "name": "chrom_7",
+      "score": 1,
+      "color": "#029121"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_8",
+      "name": "chrom_8",
+      "score": 1,
+      "color": "#0a3972"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_9",
+      "name": "chrom_9",
+      "score": 1,
+      "color": "#20037c"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_X",
+      "name": "chrom_X",
+      "score": 1,
+      "color": "#0c9936"
+    }
+  },
+  {
+    "data": {
+      "id": "chrom_unknown",
+      "name": "chrom_unknown",
+      "score": 1,
+      "color": "#000b5e"
+    }
+  }
+]

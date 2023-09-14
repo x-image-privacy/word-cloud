@@ -1,0 +1,3842 @@
+[
+  {
+    "data": {
+      "id": "1",
+      "name": "TNMD",
+      "score": 0.002022144151851535,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "57",
+      "name": "HSPB6",
+      "score": 0.0017116417875513434,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "94",
+      "name": "MPO",
+      "score": 0.0014954549260437489,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "196",
+      "name": "E2F2",
+      "score": 0.0014272081898525357,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "225",
+      "name": "MAPK8IP2",
+      "score": 0.0014144730521366,
+      "parent": "chrom_22"
+    }
+  },
+  {
+    "data": {
+      "id": "370",
+      "name": "CLCA4",
+      "score": 0.0011053383350372314,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "388",
+      "name": "MARCO",
+      "score": 0.0010573823237791657,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "414",
+      "name": "FHL1",
+      "score": 0.0031011200044304132,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "440",
+      "name": "DEPDC1",
+      "score": 0.0014866037527099252,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "599",
+      "name": "ADRB1",
+      "score": 0.0019630941096693277,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "659",
+      "name": "TNFRSF9",
+      "score": 0.0011744300136342645,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "668",
+      "name": "FOXP3",
+      "score": 0.0012565338984131813,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "682",
+      "name": "PTGER3",
+      "score": 0.0010058798361569643,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "735",
+      "name": "CBLN4",
+      "score": 0.0011933567002415657,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "839",
+      "name": "DGAT2",
+      "score": 0.0018782359547913074,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "1022",
+      "name": "PDZD4",
+      "score": 0.001194387674331665,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "1060",
+      "name": "PYGM",
+      "score": 0.0017482409020885825,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "1062",
+      "name": "PITX1",
+      "score": 0.0016249610343948007,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "1117",
+      "name": "ST6GALNAC1",
+      "score": 0.0011202233145013452,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "1137",
+      "name": "EPHA8",
+      "score": 0.0012009890051558614,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "1223",
+      "name": "TP63",
+      "score": 0.001954168314114213,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "1240",
+      "name": "PTGS2",
+      "score": 0.0018047626363113523,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "1371",
+      "name": "UBE2T",
+      "score": 0.0011164866155013442,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "1372",
+      "name": "PPP1R12B",
+      "score": 0.0017609507776796818,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "1430",
+      "name": "ITM2A",
+      "score": 0.0016806544736027718,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "1436",
+      "name": "BRINP1",
+      "score": 0.0012508407235145569,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "1472",
+      "name": "SCGN",
+      "score": 0.0012833880027756095,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "1604",
+      "name": "EPYC",
+      "score": 0.0024140644818544388,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "1634",
+      "name": "APOB",
+      "score": 0.0038911481387913227,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "1663",
+      "name": "ABCB1",
+      "score": 0.001207291497848928,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "1706",
+      "name": "PPEF1",
+      "score": 0.002167344791814685,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "1770",
+      "name": "TPX2",
+      "score": 0.0010228399187326431,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "1803",
+      "name": "TESC",
+      "score": 0.0015135927824303508,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "1839",
+      "name": "FXYD3",
+      "score": 0.0011551211355254054,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "2140",
+      "name": "MMP11",
+      "score": 0.002731417305767536,
+      "parent": "chrom_22"
+    }
+  },
+  {
+    "data": {
+      "id": "2329",
+      "name": "CDKN3",
+      "score": 0.0013945014216005802,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "2428",
+      "name": "MYBL2",
+      "score": 0.0023368499241769314,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "2435",
+      "name": "RIMS4",
+      "score": 0.0015898743877187371,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "2544",
+      "name": "CDH20",
+      "score": 0.0016226834850385785,
+      "parent": "chrom_18"
+    }
+  },
+  {
+    "data": {
+      "id": "2651",
+      "name": "KLHL4",
+      "score": 0.0013039486948400736,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "2688",
+      "name": "SGCG",
+      "score": 0.002048422349616885,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "2702",
+      "name": "MEDAG",
+      "score": 0.0014292687410488725,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "2705",
+      "name": "OLFM4",
+      "score": 0.0013526728143915534,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "2748",
+      "name": "HAS3",
+      "score": 0.0010072984732687473,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "2872",
+      "name": "SCG3",
+      "score": 0.0010679936967790127,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "2896",
+      "name": "TRPA1",
+      "score": 0.0010919489432126284,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "2989",
+      "name": "SLC17A7",
+      "score": 0.00132022297475487,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3074",
+      "name": "BBC3",
+      "score": 0.0011559735285118222,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3091",
+      "name": "CEACAM5",
+      "score": 0.002412178320810199,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3099",
+      "name": "ATP1A3",
+      "score": 0.0013499774504452944,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3119",
+      "name": "HAS1",
+      "score": 0.0015049207722768188,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3155",
+      "name": "COMP",
+      "score": 0.002077637007459998,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "3244",
+      "name": "CPED1",
+      "score": 0.0010354674886912107,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "3282",
+      "name": "TFR2",
+      "score": 0.0010564709082245827,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "3316",
+      "name": "POU6F2",
+      "score": 0.0010902683716267347,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "3354",
+      "name": "PRUNE2",
+      "score": 0.0012959932209923863,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "3361",
+      "name": "OGN",
+      "score": 0.0012558050220832229,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "3363",
+      "name": "ECM2",
+      "score": 0.0018613270949572325,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "3383",
+      "name": "ELAVL2",
+      "score": 0.0012838690308853984,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "3435",
+      "name": "UNC5B",
+      "score": 0.0011757374741137028,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "3505",
+      "name": "CSF3",
+      "score": 0.0020781802013516426,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "3603",
+      "name": "HLF",
+      "score": 0.0013510128483176231,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "3677",
+      "name": "SOD3",
+      "score": 0.001998339779675007,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "3865",
+      "name": "KCNA1",
+      "score": 0.0016951310681179166,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "3888",
+      "name": "RERGL",
+      "score": 0.0020935102365911007,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "4009",
+      "name": "BMP5",
+      "score": 0.0013146566925570369,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "4044",
+      "name": "EYA4",
+      "score": 0.001059038331732154,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "4295",
+      "name": "ROPN1B",
+      "score": 0.001348112360574305,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "4414",
+      "name": "EFEMP1",
+      "score": 0.0012690267758443952,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "4417",
+      "name": "FN1",
+      "score": 0.001066791359335184,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "4470",
+      "name": "PROC",
+      "score": 0.0010769934160634875,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "4662",
+      "name": "ADGRL2",
+      "score": 0.001088397460989654,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "4669",
+      "name": "ACTL8",
+      "score": 0.0011656058486551046,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "4671",
+      "name": "RGS4",
+      "score": 0.001339003792963922,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "4732",
+      "name": "PLPPR5",
+      "score": 0.0014043657574802637,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "4778",
+      "name": "KIF14",
+      "score": 0.0025868213269859552,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "4804",
+      "name": "CNR1",
+      "score": 0.0011475274804979563,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "4886",
+      "name": "WDR34",
+      "score": 0.0014742205385118723,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "4896",
+      "name": "BSPRY",
+      "score": 0.001120947184972465,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "4968",
+      "name": "EPCAM",
+      "score": 0.0012551560066640377,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "5089",
+      "name": "EGR1",
+      "score": 0.0018379132961854339,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "5109",
+      "name": "ADRA1A",
+      "score": 0.0017605609027668834,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "5132",
+      "name": "TBX4",
+      "score": 0.0010371825192123652,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "5318",
+      "name": "EGR2",
+      "score": 0.001191578572615981,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "5335",
+      "name": "BHLHE41",
+      "score": 0.0011503298301249743,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "5339",
+      "name": "NECAB1",
+      "score": 0.0012793467612937093,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "5374",
+      "name": "HOXC11",
+      "score": 0.001551714027300477,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "5390",
+      "name": "COL10A1",
+      "score": 0.005065880250185728,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "5409",
+      "name": "ACVR1C",
+      "score": 0.001526359235867858,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "5495",
+      "name": "PCK1",
+      "score": 0.0011897551594302058,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "5538",
+      "name": "BTN1A1",
+      "score": 0.0010867444798350334,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "5563",
+      "name": "APOBEC2",
+      "score": 0.0010795298730954528,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "5695",
+      "name": "FOSB",
+      "score": 0.0017702245386317372,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "5792",
+      "name": "F10",
+      "score": 0.0017956611700356007,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "5886",
+      "name": "EDN2",
+      "score": 0.0016264698933809996,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "5931",
+      "name": "PKMYT1",
+      "score": 0.002730423118919134,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "5936",
+      "name": "GNG13",
+      "score": 0.0012682470260187984,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "5956",
+      "name": "GNG11",
+      "score": 0.0012246358674019575,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "6017",
+      "name": "KRT17",
+      "score": 0.001091519370675087,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "6020",
+      "name": "RNF112",
+      "score": 0.0011730866972357035,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "6107",
+      "name": "E2F8",
+      "score": 0.0037314274813979864,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "6110",
+      "name": "PIMREG",
+      "score": 0.001384578412398696,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "6375",
+      "name": "AKAP12",
+      "score": 0.0011116360547021031,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "6377",
+      "name": "ULBP3",
+      "score": 0.0011583691230043769,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "6449",
+      "name": "AOC3",
+      "score": 0.0018083282047882676,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "6453",
+      "name": "AOC2",
+      "score": 0.0011709744576364756,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "6636",
+      "name": "RAB25",
+      "score": 0.0011248727096244693,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "6714",
+      "name": "KL",
+      "score": 0.0011213553370907903,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "6744",
+      "name": "MYH11",
+      "score": 0.0013067468535155058,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "6766",
+      "name": "NTS",
+      "score": 0.0010348049690946937,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "6778",
+      "name": "SPINK5",
+      "score": 0.0011150682112202048,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "6786",
+      "name": "LYVE1",
+      "score": 0.0018463063752278686,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "6844",
+      "name": "GSTM5",
+      "score": 0.001815574592910707,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "6935",
+      "name": "CDCA8",
+      "score": 0.0013392223045229912,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "6949",
+      "name": "DSC1",
+      "score": 0.0014872958417981863,
+      "parent": "chrom_18"
+    }
+  },
+  {
+    "data": {
+      "id": "7025",
+      "name": "CSN2",
+      "score": 0.0011589379282668233,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "7036",
+      "name": "ADGRB3",
+      "score": 0.0012188873952254653,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "7085",
+      "name": "ESPL1",
+      "score": 0.0014571802457794547,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "7167",
+      "name": "SLC19A3",
+      "score": 0.0013760689180344343,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "7193",
+      "name": "USP44",
+      "score": 0.0010251507628709078,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "7346",
+      "name": "ANGPTL2",
+      "score": 0.0011912800837308168,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "7351",
+      "name": "TLR4",
+      "score": 0.0010043623624369502,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "7430",
+      "name": "CAPN11",
+      "score": 0.0011972442734986544,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "7460",
+      "name": "FGFBP1",
+      "score": 0.0022369197104126215,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "7461",
+      "name": "FGFBP2",
+      "score": 0.0026092783082276583,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "7513",
+      "name": "ARHGAP20",
+      "score": 0.002160855336114764,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "7621",
+      "name": "CEP55",
+      "score": 0.00127516221255064,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "7641",
+      "name": "AOX1",
+      "score": 0.0011543255532160401,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "7690",
+      "name": "FAM13A",
+      "score": 0.0011363328667357564,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "7753",
+      "name": "B4GALNT3",
+      "score": 0.0015616817399859428,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "7761",
+      "name": "FGD4",
+      "score": 0.0010703643783926964,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "7799",
+      "name": "PTPRQ",
+      "score": 0.001306588645093143,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "7868",
+      "name": "SLAIN1",
+      "score": 0.001000010292045772,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "7909",
+      "name": "FAM181A",
+      "score": 0.0010141154052689672,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "8053",
+      "name": "MYOCD",
+      "score": 0.001600587391294539,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "8121",
+      "name": "SLC16A3",
+      "score": 0.0010433309944346547,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "8160",
+      "name": "STAC2",
+      "score": 0.00103169830981642,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "8205",
+      "name": "IL19",
+      "score": 0.0010446063242852688,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "8232",
+      "name": "KLK3",
+      "score": 0.001151887234300375,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "8330",
+      "name": "DPT",
+      "score": 0.0017304221400991082,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "8338",
+      "name": "NUF2",
+      "score": 0.002679135650396347,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "8383",
+      "name": "CERS2",
+      "score": 0.0010172557085752487,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "8541",
+      "name": "TMEFF2",
+      "score": 0.0010929488344118,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "8561",
+      "name": "ACKR3",
+      "score": 0.0012149506947025657,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "8777",
+      "name": "LRRTM2",
+      "score": 0.002260850975289941,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "8797",
+      "name": "DAAM2",
+      "score": 0.00108232197817415,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "8826",
+      "name": "RSPO3",
+      "score": 0.0012702221283689141,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "8834",
+      "name": "MTFR2",
+      "score": 0.0010830622632056475,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "8851",
+      "name": "SDK1",
+      "score": 0.0010686139576137066,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "8858",
+      "name": "EGFR",
+      "score": 0.0011222409084439278,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "8898",
+      "name": "DENND2A",
+      "score": 0.0013932278379797935,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "8942",
+      "name": "DOCK11",
+      "score": 0.0014176409458741546,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "8943",
+      "name": "IGSF1",
+      "score": 0.0015538408188149333,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "8983",
+      "name": "TRIM55",
+      "score": 0.0014566999161615968,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "9039",
+      "name": "PLPPR1",
+      "score": 0.001523891114629805,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "9050",
+      "name": "CRB2",
+      "score": 0.0013112527085468173,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "9124",
+      "name": "MKI67",
+      "score": 0.001227592583745718,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "9156",
+      "name": "PAMR1",
+      "score": 0.0021336108911782503,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "9160",
+      "name": "GLYAT",
+      "score": 0.005172499921172857,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "9199",
+      "name": "ADAM33",
+      "score": 0.0013555227778851986,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "9267",
+      "name": "CNKSR2",
+      "score": 0.0018518419237807393,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "9305",
+      "name": "GPM6A",
+      "score": 0.002356902929022908,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "9320",
+      "name": "C11orf53",
+      "score": 0.0012603964423760772,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "9378",
+      "name": "AKAP6",
+      "score": 0.0011644359910860658,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "9401",
+      "name": "CCDC3",
+      "score": 0.0012143785133957863,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "9461",
+      "name": "CCL28",
+      "score": 0.0012414350640028715,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "9547",
+      "name": "GRIA4",
+      "score": 0.0016864010831341147,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "9548",
+      "name": "IGSF10",
+      "score": 0.0014364453963935375,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "9635",
+      "name": "FEZF2",
+      "score": 0.001435385667718947,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "9640",
+      "name": "FRMD1",
+      "score": 0.002495609922334552,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "9676",
+      "name": "SPHKAP",
+      "score": 0.0011878610821440816,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "9704",
+      "name": "AK5",
+      "score": 0.0019637851510196924,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "9736",
+      "name": "GAL3ST2",
+      "score": 0.001110814861021936,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "9737",
+      "name": "ABCA9",
+      "score": 0.0023538304958492517,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "9750",
+      "name": "PGM5",
+      "score": 0.0019761526491492987,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "9782",
+      "name": "CHODL",
+      "score": 0.0010639084503054619,
+      "parent": "chrom_21"
+    }
+  },
+  {
+    "data": {
+      "id": "9793",
+      "name": "ADAMTS5",
+      "score": 0.0012288076104596257,
+      "parent": "chrom_21"
+    }
+  },
+  {
+    "data": {
+      "id": "9805",
+      "name": "SKA1",
+      "score": 0.0027423298452049494,
+      "parent": "chrom_18"
+    }
+  },
+  {
+    "data": {
+      "id": "9815",
+      "name": "EPHB1",
+      "score": 0.0010378267616033554,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "9859",
+      "name": "PPM1J",
+      "score": 0.0011719909962266684,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "9905",
+      "name": "SLC24A2",
+      "score": 0.002862961497157812,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "9952",
+      "name": "CXCL13",
+      "score": 0.001285768230445683,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "9989",
+      "name": "FBXO43",
+      "score": 0.0010979563230648637,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "9995",
+      "name": "LRFN2",
+      "score": 0.0014592716470360756,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "10028",
+      "name": "ADGRG4",
+      "score": 0.001175959943793714,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "10129",
+      "name": "ACAN",
+      "score": 0.0020822309888899326,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "10199",
+      "name": "HIST1H2BD",
+      "score": 0.0016862048069015145,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "10208",
+      "name": "KCNB1",
+      "score": 0.0037167358677834272,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "10223",
+      "name": "CPA2",
+      "score": 0.0012712670722976327,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "10245",
+      "name": "SLAMF8",
+      "score": 0.0012092908145859838,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "10339",
+      "name": "IRX6",
+      "score": 0.0015802861889824271,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "10415",
+      "name": "CPAMD8",
+      "score": 0.0010322339367121458,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "10421",
+      "name": "CILP2",
+      "score": 0.002161566633731127,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "10500",
+      "name": "TLCD1",
+      "score": 0.0015691650332883,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "10557",
+      "name": "FOXH1",
+      "score": 0.0010282688308507204,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "10628",
+      "name": "AQP5",
+      "score": 0.0012672931188717484,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "10661",
+      "name": "CCDC78",
+      "score": 0.0016761369770392776,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "10730",
+      "name": "RBP7",
+      "score": 0.00117544608656317,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "10838",
+      "name": "KIF26B",
+      "score": 0.002475988119840622,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "10843",
+      "name": "PM20D1",
+      "score": 0.0011652286630123854,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "10867",
+      "name": "CAPN13",
+      "score": 0.0013339387951418757,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "11027",
+      "name": "FCRL4",
+      "score": 0.0015002342406660318,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "11101",
+      "name": "PRRT3",
+      "score": 0.0011104450095444918,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "11136",
+      "name": "CLEC3B",
+      "score": 0.0021381094120442867,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "11142",
+      "name": "LRRC2",
+      "score": 0.0014006156707182527,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "11315",
+      "name": "EGFLAM",
+      "score": 0.0010766934137791395,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "11473",
+      "name": "CTHRC1",
+      "score": 0.0014880275120958686,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "11495",
+      "name": "DIRAS2",
+      "score": 0.0010743982857093215,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "11497",
+      "name": "NIPSNAP3B",
+      "score": 0.0011546975001692772,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "11522",
+      "name": "SVEP1",
+      "score": 0.0016740610590204597,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "11543",
+      "name": "VEGFD",
+      "score": 0.00210174941457808,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "11574",
+      "name": "INTS6L",
+      "score": 0.001066872151568532,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "11594",
+      "name": "GJB2",
+      "score": 0.0017890384187921882,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "11598",
+      "name": "SKA3",
+      "score": 0.0016779639991000295,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "11730",
+      "name": "KCNC2",
+      "score": 0.00174216297455132,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "11833",
+      "name": "SERPINB7",
+      "score": 0.0012385633308440447,
+      "parent": "chrom_18"
+    }
+  },
+  {
+    "data": {
+      "id": "11925",
+      "name": "YPEL4",
+      "score": 0.0012173334835097194,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "11931",
+      "name": "PCLAF",
+      "score": 0.0016427792143076658,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "11934",
+      "name": "PLIN1",
+      "score": 0.002935434691607952,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "11972",
+      "name": "NYAP1",
+      "score": 0.0012675434118136764,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "12015",
+      "name": "TMEM92",
+      "score": 0.0016711059724912047,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "12097",
+      "name": "CDT1",
+      "score": 0.0017629291396588087,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "12105",
+      "name": "LALBA",
+      "score": 0.002059649908915162,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "12147",
+      "name": "LY6D",
+      "score": 0.001349919242784381,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "12179",
+      "name": "KLK11",
+      "score": 0.0016758071724325418,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "12229",
+      "name": "RAB26",
+      "score": 0.0018624531803652644,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "12250",
+      "name": "HRASLS5",
+      "score": 0.0023729356471449137,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "12327",
+      "name": "FAM107A",
+      "score": 0.0012340120738372207,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "12381",
+      "name": "COL3A1",
+      "score": 0.0010814560810104012,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12382",
+      "name": "GFRA2",
+      "score": 0.0014156842371448874,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "12439",
+      "name": "NSG1",
+      "score": 0.0015533068217337132,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "12447",
+      "name": "ATOH8",
+      "score": 0.0017931025940924883,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12536",
+      "name": "RSPO1",
+      "score": 0.0013547815615311265,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "12547",
+      "name": "CXCL10",
+      "score": 0.0010301803704351187,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "12550",
+      "name": "CXCL11",
+      "score": 0.0012995105935260653,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "12553",
+      "name": "ADRB2",
+      "score": 0.0022724024020135403,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "12561",
+      "name": "NR0B1",
+      "score": 0.0015751507598906755,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "12586",
+      "name": "NPR1",
+      "score": 0.0014642570167779922,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "12589",
+      "name": "SCN9A",
+      "score": 0.002009917050600052,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12627",
+      "name": "PROKR1",
+      "score": 0.003123712493106723,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12699",
+      "name": "FRMPD4",
+      "score": 0.0013546536210924387,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "12714",
+      "name": "MYO7B",
+      "score": 0.0013492057332769036,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12731",
+      "name": "NSG2",
+      "score": 0.0014303233474493027,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "12747",
+      "name": "HOXD4",
+      "score": 0.0011549594346433878,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "12764",
+      "name": "MRAP",
+      "score": 0.0012169278925284743,
+      "parent": "chrom_21"
+    }
+  },
+  {
+    "data": {
+      "id": "12780",
+      "name": "CDK1",
+      "score": 0.0010986311826854944,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "12793",
+      "name": "CST2",
+      "score": 0.0019734669476747513,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "12993",
+      "name": "MUC7",
+      "score": 0.001191017683595419,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "12994",
+      "name": "OPRPN",
+      "score": 0.0027497578412294388,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "13023",
+      "name": "ESCO2",
+      "score": 0.0012995145516470075,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "13151",
+      "name": "RRM2",
+      "score": 0.0014997764956206083,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "13188",
+      "name": "SYNPO",
+      "score": 0.0011579238343983889,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "13206",
+      "name": "LRRC15",
+      "score": 0.0014603694435209036,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "13263",
+      "name": "B3GALT1",
+      "score": 0.0023036024067550898,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "13436",
+      "name": "LRRN3",
+      "score": 0.0010568967554718256,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "13448",
+      "name": "ADCY5",
+      "score": 0.0013683410361409187,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "13711",
+      "name": "NPAS4",
+      "score": 0.001763592823408544,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "13730",
+      "name": "LEP",
+      "score": 0.003412242280319333,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "13765",
+      "name": "PQLC2L",
+      "score": 0.0012842530850321054,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "13830",
+      "name": "PCCA",
+      "score": 0.001054896041750908,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "13960",
+      "name": "TMEM270",
+      "score": 0.0017368114786222577,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "13991",
+      "name": "TPRN",
+      "score": 0.0012531167594715953,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "14021",
+      "name": "LRRTM4",
+      "score": 0.00128652760758996,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "14128",
+      "name": "CDK5R1",
+      "score": 0.0011706899385899305,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "14156",
+      "name": "TYMS",
+      "score": 0.0012233927845954895,
+      "parent": "chrom_18"
+    }
+  },
+  {
+    "data": {
+      "id": "14215",
+      "name": "LINC00982",
+      "score": 0.0016731338109821081,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "14249",
+      "name": "KCNA2",
+      "score": 0.0010126582346856594,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "14424",
+      "name": "FAR2P2",
+      "score": 0.0011304655345156789,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "14488",
+      "name": "CTXN1",
+      "score": 0.0016748083289712667,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "14510",
+      "name": "CSRNP3",
+      "score": 0.001067648408934474,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "14521",
+      "name": "C5orf64",
+      "score": 0.0013526843395084143,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "14525",
+      "name": "LMO7DN",
+      "score": 0.0010941886575892568,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "14537",
+      "name": "RIIAD1",
+      "score": 0.0014369816053658724,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "14625",
+      "name": "TMEM125",
+      "score": 0.001007111044600606,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "14637",
+      "name": "C2orf71",
+      "score": 0.001574974856339395,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "14641",
+      "name": "TMEM151A",
+      "score": 0.0014080535620450974,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "14722",
+      "name": "LRRC3B",
+      "score": 0.0012396408710628748,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "14754",
+      "name": "CCR8",
+      "score": 0.0012992043048143387,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "14820",
+      "name": "ADGRD2",
+      "score": 0.0013800456654280424,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "14830",
+      "name": "KCTD4",
+      "score": 0.001533522387035191,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "14886",
+      "name": "MAB21L1",
+      "score": 0.0013638728996738791,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "15002",
+      "name": "TMEM132C",
+      "score": 0.0012491628294810653,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "15066",
+      "name": "GPR88",
+      "score": 0.001140675274655223,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "15145",
+      "name": "PTCHD3",
+      "score": 0.001610918901860714,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "15189",
+      "name": "SYNM",
+      "score": 0.0023312242701649666,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "15197",
+      "name": "B4GALNT4",
+      "score": 0.0017036300851032138,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "15289",
+      "name": "KCNB2",
+      "score": 0.0013287017354741693,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "15365",
+      "name": "PYCR1",
+      "score": 0.0011569730704650283,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "15545",
+      "name": "LHFPL6",
+      "score": 0.0010844268836081028,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "15586",
+      "name": "IQGAP3",
+      "score": 0.0012016394175589085,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "15589",
+      "name": "SCN5A",
+      "score": 0.0011300622718408704,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "15636",
+      "name": "CLDN5",
+      "score": 0.0017879002261906862,
+      "parent": "chrom_22"
+    }
+  },
+  {
+    "data": {
+      "id": "15667",
+      "name": "PCDH9",
+      "score": 0.0020748369861394167,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "15670",
+      "name": "ALDH1A3",
+      "score": 0.0013151823077350855,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "15698",
+      "name": "HIST1H1B",
+      "score": 0.0013936260947957635,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "15741",
+      "name": "C6orf58",
+      "score": 0.0010808053193613887,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "15830",
+      "name": "WT1",
+      "score": 0.0013120899675413966,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "15853",
+      "name": "F8",
+      "score": 0.001182918786071241,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "15870",
+      "name": "SGCZ",
+      "score": 0.001015727175399661,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "15926",
+      "name": "NOTUM",
+      "score": 0.0011696513975039124,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "15927",
+      "name": "KLHL33",
+      "score": 0.0010092247975990176,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "15979",
+      "name": "MUC1",
+      "score": 0.0017925564898177981,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "15991",
+      "name": "DLK1",
+      "score": 0.0023758180905133486,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "16142",
+      "name": "LRRC70",
+      "score": 0.0011810818687081337,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "16235",
+      "name": "DEFB132",
+      "score": 0.002568081021308899,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "16237",
+      "name": "AQP7P1",
+      "score": 0.0020829285494983196,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "16239",
+      "name": "GNG2",
+      "score": 0.001624993048608303,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "16280",
+      "name": "PDE2A",
+      "score": 0.0014426829293370247,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "16336",
+      "name": "TNFRSF18",
+      "score": 0.0014191159280017018,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "16356",
+      "name": "KRTAP13-4",
+      "score": 0.001154368743300438,
+      "parent": "chrom_21"
+    }
+  },
+  {
+    "data": {
+      "id": "16374",
+      "name": "TMPRSS6",
+      "score": 0.0015752147883176804,
+      "parent": "chrom_22"
+    }
+  },
+  {
+    "data": {
+      "id": "16400",
+      "name": "ANGPTL5",
+      "score": 0.0028806196060031652,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "16510",
+      "name": "GABRD",
+      "score": 0.0016135242767632008,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "16720",
+      "name": "HBA2",
+      "score": 0.0020758395548909903,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "16859",
+      "name": "FAM111B",
+      "score": 0.0022469637915492058,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "16943",
+      "name": "OR7E12P",
+      "score": 0.0010778302093967795,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "16958",
+      "name": "OR2L13",
+      "score": 0.00173753232229501,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "17016",
+      "name": "SULT1C3",
+      "score": 0.001697065308690071,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "17035",
+      "name": "GRM7",
+      "score": 0.0015014882665127516,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "17145",
+      "name": "XRCC2",
+      "score": 0.0015306376153603196,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "17155",
+      "name": "MMP1",
+      "score": 0.0014321744674816728,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "17174",
+      "name": "FAM180B",
+      "score": 0.0011541472049430013,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "17235",
+      "name": "LAMB3",
+      "score": 0.001198316109366715,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "17351",
+      "name": "AP000445.1",
+      "score": 0.002244834089651704,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "17422",
+      "name": "ZNF695",
+      "score": 0.0017133369110524654,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "17448",
+      "name": "COL4A6",
+      "score": 0.0012158002937212586,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "17460",
+      "name": "KLKP1",
+      "score": 0.001165791298262775,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "17507",
+      "name": "LHFPL5",
+      "score": 0.0010109221329912543,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "17511",
+      "name": "CFD",
+      "score": 0.0021472726948559284,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "17553",
+      "name": "SLC22A12",
+      "score": 0.0023051761090755463,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "17575",
+      "name": "AADACL2",
+      "score": 0.0018230039859190583,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "17789",
+      "name": "FAM3D",
+      "score": 0.00271143508143723,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "17847",
+      "name": "APCDD1L",
+      "score": 0.0011544926092028618,
+      "parent": "chrom_20"
+    }
+  },
+  {
+    "data": {
+      "id": "17893",
+      "name": "CES1",
+      "score": 0.0014013914624229074,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "17904",
+      "name": "CCDC152",
+      "score": 0.00132266734726727,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "17924",
+      "name": "PRC1",
+      "score": 0.0013298343401402235,
+      "parent": "chrom_15"
+    }
+  },
+  {
+    "data": {
+      "id": "19504",
+      "name": "AC004988.1",
+      "score": 0.0010714682284742594,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "19546",
+      "name": "STUM",
+      "score": 0.0018339927773922682,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "19554",
+      "name": "C6orf99",
+      "score": 0.0010043162619695067,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "19565",
+      "name": "METTL11B",
+      "score": 0.0011039337841793895,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "19587",
+      "name": "PLPP4",
+      "score": 0.005493749864399433,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "19594",
+      "name": "HIST2H2BC",
+      "score": 0.0011349013075232506,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "19657",
+      "name": "LRRC73",
+      "score": 0.0010015179868787527,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "19753",
+      "name": "CYP21A1P",
+      "score": 0.0011222384637221694,
+      "parent": "chrom_6"
+    }
+  },
+  {
+    "data": {
+      "id": "19934",
+      "name": "FAM196B",
+      "score": 0.0013467064127326012,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "19989",
+      "name": "CD177",
+      "score": 0.0015604424988850951,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "20301",
+      "name": "HBA1",
+      "score": 0.001602513948455453,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "21361",
+      "name": "GPX3",
+      "score": 0.002109299646690488,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "21613",
+      "name": "IGHG4",
+      "score": 0.0010081444634124637,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "22467",
+      "name": "AC011487.1",
+      "score": 0.0013222112320363522,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "22478",
+      "name": "AC104212.1",
+      "score": 0.0023519117385149,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "22761",
+      "name": "PLIN5",
+      "score": 0.0010631250916048884,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "23433",
+      "name": "AL031777.1",
+      "score": 0.0011999234557151794,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "24399",
+      "name": "PLXNA4",
+      "score": 0.0010546391131356359,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "24464",
+      "name": "AC112721.1",
+      "score": 0.0010127228451892734,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "24469",
+      "name": "AC112721.2",
+      "score": 0.0010815748246386647,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "25062",
+      "name": "MEG9",
+      "score": 0.0011313097784295678,
+      "parent": "chrom_14"
+    }
+  },
+  {
+    "data": {
+      "id": "25329",
+      "name": "AC044784.1",
+      "score": 0.0024113545659929514,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "25834",
+      "name": "LINC01886",
+      "score": 0.0011435509659349918,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "25989",
+      "name": "CETN4P",
+      "score": 0.0013267166214063764,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "26108",
+      "name": "PGM5-AS1",
+      "score": 0.0010758987627923489,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "26650",
+      "name": "AL161646.1",
+      "score": 0.0010282208677381277,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "27038",
+      "name": "AC005682.1",
+      "score": 0.0010894853621721268,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "27151",
+      "name": "ADIPOQ-AS1",
+      "score": 0.001207902911119163,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "27916",
+      "name": "AL031316.1",
+      "score": 0.0022331958170980215,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "28111",
+      "name": "AL136979.1",
+      "score": 0.001151151256635785,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "28213",
+      "name": "LYPLAL1-AS1",
+      "score": 0.001038982649333775,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "28592",
+      "name": "HOTAIR",
+      "score": 0.0012674732133746147,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "28822",
+      "name": "SLC47A1P1",
+      "score": 0.0010320711880922318,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "29288",
+      "name": "LINC00484",
+      "score": 0.0012523112818598747,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "29392",
+      "name": "EMX2OS",
+      "score": 0.0015387035673484206,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "29516",
+      "name": "PPIAP39",
+      "score": 0.001116644823923707,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "29522",
+      "name": "unknown",
+      "score": 0.0010777672287076712,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "30093",
+      "name": "LINC01614",
+      "score": 0.001970912329852581,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "30235",
+      "name": "AC096637.2",
+      "score": 0.0015412948559969664,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "30282",
+      "name": "SPATA20P1",
+      "score": 0.0014487986918538809,
+      "parent": "chrom_21"
+    }
+  },
+  {
+    "data": {
+      "id": "30446",
+      "name": "AC011247.1",
+      "score": 0.002555652055889368,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "30885",
+      "name": "LEF1-AS1",
+      "score": 0.0013663404388353229,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "30915",
+      "name": "AL691447.2",
+      "score": 0.0010029332479462028,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "31059",
+      "name": "GNG12-AS1",
+      "score": 0.0015859651612117887,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "31164",
+      "name": "AC010745.4",
+      "score": 0.0011010650778189301,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "31226",
+      "name": "AL109809.1",
+      "score": 0.0015259236097335815,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "31428",
+      "name": "COL4A2-AS1",
+      "score": 0.0012413591612130404,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "31465",
+      "name": "SEC1P",
+      "score": 0.0011998953996226192,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "31723",
+      "name": "unknown",
+      "score": 0.0012361613335087895,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "32407",
+      "name": "BOK-AS1",
+      "score": 0.0010284751188009977,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "32561",
+      "name": "AC147651.3",
+      "score": 0.001041813287883997,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "32796",
+      "name": "AL603840.1",
+      "score": 0.001956394873559475,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "32842",
+      "name": "AL022329.1",
+      "score": 0.0010557223577052355,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "32853",
+      "name": "SOX9-AS1",
+      "score": 0.0016667158342897892,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "32922",
+      "name": "LINC01883",
+      "score": 0.0010272815125063062,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "33267",
+      "name": "AP002004.1",
+      "score": 0.0010433468269184232,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "33358",
+      "name": "LINC00484",
+      "score": 0.0014277879381552339,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "34194",
+      "name": "LINC01554",
+      "score": 0.0010917533654719591,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "34236",
+      "name": "AL139412.1",
+      "score": 0.0014956464292481542,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "34419",
+      "name": "SULT1C2P1",
+      "score": 0.0012625542003661394,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "34840",
+      "name": "AC002066.1",
+      "score": 0.0012193609727546573,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "34933",
+      "name": "LINC00844",
+      "score": 0.0010337468702346087,
+      "parent": "chrom_10"
+    }
+  },
+  {
+    "data": {
+      "id": "34983",
+      "name": "AC093110.1",
+      "score": 0.0023507256992161274,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "35055",
+      "name": "SLC25A24P2",
+      "score": 0.0010061138309538364,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "36276",
+      "name": "LINC02066",
+      "score": 0.0012697795173153281,
+      "parent": "chrom_3"
+    }
+  },
+  {
+    "data": {
+      "id": "36690",
+      "name": "ARHGDIG",
+      "score": 0.0012599390465766191,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "37128",
+      "name": "IGKV1-12",
+      "score": 0.0010177891235798597,
+      "parent": "chrom_2"
+    }
+  },
+  {
+    "data": {
+      "id": "37169",
+      "name": "AC119424.1",
+      "score": 0.001473181531764567,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "37197",
+      "name": "C4orf48",
+      "score": 0.001237903838045895,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "37473",
+      "name": "SPRR2F",
+      "score": 0.001220142818056047,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "37743",
+      "name": "HBB",
+      "score": 0.0025088044349104166,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "38472",
+      "name": "LINC02511",
+      "score": 0.0020251658279448748,
+      "parent": "chrom_4"
+    }
+  },
+  {
+    "data": {
+      "id": "38607",
+      "name": "C5orf66-AS1",
+      "score": 0.0016585980774834752,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "38971",
+      "name": "CARMN",
+      "score": 0.0027082948945462704,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "39022",
+      "name": "AC108156.1",
+      "score": 0.0010537654161453247,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "39338",
+      "name": "AC010307.4",
+      "score": 0.0013655058573931456,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "39409",
+      "name": "STK32A-AS1",
+      "score": 0.001070960657671094,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "39543",
+      "name": "AC104407.1",
+      "score": 0.0014437864301726222,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "39937",
+      "name": "HOXC-AS3",
+      "score": 0.0010811915853992105,
+      "parent": "chrom_12"
+    }
+  },
+  {
+    "data": {
+      "id": "40015",
+      "name": "AC010457.1",
+      "score": 0.0010170884197577834,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "41379",
+      "name": "LINC01605",
+      "score": 0.001267702435143292,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "41959",
+      "name": "ETV3L",
+      "score": 0.0011947188759222627,
+      "parent": "chrom_1"
+    }
+  },
+  {
+    "data": {
+      "id": "42039",
+      "name": "AC105118.1",
+      "score": 0.0018895685207098722,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "42135",
+      "name": "AC103719.1",
+      "score": 0.0014230101369321346,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "42273",
+      "name": "LINC01485",
+      "score": 0.0030046277679502964,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "42378",
+      "name": "AC083967.1",
+      "score": 0.001538554672151804,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "42509",
+      "name": "AC002056.2",
+      "score": 0.0010521302465349436,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "42811",
+      "name": "AC009806.1",
+      "score": 0.0012088129296898842,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "42946",
+      "name": "LINC02489",
+      "score": 0.0010625030845403671,
+      "parent": "chrom_11"
+    }
+  },
+  {
+    "data": {
+      "id": "42958",
+      "name": "AC093496.1",
+      "score": 0.001023787772282958,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "43693",
+      "name": "unknown",
+      "score": 0.0010857087327167392,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "44909",
+      "name": "AL161668.3",
+      "score": 0.0018039161805063486,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "45208",
+      "name": "TUBB3",
+      "score": 0.0014108015457168221,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "46001",
+      "name": "AC007938.1",
+      "score": 0.00115304091013968,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "46063",
+      "name": "TGFBR3L",
+      "score": 0.0011801834916695952,
+      "parent": "chrom_19"
+    }
+  },
+  {
+    "data": {
+      "id": "46138",
+      "name": "LINC01070",
+      "score": 0.0014640679582953453,
+      "parent": "chrom_13"
+    }
+  },
+  {
+    "data": {
+      "id": "46141",
+      "name": "AOC4P",
+      "score": 0.0019636470824480057,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "46690",
+      "name": "AC104072.1",
+      "score": 0.001001193537376821,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "46741",
+      "name": "AL356489.2",
+      "score": 0.0014986657770350575,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "46818",
+      "name": "AC036108.2",
+      "score": 0.0016950290882959962,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "47127",
+      "name": "AC084064.1",
+      "score": 0.0014512643683701754,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "47228",
+      "name": "AC036108.3",
+      "score": 0.0015311386669054627,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "47321",
+      "name": "LINC00922",
+      "score": 0.0026181272696703672,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "47417",
+      "name": "PCDHGA9",
+      "score": 0.0010181142715737224,
+      "parent": "chrom_5"
+    }
+  },
+  {
+    "data": {
+      "id": "47455",
+      "name": "LINC02185",
+      "score": 0.001925926306284964,
+      "parent": "chrom_16"
+    }
+  },
+  {
+    "data": {
+      "id": "47678",
+      "name": "AC009121.2",
+      "score": 0.0010866087395697832,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "48146",
+      "name": "AC015908.3",
+      "score": 0.0014941669069230556,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "49188",
+      "name": "AC005821.1",
+      "score": 0.0010770201915875077,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "49467",
+      "name": "unknown",
+      "score": 0.001740906503982842,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "49528",
+      "name": "KLF14",
+      "score": 0.0011446245480328798,
+      "parent": "chrom_7"
+    }
+  },
+  {
+    "data": {
+      "id": "50248",
+      "name": "AC002398.2",
+      "score": 0.0011820053914561868,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "50271",
+      "name": "SEC24AP1",
+      "score": 0.0018191304989159107,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "50310",
+      "name": "AC068473.4",
+      "score": 0.0012453885283321142,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "50447",
+      "name": "LINC01028",
+      "score": 0.0020546133164316416,
+      "parent": "chrom_17"
+    }
+  },
+  {
+    "data": {
+      "id": "50693",
+      "name": "SLC6A14",
+      "score": 0.0010891486890614033,
+      "parent": "chrom_X"
+    }
+  },
+  {
+    "data": {
+      "id": "51041",
+      "name": "AC011503.1",
+      "score": 0.0016427042428404093,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "51180",
+      "name": "AC010319.5",
+      "score": 0.0019535603933036327,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "51270",
+      "name": "unknown",
+      "score": 0.0017791354330256581,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "51354",
+      "name": "AF131215.7",
+      "score": 0.001084551215171814,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "51878",
+      "name": "AC015849.5",
+      "score": 0.0015973869012668729,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "53007",
+      "name": "AL353708.3",
+      "score": 0.0010198933305218816,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "53176",
+      "name": "AC006946.2",
+      "score": 0.0011396659538149834,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "53484",
+      "name": "AC024337.2",
+      "score": 0.0012560233008116484,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "53788",
+      "name": "AC015722.2",
+      "score": 0.0012661076616495848,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "54147",
+      "name": "AC120042.3",
+      "score": 0.002048487076535821,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "54302",
+      "name": "AL121906.2",
+      "score": 0.0011721603805199265,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "54897",
+      "name": "CNTNAP3P2",
+      "score": 0.002211524173617363,
+      "parent": "chrom_9"
+    }
+  },
+  {
+    "data": {
+      "id": "55499",
+      "name": "GPIHBP1",
+      "score": 0.0011955804657191038,
+      "parent": "chrom_8"
+    }
+  },
+  {
+    "data": {
+      "id": "55584",
+      "name": "AC007906.2",
+      "score": 0.002087637549266219,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "55643",
+      "name": "FP325317.1",
+      "score": 0.00439120689406991,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "55772",
+      "name": "AC092376.2",
+      "score": 0.0010779054136946797,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56330",
+      "name": "AC136621.1",
+      "score": 0.0025198396760970354,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56332",
+      "name": "CR381670.1",
+      "score": 0.002329942537471652,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56574",
+      "name": "CR381653.2",
+      "score": 0.0011847899295389652,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56674",
+      "name": "unknown",
+      "score": 0.0010890100384131074,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56709",
+      "name": "AC009159.4",
+      "score": 0.0012152043636888266,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "56771",
+      "name": "AL118508.4",
+      "score": 0.0013742046430706978,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57003",
+      "name": "FP325330.3",
+      "score": 0.0014170472277328372,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57308",
+      "name": "AL157996.1",
+      "score": 0.0010383578483015299,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57318",
+      "name": "AC079777.1",
+      "score": 0.0010373537661507726,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57510",
+      "name": "AP005264.7",
+      "score": 0.0012714051408693194,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57542",
+      "name": "AP001528.3",
+      "score": 0.0017815959872677922,
+      "parent": "chrom_unknown"
+    }
+  },
+  {
+    "data": {
+      "id": "57708",
+      "name": "PCAT14",
+      "score": 0.0013730517821386456,
+      "parent": "chrom_22"
+    }
+  },
+  {
+    "data": {
+      "id": "58154",
+      "name": "AP000851.2",
+      "score": 0.0012979059247300029,
+      "parent": "chrom_unknown"
+    }
+  }
+]
