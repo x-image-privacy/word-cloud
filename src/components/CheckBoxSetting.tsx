@@ -9,12 +9,12 @@ const CheckBoxSetting = ({ onChange, id, label, value }: Props) => {
     <div>
       <input
         id={id}
-        name="showWordBounds"
-        type="checkbox"
+        name='showWordBounds'
+        type='checkbox'
         checked={value}
         onChange={onChange}
       />
-      <label className="ml-1" htmlFor={id}>
+      <label className='ml-1' htmlFor={id}>
         {label}
       </label>
     </div>

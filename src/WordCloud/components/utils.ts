@@ -10,15 +10,21 @@ import {
   NUMBER_OF_INTERVALS,
   WORD_CLOUD_MARGIN_HEIGHT,
   WORD_CLOUD_MARGIN_WIDTH,
-} from "./constants";
-import {CenterCoordinate, Circle, Coordinate, Rectangle, Word} from "./types";
+} from './constants';
+import { CenterCoordinate, Circle, Coordinate, Rectangle, Word } from './types';
 
 // linear interpolation (https://math.stackexchange.com/questions/914823/shift-numbers-into-a-different-range)
-export const computeFontSize = (coef: number, maxCoef: number, minCoef: number, minFontSize: number, maxFontSize: number): number => {
+export const computeFontSize = (
+  coef: number,
+  maxCoef: number,
+  minCoef: number,
+  minFontSize: number,
+  maxFontSize: number,
+): number => {
   const fontInterval = maxFontSize - minFontSize;
   const coefInterval = maxCoef - minCoef;
 
-  return minFontSize + fontInterval / coefInterval * (coef - minCoef);
+  return minFontSize + (fontInterval / coefInterval) * (coef - minCoef);
 };
 
 // This function returns the bound of the word cloud
@@ -62,7 +68,7 @@ export const areCentersTooClose = (
   centerA: CenterCoordinate,
   centerB: CenterCoordinate,
   minX: number,
-  minY: number
+  minY: number,
 ): boolean =>
   Math.abs(centerA.cx - centerB.cx) <= minX &&
   Math.abs(centerA.cy - centerB.cy) <= minY;
@@ -70,16 +76,16 @@ export const areCentersTooClose = (
 // This function computes the collisions
 export const allCollision = (
   word: Rectangle,
-  passRect: Rectangle[]
+  passRect: Rectangle[],
 ): boolean => {
   return passRect
     .map((rect) =>
       areCentersTooClose(
-        {cx: rect.x + rect.width / 2, cy: rect.y + rect.height / 2},
-        {cx: word.x + word.width / 2, cy: word.y + word.height / 2},
+        { cx: rect.x + rect.width / 2, cy: rect.y + rect.height / 2 },
+        { cx: word.x + word.width / 2, cy: word.y + word.height / 2 },
         (rect.width + word.width) / 2,
-        (rect.height + word.height) / 2
-      )
+        (rect.height + word.height) / 2,
+      ),
     )
     .some((t) => t === true);
 };
@@ -106,7 +112,7 @@ export function archimedeanSpiral(size: [number, number]) {
 
 export const futureSpiralPosition = (
   rectangle: Rectangle,
-  placedRects: Rectangle[]
+  placedRects: Rectangle[],
 ) => {
   let position = {
     ...rectangle,
@@ -137,7 +143,7 @@ export const futurPosition = (
   word: Rectangle,
   placedRects: Rectangle[],
   step: number,
-  weight: number[]
+  weight: number[],
 ): Rectangle => {
   let isDone = false;
 
@@ -157,8 +163,8 @@ export const futurPosition = (
     };
     // Test if the word can be move over the hypotenuse
     if (allCollision(futurRectPosition, placedRects)) {
-      const onlyMoveOverX = {...futurRectPosition, y: movedRect.y};
-      const onlyMoveOverY = {...futurRectPosition, x: movedRect.x};
+      const onlyMoveOverX = { ...futurRectPosition, y: movedRect.y };
+      const onlyMoveOverY = { ...futurRectPosition, x: movedRect.x };
       const xColl = allCollision(onlyMoveOverX, placedRects);
       const yColl = allCollision(onlyMoveOverY, placedRects);
       if (xColl) {
@@ -166,13 +172,13 @@ export const futurPosition = (
           // Do not move anymore
           isDone = true;
         } else {
-          movedRect = {...onlyMoveOverY};
+          movedRect = { ...onlyMoveOverY };
         }
       } else {
-        movedRect = {...onlyMoveOverX};
+        movedRect = { ...onlyMoveOverX };
       }
     } else {
-      movedRect = {...futurRectPosition};
+      movedRect = { ...futurRectPosition };
     }
     displacement = Math.abs(stepX) + Math.abs(stepY);
     iter++;
@@ -187,7 +193,7 @@ export const cumulativeBins = (bin: number[]): number[] => {
     (
       (sum) => (value) =>
         (sum += value)
-    )(0)
+    )(0),
   );
 };
 
@@ -197,28 +203,28 @@ export const cumulativeBins = (bin: number[]): number[] => {
 export const rangeWithStep = (
   from: number,
   to: number,
-  step: number
+  step: number,
 ): number[] => {
   if (to < from) {
     return [];
   }
   return [...Array(Math.floor((to - from) / step) + 1)].map(
-    (_, i) => from + i * step
+    (_, i) => from + i * step,
   );
 };
 
 // This function put the first word in the center of the parent rectangle
 export const setFirstWordInCenterOfParent = (w: Word, p: string): Rectangle => {
-  const parentElement = document.getElementsByTagName("svg").namedItem(p);
+  const parentElement = document.getElementsByTagName('svg').namedItem(p);
   const word = getBoundingRect(w.id);
   if (parentElement && word) {
     const parent = parentElement.getBBox();
 
     const newX = (parent.width - word.width) / 2;
     const newY = (parent.height - word.height) / 2;
-    return {x: newX, y: newY, width: word.width, height: word.height};
+    return { x: newX, y: newY, width: word.width, height: word.height };
   }
-  return {x: 0, y: 0, width: 50, height: 20};
+  return { x: 0, y: 0, width: 50, height: 20 };
 };
 
 // This function return the distance between a rectangle and a cartesian coordinate
@@ -236,7 +242,7 @@ export const centerOfMass = (passRect: Rectangle[]): Coordinate => {
       };
       return sum;
     },
-    {x: 0, y: 0}
+    { x: 0, y: 0 },
   );
   centerMass.x /= passRect.length;
   centerMass.y /= passRect.length;
@@ -249,16 +255,16 @@ export const getTheCircle = (passRect: Rectangle[]): Circle => {
   const centerMass = centerOfMass(passRect);
 
   const distance: number[] = passRect.map((rect) =>
-    getDistance(centerMass, rect)
+    getDistance(centerMass, rect),
   );
 
   const radius = Math.max(
     ...distance,
     CONTAINER_HEIGHT / 2,
-    CONTAINER_WIDTH / 2
+    CONTAINER_WIDTH / 2,
   );
 
-  return {x: centerMass.x, y: centerMass.y, radius};
+  return { x: centerMass.x, y: centerMass.y, radius };
 };
 
 // This function return a random float between min and max
@@ -270,7 +276,7 @@ export const randomInterval = (min: number, max: number): number => {
 export const placeWordOnOuterCircle = (
   w: Rectangle,
   passRect: Rectangle[],
-  weight: number[]
+  weight: number[],
 ): Rectangle => {
   const maxWeight = Math.max(...weight);
 
@@ -283,7 +289,7 @@ export const placeWordOnOuterCircle = (
 
   const randomInter = randomInterval(
     0,
-    cumulativeWeight[cumulativeWeight.length - 1]
+    cumulativeWeight[cumulativeWeight.length - 1],
   );
 
   // Calculate the size of each intervals
@@ -304,7 +310,7 @@ export const placeWordOnOuterCircle = (
       y: rangeInterval[inter + 1] - 1,
     };
   } else {
-    angleInter = {x: 0, y: 360};
+    angleInter = { x: 0, y: 360 };
   }
 
   const angle = randomInterval(angleInter.x, angleInter.y);
@@ -320,7 +326,7 @@ export const placeWordOnOuterCircle = (
 // This function allows to obtain the direction of movement of a rectangle in the direction of the rectangles already placed.
 export const getMoveDirection = (
   pastWords: Rectangle[],
-  currentRect: Rectangle
+  currentRect: Rectangle,
 ): Coordinate => {
   return pastWords.reduce(
     (acc, word) => {
@@ -328,9 +334,9 @@ export const getMoveDirection = (
         x: word.x - currentRect.x,
         y: word.y - currentRect.y,
       };
-      return {x: acc.x + differences.x, y: acc.y + differences.y};
+      return { x: acc.x + differences.x, y: acc.y + differences.y };
     },
-    {x: 0, y: 0}
+    { x: 0, y: 0 },
   );
 };
 
@@ -343,7 +349,7 @@ export const getAreaRectangle = (rect: Rectangle): number => {
 export const placeFirstWord = (
   rectToPlace: Rectangle,
   centerX: number,
-  centerY: number
+  centerY: number,
 ): Rectangle => {
   const centeredRect = {
     width: rectToPlace.width,
@@ -357,7 +363,7 @@ export const placeFirstWord = (
 
 export const getBoundingRect = (
   id: string,
-  tagName: "svg" | "text" = "text"
+  tagName: 'svg' | 'text' = 'text',
 ): Rectangle => {
   const bbox =
     (

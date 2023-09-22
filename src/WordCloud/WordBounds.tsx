@@ -1,4 +1,4 @@
-import { WordCloudData } from "./components/types";
+import { WordCloudData } from './components/types';
 
 type Props = {
   showWordBounds: boolean;
@@ -23,8 +23,8 @@ const WordBounds = ({
                 y={rect.y}
                 width={rect.width}
                 height={rect.height}
-                fill="none"
-                stroke="green"
+                fill='none'
+                stroke='green'
                 strokeWidth={1}
               />
               <text x={rect.x} y={rect.y}>
@@ -32,7 +32,7 @@ const WordBounds = ({
               </text>
             </g>
           );
-        })
+        }),
       )}
     </>
   );

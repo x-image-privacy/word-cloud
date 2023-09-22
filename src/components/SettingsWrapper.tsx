@@ -6,9 +6,9 @@ const SettingsWrapper = ({
   title: string;
 }) => {
   return (
-    <fieldset className=".border-blue">
+    <fieldset className='.border-blue'>
       <legend>{title}</legend>
-      <div className="flex flex-col gap-2 grow h-full ">{children}</div>
+      <div className='flex flex-col gap-2 grow h-full '>{children}</div>
     </fieldset>
   );
 };

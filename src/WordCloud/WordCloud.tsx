@@ -1,17 +1,22 @@
+import { useEffect, useState } from 'react';
+
+import WordBounds from './WordBounds';
+import CategoryCloudDisplay from './components/CategoryCloudDisplay';
+import {
+  MARGIN_HEIGHT,
+  MARGIN_WIDTH,
+  MAX_FONT_SIZE,
+  MIN_FONT_SIZE,
+} from './components/constants';
+import { PlacedWordCloud, Word, WordCloudData } from './components/types';
 import {
   boundParent,
   computeFontSize,
   futureSpiralPosition,
   getBoundingWordCloud,
   slideWords,
-} from "./components/utils";
-
-import {MARGIN_HEIGHT, MARGIN_WIDTH, MAX_FONT_SIZE, MIN_FONT_SIZE} from "./components/constants";
-import {useEffect, useState} from "react";
-import {ExplanationData} from "./types";
-import WordBounds from "./WordBounds";
-import {PlacedWordCloud, Word, WordCloudData} from "./components/types";
-import CategoryCloudDisplay from "./components/CategoryCloudDisplay";
+} from './components/utils';
+import { ExplanationData } from './types';
 
 const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
   wordClouds.forEach((cloud, cloudIdx, originalWordClouds) => {
@@ -19,11 +24,11 @@ const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
       (placedWords, word) => {
         const futureItem = futureSpiralPosition(
           word.rect,
-          placedWords.map(({rect}) => rect)
+          placedWords.map(({ rect }) => rect),
         );
-        return [...placedWords, {...word, rect: futureItem}];
+        return [...placedWords, { ...word, rect: futureItem }];
       },
-      [cloud.words[0]]
+      [cloud.words[0]],
     );
     originalWordClouds[cloudIdx].words = newWordCloud;
   });
@@ -35,7 +40,7 @@ const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
 
   placedWordCloud.sort((cloudA, cloudB) => {
     return cloudA.bound.width * cloudA.bound.height >=
-    cloudB.bound.width * cloudB.bound.height
+      cloudB.bound.width * cloudB.bound.height
       ? -1
       : 1;
   });
@@ -53,7 +58,7 @@ const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
         });
         return accWordClouds;
       }
-      const previousBounds = accWordClouds.map(({bound}) => bound);
+      const previousBounds = accWordClouds.map(({ bound }) => bound);
 
       const futurePos = futureSpiralPosition(cloud.bound, previousBounds);
 
@@ -68,7 +73,7 @@ const useWordCloudLayout = (wordClouds: WordCloudData): PlacedWordCloud => {
       accWordClouds.push(newCloud);
       return accWordClouds;
     },
-    []
+    [],
   );
 
   return newWordClouds;
@@ -90,16 +95,16 @@ type Props = {
 };
 
 const Wordcloud = ({
-                     data,
-                     height = "100%",
-                     width = "100%",
-                     hideWords = false,
-                     showOrigin = false,
-                     showBounds = false,
-                     showWordBounds = false,
-                     minFontSize = MIN_FONT_SIZE,
-                     maxFontSize = MAX_FONT_SIZE,
-                   }: Props) => {
+  data,
+  height = '100%',
+  width = '100%',
+  hideWords = false,
+  showOrigin = false,
+  showBounds = false,
+  showWordBounds = false,
+  minFontSize = MIN_FONT_SIZE,
+  maxFontSize = MAX_FONT_SIZE,
+}: Props) => {
   const [wordClouds, setWordClouds] = useState<WordCloudData>();
 
   // casting is fine here https://codereview.stackexchange.com/questions/135363/filtering-undefined-elements-out-of-an-array
@@ -113,22 +118,22 @@ const Wordcloud = ({
   const bound = rects?.length
     ? boundParent(rects)
     : {
-      x: -100,
-      y: -100,
-      width: 200,
-      height: 200,
-    };
+        x: -100,
+        y: -100,
+        width: 200,
+        height: 200,
+      };
 
   useEffect(() => {
     if (data) {
       // get rectangles from data
       const wordCloudsWithRectangles = data.map(
-        ({category, words: prevWords}) => {
+        ({ category, words: prevWords }) => {
           // get rectangle from canvas
           const words = prevWords.map((w) => {
             const rect = document
               .getElementById(getHiddenElementId(w.id))
-              ?.getBoundingClientRect() || {x: 0, y: 0, width: 0, height: 0};
+              ?.getBoundingClientRect() || { x: 0, y: 0, width: 0, height: 0 };
             const width = rect?.width + MARGIN_WIDTH;
             const height = rect?.height + MARGIN_HEIGHT;
             return {
@@ -149,7 +154,7 @@ const Wordcloud = ({
             category,
             words,
           };
-        }
+        },
       );
 
       const layedOutWordClouds = useWordCloudLayout(wordCloudsWithRectangles);
@@ -161,44 +166,49 @@ const Wordcloud = ({
 
   return (
     <>
-      <svg visibility="hidden" style={{position: "absolute"}}>
+      <svg visibility='hidden' style={{ position: 'absolute' }}>
         {data?.map((c) => {
-            const coefs = c.words.map((word) => word.coef);
-            const minCoef = Math.min(...coefs);
-            let maxCoef = Math.max(...coefs);
-            return c.words.map((w) => (
-              <text
-                key={`${c.category}-${w.id}`}
-                id={getHiddenElementId(w.id)}
-                fontSize={computeFontSize(w.coef, maxCoef, minCoef, minFontSize, maxFontSize)}
-              >
-                {w.text}
-              </text>
-            ))
-          }
-        )}
+          const coefs = c.words.map((word) => word.coef);
+          const minCoef = Math.min(...coefs);
+          let maxCoef = Math.max(...coefs);
+          return c.words.map((w) => (
+            <text
+              key={`${c.category}-${w.id}`}
+              id={getHiddenElementId(w.id)}
+              fontSize={computeFontSize(
+                w.coef,
+                maxCoef,
+                minCoef,
+                minFontSize,
+                maxFontSize,
+              )}
+            >
+              {w.text}
+            </text>
+          ));
+        })}
       </svg>
       <svg
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
+        version='1.1'
+        xmlns='http://www.w3.org/2000/svg'
         width={width}
         height={height}
-        style={{outline: "1px solid transparent"}}
+        style={{ outline: '1px solid transparent' }}
         viewBox={`${bound.x} ${bound.y} ${bound.width} ${bound.height}`}
       >
         {showOrigin && (
           <>
-            <line x1={-100} x2={100} y={0} stroke="red"/>
-            <line y1={-100} y2={100} x={0} stroke="red"/>
+            <line x1={-100} x2={100} y={0} stroke='red' />
+            <line y1={-100} y2={100} x={0} stroke='red' />
           </>
         )}
-        {bounds?.map(({id, bound: b}) => (
+        {bounds?.map(({ id, bound: b }) => (
           <>
             <rect
               className={
-                showBounds ? "stroke-blue-500 dark:stroke-green-200" : ""
+                showBounds ? 'stroke-blue-500 dark:stroke-green-200' : ''
               }
-              style={{cursor: "pointer"}}
+              style={{ cursor: 'pointer' }}
               key={`bounds-${id}`}
               x={b.x}
               y={b.y}
@@ -206,7 +216,7 @@ const Wordcloud = ({
               ry={10}
               width={b.width}
               height={b.height}
-              fill="transparent"
+              fill='transparent'
               strokeWidth={1}
             >
               <title>Category: {id}; Score: TBA</title>
@@ -214,41 +224,47 @@ const Wordcloud = ({
           </>
         ))}
         {wordClouds?.map((wordCloud) => {
-            const coefs = wordCloud.words.map((word) => word.coef);
-            const minCoef = Math.min(...coefs);
-            let maxCoef = Math.max(...coefs);
+          const coefs = wordCloud.words.map((word) => word.coef);
+          const minCoef = Math.min(...coefs);
+          let maxCoef = Math.max(...coefs);
 
-            return (
-              <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
-                {hideWords ? (
-                  <CategoryCloudDisplay wordCloud={wordCloud}/>
-                ) : (
-                  wordCloud.words.map((word) => {
-                    const fontSize = computeFontSize(word.coef, maxCoef, minCoef, minFontSize, maxFontSize);
-                    return (
-                      <text
-                        key={`${wordCloud.category}-${word.id}`}
-                        // useful to have the anchor at the center of the word
-                        textAnchor="middle"
-                        // y centering
-                        dominantBaseline="middle"
-                        fontSize={fontSize}
-                        id={word.id}
-                        x={(word.rect.x + word.rect.width / 2).toString()}
-                        y={(word.rect.y + word.rect.height / 2).toString()}
-                      >
-                        {word.text}
-                        <title>
-                          Word: {word.text}; Score: {word.coef}
-                        </title>
-                      </text>
-                    );
-                  })
-                )}
-              </g>)
-          }
-        )}
-        <WordBounds showWordBounds={showWordBounds} wordClouds={wordClouds}/>
+          return (
+            <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
+              {hideWords ? (
+                <CategoryCloudDisplay wordCloud={wordCloud} />
+              ) : (
+                wordCloud.words.map((word) => {
+                  const fontSize = computeFontSize(
+                    word.coef,
+                    maxCoef,
+                    minCoef,
+                    minFontSize,
+                    maxFontSize,
+                  );
+                  return (
+                    <text
+                      key={`${wordCloud.category}-${word.id}`}
+                      // useful to have the anchor at the center of the word
+                      textAnchor='middle'
+                      // y centering
+                      dominantBaseline='middle'
+                      fontSize={fontSize}
+                      id={word.id}
+                      x={(word.rect.x + word.rect.width / 2).toString()}
+                      y={(word.rect.y + word.rect.height / 2).toString()}
+                    >
+                      {word.text}
+                      <title>
+                        Word: {word.text}; Score: {word.coef}
+                      </title>
+                    </text>
+                  );
+                })
+              )}
+            </g>
+          );
+        })}
+        <WordBounds showWordBounds={showWordBounds} wordClouds={wordClouds} />
       </svg>
     </>
   );

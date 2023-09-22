@@ -1,4 +1,4 @@
-import { CategoryCloud, Word } from "./types";
+import { CategoryCloud, Word } from './types';
 
 type Props = {
   wordCloud: CategoryCloud<Word>;
@@ -14,9 +14,9 @@ const CategoryCloudDisplay = ({ wordCloud }: Props) => {
       x={x}
       y={y}
       // useful to have the anchor at the center of the word
-      textAnchor="middle"
+      textAnchor='middle'
       // y centering
-      dominantBaseline="middle"
+      dominantBaseline='middle'
     >
       {category}
       <title>Category: {category}; Score: TBA</title>

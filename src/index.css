@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white dark:bg-gray-950 text-gray-950 dark:text-white
+  @apply bg-white dark:bg-gray-950 text-gray-950 dark:text-white;
 }
 
 fieldset {
@@ -31,9 +31,8 @@ legend {
 }
 
 text {
-  @apply fill-gray-800 dark:fill-gray-200
+  @apply fill-gray-800 dark:fill-gray-200;
 }
-
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -98,7 +97,7 @@ h1 {
     background-color: #f9f9f9;
   }
   /* set fill color for svg element */
-  /* text {
+/* text {
     fill: #213547
   } */
 /* } */

@@ -1,4 +1,4 @@
-import { InputNode } from "../types";
+import { InputNode } from '../types';
 
 export type Rectangle = {
   x: number;

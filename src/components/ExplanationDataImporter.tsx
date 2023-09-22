@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
-import { ExplanationData } from "../WordCloud";
-import { transformGPipelineData } from "./utils/transformations";
-import { Category, ExplainabilityNode } from "./types";
+import { useRef, useState } from 'react';
+
+import { ExplanationData } from '../WordCloud';
+import { Category, ExplainabilityNode } from './types';
+import { transformGPipelineData } from './utils/transformations';
 
 type SuccessButtonProps = {
   isSuccess: boolean;
@@ -17,23 +18,23 @@ const SuccessButton = ({
   return (
     <button
       className={`btn inline-flex justify-center items-center btn-${
-        isSuccess ? "green" : "blue"
+        isSuccess ? 'green' : 'blue'
       }`}
       onClick={onClick}
     >
       {isSuccess && (
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
           strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6 mr-2"
+          stroke='currentColor'
+          className='w-6 h-6 mr-2'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
           />
         </svg>
       )}
@@ -84,15 +85,15 @@ const DataFileButton = <T,>({
   return (
     <>
       <input
-        className="hidden"
+        className='hidden'
         ref={fileInputRef}
         onChange={handleFile}
-        type="file"
-        accept=".json,.txt,text/plain"
+        type='file'
+        accept='.json,.txt,text/plain'
       />
       {error && (
-        <div className="w-min-content border bg-red-500 rounded-lg px-4 py-3">
-          <p className="text-white">{error}</p>
+        <div className='w-min-content border bg-red-500 rounded-lg px-4 py-3'>
+          <p className='text-white'>{error}</p>
         </div>
       )}
       <SuccessButton isSuccess={!!data} onClick={triggerFileSelection}>

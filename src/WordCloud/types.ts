@@ -1,4 +1,4 @@
-import { CategoryCloud } from "./components/types";
+import { CategoryCloud } from './components/types';
 
 export type InputNode = {
   id: string;

@@ -1,9 +1,9 @@
-import { InputNode } from "../../WordCloud/types";
-import { Category, ExplainabilityNode } from "../types";
+import { InputNode } from '../../WordCloud/types';
+import { Category, ExplainabilityNode } from '../types';
 
 export const transformGPipelineData = (
   nodes: ExplainabilityNode[],
-  categories: Category[]
+  categories: Category[],
 ) =>
   categories?.map((c) => ({
     category: c.name,
