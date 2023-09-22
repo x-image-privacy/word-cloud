@@ -162,7 +162,7 @@ const Wordcloud = ({
       // set rectangles and let hook re-render
       setWordClouds(layedOutWordClouds);
     }
-  }, [data]);
+  }, [data, minFontSize, maxFontSize]);
 
   return (
     <>
@@ -170,7 +170,7 @@ const Wordcloud = ({
         {data?.map((c) => {
           const coefs = c.words.map((word) => word.coef);
           const minCoef = Math.min(...coefs);
-          let maxCoef = Math.max(...coefs);
+          const maxCoef = Math.max(...coefs);
           return c.words.map((w) => (
             <text
               key={`${c.category}-${w.id}`}
@@ -226,7 +226,7 @@ const Wordcloud = ({
         {wordClouds?.map((wordCloud) => {
           const coefs = wordCloud.words.map((word) => word.coef);
           const minCoef = Math.min(...coefs);
-          let maxCoef = Math.max(...coefs);
+          const maxCoef = Math.max(...coefs);
 
           return (
             <g key={wordCloud.category} id={wordCloud.category} opacity={1}>
