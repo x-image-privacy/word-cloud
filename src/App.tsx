@@ -64,6 +64,7 @@ const convertFromString = (obj?: any): any => {
 const SHOW_NODES_KEY = 'showNodes';
 const SHOW_PARENT_NODES_KEY = 'showParentNodes';
 const SHOW_EDGES_KEY = 'showEdges';
+const SHOW_LABELS = 'showLabels';
 
 const graph = genomicsGraph;
 // const graph = privacyGraph;
@@ -81,6 +82,7 @@ const App = () => {
     [SHOW_NODES_KEY]: true,
     [SHOW_PARENT_NODES_KEY]: true,
     [SHOW_EDGES_KEY]: true,
+    [SHOW_LABELS]: false,
   });
 
   const [useCase, setUseCase] = useState('genomics');
@@ -106,6 +108,9 @@ const App = () => {
       style: {
         label: 'data(name)',
         backgroundOpacity: 0,
+        backgroundColor: selectTextOutlineColor,
+        width: `mapData(score, ${minScore}, ${maxScore}, 10, 100)`,
+        height: `mapData(score, ${minScore}, ${maxScore}, 10, 100)`,
         fontSize: `mapData(score, ${minScore}, ${maxScore}, 1, 20)`,
         color: 'white',
         textHalign: 'center',
@@ -156,6 +161,7 @@ const App = () => {
       style: {
         textOutlineOpacity: 1,
         textOutlineColor: 'red',
+        backgroundColor: 'red',
       },
     },
   ];
@@ -228,6 +234,18 @@ const App = () => {
           .style({
             'text-outline-opacity': 0,
             'text-opacity': 0,
+          })
+          .update();
+      }
+
+      if (!settings[SHOW_LABELS]) {
+        cyHandle
+          .style()
+          .selector('node')
+          .style({
+            'text-outline-opacity': 0,
+            'text-opacity': 0,
+            'background-opacity': 1,
           })
           .update();
       }
@@ -316,6 +334,13 @@ const App = () => {
                 value={settings[SHOW_EDGES_KEY]}
                 onChange={() => handleCheckbox(SHOW_EDGES_KEY)}
                 label="Show Edges"
+              />
+
+              <CheckBoxSetting
+                id={SHOW_LABELS}
+                value={settings[SHOW_LABELS]}
+                onChange={() => handleCheckbox(SHOW_LABELS)}
+                label="Show Labels"
               />
             </SettingsWrapper>
           </div>
