@@ -15,6 +15,11 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.12",
+    "@mui/material": "^5.14.12",
     "cytoscape": "^3.26.0",
     "cytoscape-avsdf": "^1.0.0",
     "cytoscape-cise": "^1.0.0",
