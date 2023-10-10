@@ -204,16 +204,30 @@ const View = ({ useCase, layout }: Props) => {
 
       // parent nodes
       if (settings[SHOW_PARENT_NODES_KEY]) {
-        cyHandle
-          .style()
-          .selector('node:parent[color]')
-          .style({
-            'background-opacity': 0.75,
-            'border-width': 1,
-            'text-outline-opacity': 1,
-            'text-opacity': 1,
-          })
-          .update();
+        // without labels
+        if (!settings[SHOW_LABELS]) {
+          cyHandle
+            .style()
+            .selector('node:parent[color]')
+            .style({
+              'text-outline-opacity': 0,
+              'text-opacity': 0,
+              'background-opacity': 1,
+            })
+            .update();
+        } else {
+          // with labels
+          cyHandle
+            .style()
+            .selector('node:parent[color]')
+            .style({
+              'background-opacity': 0.75,
+              'border-width': 1,
+              'text-outline-opacity': 1,
+              'text-opacity': 1,
+            })
+            .update();
+        }
       } else {
         cyHandle
           .style()
@@ -227,35 +241,38 @@ const View = ({ useCase, layout }: Props) => {
           .update();
       }
 
-      // parent nodes
+      // note: assuming childless nodes as children
+      // show children nodes
       if (settings[SHOW_NODES_KEY]) {
-        cyHandle
-          .style()
-          .selector('node:child')
-          .style({
-            'text-outline-opacity': 1,
-            'text-opacity': 1,
-          })
-          .update();
+        // without labels
+        if (!settings[SHOW_LABELS]) {
+          cyHandle
+            .style()
+            .selector('node:childless')
+            .style({
+              'text-outline-opacity': 0,
+              'text-opacity': 0,
+              'background-opacity': 1,
+            })
+            .update();
+        } else {
+          // with labels
+          cyHandle
+            .style()
+            .selector('node:childless')
+            .style({
+              'text-outline-opacity': 1,
+              'text-opacity': 1,
+            })
+            .update();
+        }
       } else {
         cyHandle
           .style()
-          .selector('node:child')
+          .selector('node:childless')
           .style({
             'text-outline-opacity': 0,
             'text-opacity': 0,
-          })
-          .update();
-      }
-
-      if (!settings[SHOW_LABELS]) {
-        cyHandle
-          .style()
-          .selector('node')
-          .style({
-            'text-outline-opacity': 0,
-            'text-opacity': 0,
-            'background-opacity': 1,
           })
           .update();
       }
