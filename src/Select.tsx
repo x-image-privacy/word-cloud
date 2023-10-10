@@ -1,28 +1,46 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 
 import CheckBoxSetting from './components/CheckBoxSetting';
+import ExplanationDataImporter from './components/ExplanationDataImporter';
 import SettingsWrapper from './components/SettingsWrapper';
+import genomicsGraph from './data/genomicsGraph';
+import privacyGraph from './data/privacyGraph';
+import { GraphData } from './data/types';
 
 type Props = {
   layout: string;
-  useCase: string;
-  handleChange: (useCase: string) => void;
+  graph: GraphData;
   handleChangeLayout: (layout: string) => void;
+  handleSetGraph: (graph: GraphData) => void;
 };
 
 export default function Select({
-  useCase,
-  handleChange,
   layout,
   handleChangeLayout,
+  handleSetGraph,
 }: Props) {
-  const handleUseCase = (event: React.FormEvent<HTMLDivElement>) => {
-    // @ts-ignore
+  const [useCase, setUseCase] = React.useState('privacy');
+
+  const handleUseCase = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    handleChange(layout);
+    setUseCase(value);
   };
 
-  const handleLayout = (event: React.FormEvent<HTMLDivElement>) => {
+  useEffect(() => {
+    switch (useCase) {
+      case 'genomics': {
+        handleSetGraph(genomicsGraph);
+        break;
+      }
+      case 'privacy': {
+        handleSetGraph(privacyGraph);
+        break;
+      }
+    }
+  }, [useCase]);
+
+  const handleLayout = (event: React.ChangeEvent<HTMLInputElement>) => {
     // @ts-ignore
     const value = event.target.value;
     handleChangeLayout(value);
@@ -35,13 +53,14 @@ export default function Select({
           <div>
             <SettingsWrapper title="Use Case">
               <div>
-                <div onChange={handleUseCase}>
+                <div>
                   <input
                     type="radio"
                     id="privacy"
                     name="useCase"
                     value="privacy"
                     checked={useCase === 'privacy'}
+                    onChange={handleUseCase}
                   />
                   <label htmlFor="privacy">Privacy</label>
                   <br />
@@ -51,10 +70,26 @@ export default function Select({
                     name="useCase"
                     value="genomics"
                     checked={useCase === 'genomics'}
+                    onChange={handleUseCase}
                   />
                   <label htmlFor="genomics">Genomics</label>
+                  <br />
+                  <input
+                    type="radio"
+                    id="custom"
+                    name="useCase"
+                    value="custom"
+                    checked={useCase === 'custom'}
+                    onChange={handleUseCase}
+                  />
+                  <label htmlFor="custom">Custom</label>
                 </div>
               </div>
+              {useCase === 'custom' ? (
+                <ExplanationDataImporter onSubmit={handleSetGraph} />
+              ) : (
+                <></>
+              )}
             </SettingsWrapper>
           </div>
           <div>

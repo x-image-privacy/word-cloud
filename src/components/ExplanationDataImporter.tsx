@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
-import { ExplanationData } from "../WordCloud";
-import { transformGPipelineData } from "./utils/transformations";
-import { Category, ExplainabilityNode } from "./types";
+import { useRef, useState } from 'react';
+
+import { ElementDefinition } from 'cytoscape';
+
+import { GraphData } from '../data/types';
 
 type SuccessButtonProps = {
   isSuccess: boolean;
@@ -17,7 +18,7 @@ const SuccessButton = ({
   return (
     <button
       className={`btn inline-flex justify-center items-center btn-${
-        isSuccess ? "green" : "blue"
+        isSuccess ? 'green' : 'blue'
       }`}
       onClick={onClick}
     >
@@ -85,14 +86,15 @@ const DataFileButton = <T,>({
     <>
       <input
         className="hidden"
+        style={{ display: 'none' }}
         ref={fileInputRef}
         onChange={handleFile}
         type="file"
         accept=".json,.txt,text/plain"
       />
       {error && (
-        <div className="w-min-content border bg-red-500 rounded-lg px-4 py-3">
-          <p className="text-white">{error}</p>
+        <div className="">
+          <p className="">{error}</p>
         </div>
       )}
       <SuccessButton isSuccess={!!data} onClick={triggerFileSelection}>
@@ -103,17 +105,22 @@ const DataFileButton = <T,>({
 };
 
 type Props = {
-  onSubmit: (data: ExplanationData) => void;
+  onSubmit: (data: GraphData) => void;
 };
 
 const ExplanationDataImporter = ({ onSubmit }: Props) => {
-  const [nodeData, setNodeData] = useState<ExplainabilityNode[]>();
-  const [categoryData, setCategoryData] = useState<Category[]>();
+  const [nodeData, setNodeData] = useState<ElementDefinition[]>();
+  const [categoryData, setCategoryData] = useState<ElementDefinition[]>();
+  const [edgeData, setEdgeData] = useState<ElementDefinition[]>();
   const [submitted, setSubmitted] = useState<boolean>();
 
-  const handleTransform = () => {
-    if (nodeData && categoryData) {
-      const xData = transformGPipelineData(nodeData, categoryData);
+  const handleSubmit = () => {
+    if (nodeData && categoryData && edgeData) {
+      const xData: GraphData = {
+        nodes: nodeData,
+        edges: edgeData,
+        parentNodes: categoryData,
+      };
       onSubmit(xData);
       setSubmitted(true);
     }
@@ -127,8 +134,11 @@ const ExplanationDataImporter = ({ onSubmit }: Props) => {
       <DataFileButton data={categoryData} setData={setCategoryData}>
         Load Categories
       </DataFileButton>
-      <SuccessButton isSuccess={!!submitted} onClick={handleTransform}>
-        Transform
+      <DataFileButton data={edgeData} setData={setEdgeData}>
+        Load Edges
+      </DataFileButton>
+      <SuccessButton isSuccess={!!submitted} onClick={handleSubmit}>
+        Submit
       </SuccessButton>
     </>
   );

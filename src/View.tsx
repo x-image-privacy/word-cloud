@@ -18,16 +18,8 @@ import _ from 'lodash';
 import randomColor from 'randomcolor';
 import rgbHex from 'rgb-hex';
 
-import { ExplanationData } from './WordCloud';
 import CheckBoxSetting from './components/CheckBoxSetting';
-import ExplanationDataImporter from './components/ExplanationDataImporter';
 import SettingsWrapper from './components/SettingsWrapper';
-import UseCase from './components/UseCase';
-import { defaultWords1 } from './data';
-import genomicsGraphData from './data/genomicsGraph';
-import genomicsGraph from './data/genomicsGraph';
-import privacyGraphData from './data/privacyGraph';
-import privacyGraph from './data/privacyGraph';
 import { GraphData } from './data/types';
 
 Cytoscape.use(fcose);
@@ -67,29 +59,17 @@ const SHOW_EDGES_KEY = 'showEdges';
 const SHOW_LABELS = 'showLabels';
 
 type Props = {
-  useCase: string;
   layout: string;
+  graph: GraphData;
 };
 
-const View = ({ useCase, layout }: Props) => {
+const View = ({ layout, graph }: Props) => {
   const [settings, setSettings] = useState({
     [SHOW_NODES_KEY]: true,
     [SHOW_PARENT_NODES_KEY]: true,
     [SHOW_EDGES_KEY]: true,
     [SHOW_LABELS]: false,
   });
-  let graph;
-  switch (useCase) {
-    case 'privacy': {
-      graph = privacyGraph;
-      break;
-    }
-    case 'genomics':
-    default: {
-      graph = genomicsGraph;
-      break;
-    }
-  }
 
   const scores = graph.nodes.map((node) => node.data.score);
   const weights = graph.edges.map((edge) => edge.data.weight);
@@ -336,7 +316,7 @@ const View = ({ useCase, layout }: Props) => {
             stylesheet={stylesheet}
             style={{
               width: 'calc(100vw - 50px)',
-              height: 'calc(100vh - 200px)',
+              height: 'calc(100vh - 300px)',
             }}
             layout={{ name: layout }}
             cy={(cy) => {

@@ -10,14 +10,16 @@ import Typography from '@mui/material/Typography';
 
 import Select from './Select';
 import View from './View';
+import privacyGraph from './data/privacyGraph';
+import { GraphData } from './data/types';
 
 const steps = ['Select Data', 'Visualize', 'Export'];
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
-  const [useCase, setUseCase] = React.useState('privacy');
   const [layout, setLayout] = React.useState('cola');
+  const [graph, setGraph] = React.useState(privacyGraph);
 
   const isStepOptional = (step: number) => {
     return false;
@@ -66,16 +68,15 @@ export default function HorizontalLinearStepper() {
       case 0:
         return (
           <Select
-            useCase={useCase}
             layout={layout}
-            handleChange={(v: string) => setUseCase(v)}
+            graph={graph}
             handleChangeLayout={(v: string) => setLayout(v)}
+            handleSetGraph={(g: GraphData) => setGraph(g)}
           />
         );
       case 1:
       default:
-        // @ts-ignore
-        return <View useCase={useCase} layout={layout} />;
+        return <View layout={layout} graph={graph} />;
     }
   };
 

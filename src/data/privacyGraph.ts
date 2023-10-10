@@ -1,12 +1,10 @@
 import { ElementDefinition } from 'cytoscape';
 import randomColor from 'randomcolor';
 
-// import nodes from './genomic_nodes.json';
-import edges from './prior_graph_edges.json';
-// import nodes from './prior_graph_nodes.json';
 import categories from './privacy_categories.json';
+import edges from './privacy_edges.json';
 import nodes from './privacy_nodes.json';
-import { GraphData, GraphNode, NodeData } from './types';
+import { GraphData } from './types';
 
 // const edges: ElementDefinition[] = [];
 
