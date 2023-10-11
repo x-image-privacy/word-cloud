@@ -1,5 +1,15 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+
+import { FilterAlt as FilterIcon } from '@mui/icons-material';
+import {
+  Chip,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material';
 
 import Cytoscape, { Core, ElementDefinition, NodeSingular } from 'cytoscape';
 // @ts-ignore
@@ -84,6 +94,8 @@ const View = ({ layout, graph }: Props) => {
   const [maxScore, setMaxScore] = useState<Number>(Math.max(...scores));
   const [minWeight, setMinWeight] = useState<Number>(Math.min(...weights));
   const [maxWeight, setMaxWeight] = useState<Number>(Math.max(...weights));
+  const [query, setQuery] = useState<string>();
+  const [filters, setFilters] = useState<Set<string>>(new Set());
 
   // const layout = { name: 'cose' };
   // const layout = { name: 'circle' };
@@ -158,6 +170,26 @@ const View = ({ layout, graph }: Props) => {
 
   const handleCheckbox = (key: keyof typeof settings) => {
     setSettings((p) => ({ ...p, [key]: !p[key] }));
+  };
+
+  const handleSearch = () => {
+    if (query) {
+      const cleanQuery = query.trim().toLowerCase();
+      const newSet = new Set(filters);
+      newSet.add(cleanQuery);
+      setFilters(newSet);
+      setQuery('');
+    }
+  };
+
+  const handleChangeQuery = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  const handleRemoveFilter = (v: string) => {
+    const newSet = new Set(filters);
+    newSet.delete(v);
+    setFilters(newSet);
   };
 
   useEffect(() => {
@@ -257,20 +289,57 @@ const View = ({ layout, graph }: Props) => {
           .update();
       }
 
-      // if (
-      //   settings[SHOW_NODES_KEY] ||
-      //   settings[SHOW_PARENT_NODES_KEY] ||
-      //   settings[SHOW_EDGES_KEY]
-      // ) {
-      //   const l = cyHandle.layout(layout);
-      //   l.run();
-      // }
+      // hide all nodes
+      if (filters.size) {
+        cyHandle.nodes().style({ visibility: 'hidden' });
+      } else {
+        cyHandle.nodes().style({ visibility: 'visible' });
+        cyHandle.edges().style({ visibility: 'visible' });
+      }
+
+      // filter
+      filters.forEach((f) => {
+        // bring back relevant nodes
+        cyHandle.nodes(`[name *= '${f}']`).forEach((ele) => {
+          // const cleanName = ele.data('name').trim().toLowerCase();
+          // if (cleanName.includes(cleanFilter)) {
+          ele.style({ visibility: 'visible' });
+
+          // if node is a child
+          // todo: do not assume just one parent
+          const category = ele.parent();
+          category.style({ visibility: 'visible' });
+
+          // if node is a parent
+          const children = ele.children();
+          children.style({ visibility: 'visible' });
+          // } else {
+          //   ele.connectedEdges().style({ visibility: 'hidden' });
+          // }
+        });
+        cyHandle.edges().style({ visibility: 'visible' });
+      });
+
+      cyHandle.nodes(':hidden').forEach((ele) => {
+        ele.connectedEdges().style({ visibility: 'hidden' });
+      });
+
+      const visibleNodes = cyHandle.nodes(':visible');
+
+      // have to catch this error as it explodes on first load
+      try {
+        if (visibleNodes.length && cyHandle.container()) {
+          cyHandle.fit(visibleNodes);
+        }
+      } catch (e) {
+        console.warn(`caught error: ${e}`);
+      }
     }
 
     return () => {
       // anything in here is fired on component unmount.
     };
-  }, [settings, cyHandle]);
+  }, [settings, cyHandle, filters, query]);
 
   return (
     <>
@@ -305,6 +374,34 @@ const View = ({ layout, graph }: Props) => {
                 label="Show Labels"
               />
             </SettingsWrapper>
+          </div>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Filter
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type="text"
+              value={query}
+              onChange={handleChangeQuery}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="filter"
+                    onClick={handleSearch}
+                    edge="end"
+                  >
+                    <FilterIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Filter..."
+            />
+          </FormControl>
+          <div>
+            {Array.from(filters).map((f) => (
+              <Chip label={f} onDelete={() => handleRemoveFilter(f)} />
+            ))}
           </div>
         </div>
       </div>
