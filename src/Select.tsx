@@ -1,25 +1,26 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import CheckBoxSetting from './components/CheckBoxSetting';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
+import Box from '@mui/material/Box';
+
 import ExplanationDataImporter from './components/ExplanationDataImporter';
-import SettingsWrapper from './components/SettingsWrapper';
 import genomicsGraph from './data/genomicsGraph';
 import privacyGraph from './data/privacyGraph';
 import { GraphData } from './data/types';
 
 type Props = {
-  layout: string;
   graph: GraphData;
-  handleChangeLayout: (layout: string) => void;
   handleSetGraph: (graph: GraphData) => void;
 };
 
-export default function Select({
-  layout,
-  handleChangeLayout,
-  handleSetGraph,
-}: Props) {
+export default function Select({ handleSetGraph }: Props) {
   const [useCase, setUseCase] = React.useState('privacy');
 
   const handleUseCase = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,94 +41,41 @@ export default function Select({
     }
   }, [useCase]);
 
-  const handleLayout = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore
-    const value = event.target.value;
-    handleChangeLayout(value);
-  };
-
   return (
     <div>
-      <div>
-        <SettingsWrapper title="Data">
-          <div>
-            <SettingsWrapper title="Use Case">
-              <div>
-                <div>
-                  <input
-                    type="radio"
-                    id="privacy"
-                    name="useCase"
-                    value="privacy"
-                    checked={useCase === 'privacy'}
-                    onChange={handleUseCase}
-                  />
-                  <label htmlFor="privacy">Privacy</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="genomics"
-                    name="useCase"
-                    value="genomics"
-                    checked={useCase === 'genomics'}
-                    onChange={handleUseCase}
-                  />
-                  <label htmlFor="genomics">Genomics</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="custom"
-                    name="useCase"
-                    value="custom"
-                    checked={useCase === 'custom'}
-                    onChange={handleUseCase}
-                  />
-                  <label htmlFor="custom">Custom</label>
-                </div>
-              </div>
-              {useCase === 'custom' ? (
-                <ExplanationDataImporter onSubmit={handleSetGraph} />
-              ) : (
-                <></>
-              )}
-            </SettingsWrapper>
-          </div>
-          <div>
-            <SettingsWrapper title="Layout">
-              <div>
-                <div onChange={handleLayout}>
-                  <input
-                    type="radio"
-                    id="fcose"
-                    name="layout"
-                    value="fcose"
-                    checked={layout === 'fcose'}
-                  />
-                  <label htmlFor="fcose">fCOSE</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="cola"
-                    name="layout"
-                    value="cola"
-                    checked={layout === 'cola'}
-                  />
-                  <label htmlFor="cola">Cola</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="random"
-                    name="layout"
-                    value="random"
-                    checked={layout === 'random'}
-                  />
-                  <label htmlFor="random">Random</label>
-                </div>
-              </div>
-            </SettingsWrapper>
-          </div>
-        </SettingsWrapper>
-      </div>
+      <Box sx={{ m: 5 }}>
+        <FormControl>
+          <FormLabel id="use case">Use Case</FormLabel>
+          <RadioGroup
+            aria-labelledby="use case"
+            defaultValue="privacy"
+            name="useCase"
+            value={useCase}
+            onChange={handleUseCase}
+          >
+            <FormControlLabel
+              value="privacy"
+              control={<Radio />}
+              label="Privacy"
+            />
+            <FormControlLabel
+              value="genomics"
+              control={<Radio />}
+              label="Genomics"
+            />
+            <FormControlLabel
+              value="custom"
+              control={<Radio />}
+              label="Custom"
+            />
+          </RadioGroup>
+        </FormControl>
+        {useCase === 'custom' ? (
+          <ExplanationDataImporter onSubmit={handleSetGraph} />
+        ) : (
+          <></>
+        )}
+      </Box>
     </div>
   );
 }
