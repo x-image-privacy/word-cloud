@@ -3,6 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { FilterAlt as FilterIcon } from '@mui/icons-material';
 import {
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -18,9 +19,12 @@ export default function Filters({ handleSetFilters, filters }: Props) {
   const [query, setQuery] = useState<string>('');
   const handleSearch = () => {
     if (query) {
-      const cleanQuery = query.trim().toLowerCase();
       const newSet = new Set(filters);
-      newSet.add(cleanQuery);
+      const terms = query.split(',');
+      terms.forEach((term) => {
+        const cleanTerm = term.trim().toLowerCase();
+        newSet.add(cleanTerm);
+      });
       handleSetFilters(newSet);
       setQuery('');
     }
@@ -45,7 +49,12 @@ export default function Filters({ handleSetFilters, filters }: Props) {
           </InputAdornment>
         }
         label="Filter..."
+        aria-describedby="helper-text"
+        inputProps={{
+          'aria-label': 'filter',
+        }}
       />
+      <FormHelperText id="helper-text">Comma-Separated</FormHelperText>
     </FormControl>
   );
 }
