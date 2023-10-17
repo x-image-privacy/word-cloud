@@ -320,6 +320,30 @@ const View = ({ graph }: Props) => {
     };
   }, [settings, cyHandle, filters]);
 
+  // keydown listener for deleting elements
+  useEffect(() => {
+    if (cyHandle) {
+      try {
+        const deleteElement = (event: KeyboardEvent) => {
+          if (event.key === 'Delete' || event.key === 'Backspace') {
+            try {
+              const elems = cyHandle.$(':selected');
+              elems.remove();
+            } catch (e) {
+              console.warn(`caught error: ${e}`);
+            }
+          }
+        };
+        addEventListener('keydown', deleteElement);
+        return () => {
+          removeEventListener('keydown', deleteElement);
+        };
+      } catch (e) {
+        console.warn(`caught error: ${e}`);
+      }
+    }
+  }, [cyHandle]);
+
   return (
     <>
       <div>
