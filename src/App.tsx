@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { AppBar, Toolbar } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
@@ -78,8 +78,15 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            G-Interface
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Stepper activeStep={activeStep} sx={{ m: 3 }}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {
@@ -103,44 +110,47 @@ export default function HorizontalLinearStepper() {
 
       {renderSwitch(activeStep)}
 
-      <Box
-        sx={{ height: '100px', position: 'fixed', width: '100vw', bottom: 0 }}
-      >
-        <Divider sx={{ mt: 5 }} />
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+        <Toolbar>
+          {activeStep === steps.length ? (
+            <>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Box sx={{ flexGrow: 1 }} />
+              <Button onClick={handleReset} variant="contained" color="info">
+                Reset
+              </Button>
+            </>
+          ) : (
+            <>
               <Button
-                color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                sx={{ mr: 1 }}
+                sx={{ mr: 1, color: 'white' }}
+                variant="contained"
+                color="info"
               >
                 Back
               </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
+              <Box sx={{ flexGrow: 1 }} />
               {isStepOptional(activeStep) && (
-                <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                <Button
+                  onClick={handleSkip}
+                  sx={{ mr: 1 }}
+                  variant="contained"
+                  color="info"
+                >
                   Skip
                 </Button>
               )}
-              <Button onClick={handleNext}>
+              <Button onClick={handleNext} variant="contained" color="info">
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
-            </Box>
-          </React.Fragment>
-        )}
-      </Box>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
