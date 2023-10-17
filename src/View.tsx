@@ -4,6 +4,7 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import {
   Checkbox,
   Chip,
+  Divider,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -384,23 +385,22 @@ const View = ({ graph }: Props) => {
           </Grid>
         </Box>
       </div>
+      <Divider />
       <div>
-        <div>
-          <CytoscapeComponent
-            id="privacy"
-            elements={[...elements]}
-            stylesheet={stylesheet}
-            style={{
-              width: 'calc(100vw - 50px)',
-              height: 'calc(100vh - 300px)',
-            }}
-            layout={{ name: DEFAULT_LAYOUT }}
-            cy={(cy) => {
-              // todo: enable reshuffling
-              setCyHandle(cy);
-            }}
-          />
-        </div>
+        <CytoscapeComponent
+          id="privacy"
+          elements={[...elements]}
+          stylesheet={stylesheet}
+          style={{
+            width: 'calc(100vw)',
+            height: 'calc(100vh - 400px)',
+          }}
+          layout={{ name: DEFAULT_LAYOUT }}
+          cy={(cy) => {
+            // todo: enable reshuffling
+            setCyHandle(cy);
+          }}
+        />
       </div>
     </>
   );

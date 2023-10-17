@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import { AppBar, Toolbar } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -16,9 +17,9 @@ import { GraphData } from './data/types';
 const steps = ['Select Data', 'Visualize', 'Export'];
 
 export default function HorizontalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
-  const [graph, setGraph] = React.useState(privacyGraph);
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
+  const [graph, setGraph] = useState(privacyGraph);
 
   const isStepOptional = (step: number) => {
     return false;
@@ -78,7 +79,7 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

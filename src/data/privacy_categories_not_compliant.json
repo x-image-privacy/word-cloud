@@ -1,0 +1,82 @@
+[
+    {
+        "data": {
+            "name": "kitchen",
+            "score": 0.036130096244321175,
+            "id": "c0"
+        }
+    },
+    {
+        "data": {
+            "name": "vehicle",
+            "score": 0.7918275929910786,
+            "id": "c1",
+            "color": "#000"
+        }
+    },
+    {
+    },
+    {
+        "data": {
+            "name": "accessory",
+            "score": 0.2571571585102601,
+            "id": "c3"
+        }
+    },
+    {
+        "data": {
+            "name": "sports",
+            "score": 0.7913268668078243,
+            "id": "c4"
+        }
+    },
+    {
+        "data": {
+            "name": "electronic",
+            "score": 0.9939624780369383,
+            "id": "c5"
+        }
+    },
+    {
+        "data": {
+            "name": "indoor",
+            "score": 0.9562275883265232,
+            "id": "c6"
+        }
+    },
+    {
+        "data": {
+            "name": "outdoor",
+            "score": 0.30679977637448674,
+            "id": "c7"
+        }
+    },
+    {
+        "data": {
+            "name": "appliance",
+            "score": 0.060329260950528374,
+            "id": "c8"
+        }
+    },
+    {
+        "data": {
+            "name": "furniture",
+            "score": 0.8125364179111876,
+            "id": "c9"
+        }
+    },
+    {
+        "data": {
+            "name": "animal",
+            "score": 0.8665025102191475,
+            "id": "c10"
+        }
+    },
+    {
+        "data": {
+            "name": "person",
+            "score": 0.577010028326078,
+            "id": "c11"
+        }
+    }
+]
