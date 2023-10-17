@@ -178,27 +178,36 @@ const View = ({ graph }: Props) => {
     if (cyHandle) {
       // have to catch this error as it explodes on first load
       try {
-        // edges
+        // edges visible
         if (settings[SHOW_EDGES_KEY]) {
           cyHandle
             .style()
             .selector('edge')
             .style({
-              opacity: 0.5,
+              display: 'element',
             })
             .update();
+          // edges not visible
         } else {
+          cyHandle.$('edge').unselect();
           cyHandle
             .style()
             .selector('edge')
             .style({
-              opacity: 0,
+              display: 'none',
             })
             .update();
         }
 
-        // parent nodes
+        // parent nodes visible
         if (settings[SHOW_PARENT_NODES_KEY]) {
+          cyHandle
+            .$('node:parent')
+            .selectify()
+            .grabify()
+            // for some reason ts is not detecting this property
+            // @ts-ignore
+            .unpanify();
           // without labels
           if (!settings[SHOW_LABELS]) {
             cyHandle
@@ -223,7 +232,16 @@ const View = ({ graph }: Props) => {
               })
               .update();
           }
+          // parent nodes not visible
         } else {
+          cyHandle
+            .$('node:parent')
+            .unselect()
+            .unselectify()
+            .ungrabify()
+            // for some reason ts is not detecting this property
+            // @ts-ignore
+            .panify();
           cyHandle
             .style()
             .selector('node:parent[color]')
@@ -239,6 +257,13 @@ const View = ({ graph }: Props) => {
         // note: assuming childless nodes as children
         // show children nodes
         if (settings[SHOW_NODES_KEY]) {
+          cyHandle
+            .$('node:childless')
+            .selectify()
+            .grabify()
+            // for some reason ts is not detecting this property
+            // @ts-ignore
+            .unpanify();
           // without labels
           if (!settings[SHOW_LABELS]) {
             cyHandle
@@ -261,7 +286,16 @@ const View = ({ graph }: Props) => {
               })
               .update();
           }
+          // hide children nodes
         } else {
+          cyHandle
+            .$('node:childless')
+            .unselect()
+            .unselectify()
+            .ungrabify()
+            // for some reason ts is not detecting this property
+            // @ts-ignore
+            .panify();
           cyHandle
             .style()
             .selector('node:childless')
