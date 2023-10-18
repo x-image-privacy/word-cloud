@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Checkbox,
   Chip,
-  Divider,
   FormControlLabel,
   FormGroup,
   Grid,
 } from '@mui/material';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import Cytoscape, { Core, NodeSingular } from 'cytoscape';
 // @ts-ignore
@@ -26,10 +30,10 @@ import edgehandles from 'cytoscape-edgehandles';
 import fcose from 'cytoscape-fcose';
 import _ from 'lodash';
 import randomColor from 'randomcolor';
-import rgbHex from 'rgb-hex';
 
 import Filter from './Filter';
 import Layout from './Layout';
+import Sizer from './Sizer';
 import { DEFAULT_LAYOUT } from './constants';
 import { GraphData } from './data/types';
 
@@ -64,10 +68,17 @@ const convertFromString = (obj?: any): any => {
   return JSON.parse(obj);
 };
 
-const SHOW_NODES_KEY = 'showNodes';
-const SHOW_PARENT_NODES_KEY = 'showParentNodes';
-const SHOW_EDGES_KEY = 'showEdges';
-const SHOW_LABELS = 'showLabels';
+export const SHOW_NODES_KEY = 'showNodes';
+export const SHOW_PARENT_NODES_KEY = 'showParentNodes';
+export const SHOW_EDGES_KEY = 'showEdges';
+export const SHOW_LABELS_KEY = 'showLabels';
+
+export type SettingsProps = {
+  [SHOW_NODES_KEY]: boolean;
+  [SHOW_PARENT_NODES_KEY]: boolean;
+  [SHOW_EDGES_KEY]: boolean;
+  [SHOW_LABELS_KEY]: boolean;
+};
 
 type Props = {
   graph: GraphData;
@@ -78,7 +89,7 @@ const View = ({ graph }: Props) => {
     [SHOW_NODES_KEY]: true,
     [SHOW_PARENT_NODES_KEY]: true,
     [SHOW_EDGES_KEY]: true,
-    [SHOW_LABELS]: true,
+    [SHOW_LABELS_KEY]: true,
   });
 
   const scores = graph.nodes.map((node) => node.data.score);
@@ -90,10 +101,10 @@ const View = ({ graph }: Props) => {
   });
 
   const [cyHandle, setCyHandle] = useState<Core>();
-  const [minScore, setMinScore] = useState<Number>(Math.min(...scores));
-  const [maxScore, setMaxScore] = useState<Number>(Math.max(...scores));
-  const [minWeight, setMinWeight] = useState<Number>(Math.min(...weights));
-  const [maxWeight, setMaxWeight] = useState<Number>(Math.max(...weights));
+  const [minScore, setMinScore] = useState<number>(Math.min(...scores));
+  const [maxScore, setMaxScore] = useState<number>(Math.max(...scores));
+  const [minWeight, setMinWeight] = useState<number>(Math.min(...weights));
+  const [maxWeight, setMaxWeight] = useState<number>(Math.max(...weights));
   const [filters, setFilters] = useState<Set<string>>(new Set());
 
   const stylesheet = [
@@ -103,19 +114,15 @@ const View = ({ graph }: Props) => {
         label: 'data(name)',
         backgroundOpacity: 0,
         backgroundColor: selectTextOutlineColor,
-        width: `mapData(score, ${minScore}, ${maxScore}, 10, 100)`,
-        height: `mapData(score, ${minScore}, ${maxScore}, 10, 100)`,
-        fontSize: `mapData(score, ${minScore}, ${maxScore}, 1, 20)`,
         color: 'white',
         textHalign: 'center',
         textValign: 'center',
-        // textOutlineColor: `mapData(score, ${minScore}, ${maxScore}, blue, red)`,
         textOutlineColor: selectTextOutlineColor,
         textOutlineOpacity: 0.9,
-        textOutlineWidth: 5,
       },
     },
     {
+      // orphan nodes are grey
       selector: 'node:orphan',
       style: {
         textOutlineColor: 'gray',
@@ -130,9 +137,8 @@ const View = ({ graph }: Props) => {
       },
     },
     {
-      selector: 'edge[weight]',
+      selector: 'edge',
       style: {
-        width: `mapData(weight, ${minWeight}, ${maxWeight}, 1, 10)`,
         opacity: 0.5,
       },
     },
@@ -209,7 +215,7 @@ const View = ({ graph }: Props) => {
             // @ts-ignore
             .unpanify();
           // without labels
-          if (!settings[SHOW_LABELS]) {
+          if (!settings[SHOW_LABELS_KEY]) {
             cyHandle
               .style()
               .selector('node:parent[color]')
@@ -229,6 +235,8 @@ const View = ({ graph }: Props) => {
                 'border-width': 1,
                 'text-outline-opacity': 1,
                 'text-opacity': 1,
+                height: 'label',
+                width: 'label',
               })
               .update();
           }
@@ -265,7 +273,7 @@ const View = ({ graph }: Props) => {
             // @ts-ignore
             .unpanify();
           // without labels
-          if (!settings[SHOW_LABELS]) {
+          if (!settings[SHOW_LABELS_KEY]) {
             cyHandle
               .style()
               .selector('node:childless')
@@ -380,70 +388,87 @@ const View = ({ graph }: Props) => {
 
   return (
     <>
-      <div>
-        <Box sx={{ m: 5 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={settings[SHOW_NODES_KEY]}
-                      onChange={() => handleCheckbox(SHOW_NODES_KEY)}
-                    />
-                  }
-                  label="Show Nodes"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={settings[SHOW_PARENT_NODES_KEY]}
-                      onChange={() => handleCheckbox(SHOW_PARENT_NODES_KEY)}
-                    />
-                  }
-                  label="Show Categories"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={settings[SHOW_EDGES_KEY]}
-                      onChange={() => handleCheckbox(SHOW_EDGES_KEY)}
-                    />
-                  }
-                  label="Show Edges"
-                />
-                <FormControlLabel
-                  disabled={areNodesHidden()}
-                  control={
-                    <Checkbox
-                      checked={settings[SHOW_LABELS]}
-                      onChange={() => handleCheckbox(SHOW_LABELS)}
-                      indeterminate={areNodesHidden()}
-                    />
-                  }
-                  label="Show Labels"
-                />
-              </FormGroup>
-            </Grid>
-            <Grid item xs={4}>
-              <Filter handleSetFilters={setFilters} filters={filters} />
-              <div>
-                {Array.from(filters).map((f) => (
-                  <Chip
-                    key={f}
-                    label={f}
-                    onDelete={() => handleRemoveFilter(f)}
+      <Box sx={{ my: 1, marginX: 5 }}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Filters & More</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={settings[SHOW_NODES_KEY]}
+                        onChange={() => handleCheckbox(SHOW_NODES_KEY)}
+                      />
+                    }
+                    label="Show Nodes"
                   />
-                ))}
-              </div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={settings[SHOW_PARENT_NODES_KEY]}
+                        onChange={() => handleCheckbox(SHOW_PARENT_NODES_KEY)}
+                      />
+                    }
+                    label="Show Categories"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={settings[SHOW_EDGES_KEY]}
+                        onChange={() => handleCheckbox(SHOW_EDGES_KEY)}
+                      />
+                    }
+                    label="Show Edges"
+                  />
+                  <FormControlLabel
+                    disabled={areNodesHidden()}
+                    control={
+                      <Checkbox
+                        checked={settings[SHOW_LABELS_KEY]}
+                        onChange={() => handleCheckbox(SHOW_LABELS_KEY)}
+                        indeterminate={areNodesHidden()}
+                      />
+                    }
+                    label="Show Labels"
+                  />
+                </FormGroup>
+              </Grid>
+              <Grid item xs={4}>
+                <Filter handleSetFilters={setFilters} filters={filters} />
+                <div>
+                  {Array.from(filters).map((f) => (
+                    <Chip
+                      key={f}
+                      label={f}
+                      onDelete={() => handleRemoveFilter(f)}
+                    />
+                  ))}
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <Layout cy={cyHandle} />
+                <Sizer
+                  cy={cyHandle}
+                  minScore={minScore}
+                  maxScore={maxScore}
+                  minWeight={minWeight}
+                  maxWeight={maxWeight}
+                  settings={settings}
+                  filters={filters}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Layout cy={cyHandle} />
-            </Grid>
-          </Grid>
-        </Box>
-      </div>
-      <Divider />
+          </AccordionDetails>
+        </Accordion>
+      </Box>
       <div>
         <CytoscapeComponent
           id="privacy"
@@ -453,7 +478,9 @@ const View = ({ graph }: Props) => {
             width: 'calc(100vw)',
             height: 'calc(100vh - 400px)',
           }}
-          layout={{ name: DEFAULT_LAYOUT }}
+          layout={{
+            name: DEFAULT_LAYOUT,
+          }}
           cy={(cy) => {
             // todo: enable reshuffling
             setCyHandle(cy);

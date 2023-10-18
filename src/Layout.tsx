@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  ButtonGroup,
   FormControl,
   InputLabel,
   MenuItem,
@@ -27,6 +28,7 @@ export default function Layout({ cy }: Props) {
   const handleFit = () => {
     if (cy) {
       const visibleNodes = cy.nodes(':visible');
+
       const l = visibleNodes.layout({
         name: layout,
       });
@@ -62,13 +64,15 @@ export default function Layout({ cy }: Props) {
           <MenuItem value={'cise'}>Grid</MenuItem>
           <MenuItem value={'random'}>Random</MenuItem>
         </Select>
+        <ButtonGroup sx={{ alignSelf: 'center', mt: 2 }}>
+          <Button variant="outlined" onClick={handleCenter}>
+            Center
+          </Button>
+          <Button variant="outlined" onClick={handleFit}>
+            Fit
+          </Button>
+        </ButtonGroup>
       </FormControl>
-      <Button variant="outlined" onClick={handleCenter}>
-        Center
-      </Button>
-      <Button variant="outlined" onClick={handleFit}>
-        Fit
-      </Button>
     </>
   );
 }
