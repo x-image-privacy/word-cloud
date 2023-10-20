@@ -11,7 +11,7 @@ import Cytoscape from 'cytoscape';
 import {
   SHOW_EDGES_KEY,
   SHOW_LABELS_KEY,
-  SHOW_PARENT_NODES_KEY,
+  SHOW_NODES_KEY,
   SettingsProps,
 } from './View';
 
@@ -133,8 +133,7 @@ export default function Sizer({
   }, [fontSize, nodeSize, edgeSize, cy, settings, filters]);
 
   const edgesDisabled = (n: number) => !settings[SHOW_EDGES_KEY] || n === 0;
-  const nodesDisabled =
-    !settings[SHOW_PARENT_NODES_KEY] && settings[SHOW_LABELS_KEY];
+  const nodesDisabled = !settings[SHOW_NODES_KEY] || settings[SHOW_LABELS_KEY];
   const labelsDisabled = !settings[SHOW_LABELS_KEY];
   return (
     <Box sx={{ mt: 2 }}>
