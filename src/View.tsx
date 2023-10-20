@@ -2,19 +2,15 @@ import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SaveIcon from '@mui/icons-material/Save';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Checkbox,
   Chip,
-  Fab,
   FormControlLabel,
   FormGroup,
   Grid,
-  IconButton,
-  Modal,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -59,14 +55,6 @@ const selectTextOutlineColor = _.memoize(function (ele: NodeSingular) {
   return 'gray';
 });
 
-const convertToString = (obj?: any): string => {
-  return JSON.stringify(obj, null, 2);
-};
-
-const convertFromString = (obj?: any): any => {
-  return JSON.parse(obj);
-};
-
 export const SHOW_NODES_KEY = 'showNodes';
 export const SHOW_PARENT_NODES_KEY = 'showParentNodes';
 export const SHOW_EDGES_KEY = 'showEdges';
@@ -105,6 +93,7 @@ const View = ({ graph }: Props) => {
   const [minWeight, setMinWeight] = useState<number>(Math.min(...weights));
   const [maxWeight, setMaxWeight] = useState<number>(Math.max(...weights));
   const [filters, setFilters] = useState<Set<string>>(new Set());
+  const [matchFullWord, setMatchFullWord] = useState<boolean>(false);
 
   const stylesheet = [
     {
@@ -176,6 +165,23 @@ const View = ({ graph }: Props) => {
     const newSet = new Set(filters);
     newSet.delete(v);
     setFilters(newSet);
+  };
+
+  const handleSetMatchFullWord = (): void => {
+    setMatchFullWord(!matchFullWord);
+  };
+
+  const showElement = (ele: Cytoscape.NodeSingular): void => {
+    ele.style({ visibility: 'visible' });
+
+    // if node is a child
+    // todo: do not assume just one parent
+    const category = ele.parent();
+    category.style({ visibility: 'visible' });
+
+    // if node is a parent
+    const children = ele.children();
+    children.style({ visibility: 'visible' });
   };
 
   useEffect(() => {
@@ -326,17 +332,15 @@ const View = ({ graph }: Props) => {
           // bring back relevant nodes
           cyHandle.nodes().forEach((ele) => {
             const cleanName = ele.data('name').trim().toLowerCase();
-            if (cleanName.includes(f)) {
-              ele.style({ visibility: 'visible' });
-
-              // if node is a child
-              // todo: do not assume just one parent
-              const category = ele.parent();
-              category.style({ visibility: 'visible' });
-
-              // if node is a parent
-              const children = ele.children();
-              children.style({ visibility: 'visible' });
+            if (matchFullWord) {
+              if (cleanName === f) {
+                showElement(ele);
+              }
+            } else {
+              // partial match
+              if (cleanName.includes(f)) {
+                showElement(ele);
+              }
             }
           });
           cyHandle.edges().style({ visibility: 'visible' });
@@ -356,11 +360,10 @@ const View = ({ graph }: Props) => {
         console.warn(`caught error: ${e}`);
       }
     }
-
     return () => {
       // anything in here is fired on component unmount.
     };
-  }, [settings, cyHandle, filters]);
+  }, [settings, cyHandle, filters, matchFullWord]);
 
   // keydown listener for deleting elements
   useEffect(() => {
@@ -443,7 +446,12 @@ const View = ({ graph }: Props) => {
                 </FormGroup>
               </Grid>
               <Grid item xs={4}>
-                <Filter handleSetFilters={setFilters} filters={filters} />
+                <Filter
+                  handleSetFilters={setFilters}
+                  filters={filters}
+                  matchFullWord={matchFullWord}
+                  handleSetMatchFullWord={handleSetMatchFullWord}
+                />
                 <div>
                   {Array.from(filters).map((f) => (
                     <Chip
@@ -464,6 +472,7 @@ const View = ({ graph }: Props) => {
                   maxWeight={maxWeight}
                   settings={settings}
                   filters={filters}
+                  matchFullWord={matchFullWord}
                 />
               </Grid>
             </Grid>

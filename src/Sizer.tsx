@@ -23,6 +23,7 @@ type Props = {
   maxWeight: number;
   settings: SettingsProps;
   filters: Set<string>;
+  matchFullWord: boolean;
 };
 
 export default function Sizer({
@@ -33,6 +34,7 @@ export default function Sizer({
   minWeight,
   maxWeight,
   filters,
+  matchFullWord,
 }: Props) {
   const [nodeSize, setNodeSize] = useState<number>(1);
   const [edgeSize, setEdgeSize] = useState<number>(1);
@@ -130,7 +132,7 @@ export default function Sizer({
         console.warn(`caught error: ${e}`);
       }
     }
-  }, [fontSize, nodeSize, edgeSize, cy, settings, filters]);
+  }, [fontSize, nodeSize, edgeSize, cy, settings, filters, matchFullWord]);
 
   const edgesDisabled = (n: number) => !settings[SHOW_EDGES_KEY] || n === 0;
   const nodesDisabled = !settings[SHOW_NODES_KEY] || settings[SHOW_LABELS_KEY];

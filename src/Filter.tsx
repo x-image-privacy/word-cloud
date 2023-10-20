@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { FilterAlt as FilterIcon } from '@mui/icons-material';
+import TextFormatIcon from '@mui/icons-material/TextFormat';
 import {
   FormControl,
   FormHelperText,
@@ -13,10 +14,18 @@ import {
 type Props = {
   handleSetFilters: (filters: Set<string>) => void;
   filters: Set<string>;
+  handleSetMatchFullWord: () => void;
+  matchFullWord: boolean;
 };
 
-export default function Filters({ handleSetFilters, filters }: Props) {
+export default function Filters({
+  handleSetFilters,
+  filters,
+  handleSetMatchFullWord,
+  matchFullWord,
+}: Props) {
   const [query, setQuery] = useState<string>('');
+
   const handleSearch = () => {
     if (query) {
       const newSet = new Set(filters);
@@ -42,11 +51,24 @@ export default function Filters({ handleSetFilters, filters }: Props) {
         value={query}
         onChange={handleChangeQuery}
         endAdornment={
-          <InputAdornment position="end">
-            <IconButton aria-label="filter" onClick={handleSearch} edge="end">
-              <FilterIcon />
-            </IconButton>
-          </InputAdornment>
+          <>
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="filter"
+                onClick={handleSetMatchFullWord}
+                edge="end"
+              >
+                <TextFormatIcon
+                  color={matchFullWord ? 'primary' : 'disabled'}
+                />
+              </IconButton>
+            </InputAdornment>
+            <InputAdornment position="end">
+              <IconButton aria-label="filter" onClick={handleSearch} edge="end">
+                <FilterIcon />
+              </IconButton>
+            </InputAdornment>
+          </>
         }
         label="Filter..."
         aria-describedby="helper-text"
