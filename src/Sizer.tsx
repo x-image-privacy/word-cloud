@@ -91,7 +91,7 @@ export default function Sizer({
               'font-size': `mapData(score, ${minScore || 0}, ${
                 maxScore || 1
               }, ${1 * fontSize}, ${20 * fontSize})`,
-              'text-outline-width': 1 * fontSize,
+              'text-outline-width': 2 * fontSize,
             },
           )
           .update();
