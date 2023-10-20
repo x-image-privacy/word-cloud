@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SaveIcon from '@mui/icons-material/Save';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Checkbox,
   Chip,
+  Fab,
   FormControlLabel,
   FormGroup,
   Grid,
+  IconButton,
+  Modal,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -23,14 +27,11 @@ import cise from 'cytoscape-cise';
 // @ts-ignore
 import cola from 'cytoscape-cola';
 // @ts-ignore
-import compoundDragAndDrop from 'cytoscape-compound-drag-and-drop';
-// @ts-ignore
-import edgehandles from 'cytoscape-edgehandles';
-// @ts-ignore
 import fcose from 'cytoscape-fcose';
 import _ from 'lodash';
 import randomColor from 'randomcolor';
 
+import Export from './Export';
 import Filter from './Filter';
 import Layout from './Layout';
 import Sizer from './Sizer';
@@ -41,8 +42,6 @@ Cytoscape.use(fcose);
 Cytoscape.use(cola);
 Cytoscape.use(avsdf);
 Cytoscape.use(cise);
-Cytoscape.use(compoundDragAndDrop);
-Cytoscape.use(edgehandles);
 
 // todo: figure out how to uncache for nodes that change color
 const selectTextOutlineColor = _.memoize(function (ele: NodeSingular) {
@@ -348,6 +347,7 @@ const View = ({ graph }: Props) => {
         });
 
         const visibleNodes = cyHandle.nodes(':visible');
+        // console.log(visibleNodes.length);
 
         if (visibleNodes.length && cyHandle.container()) {
           cyHandle.fit(visibleNodes);
@@ -389,13 +389,14 @@ const View = ({ graph }: Props) => {
   return (
     <>
       <Box sx={{ my: 1, marginX: 5 }}>
+        <Export cy={cyHandle} />
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>Filters & More</Typography>
+            <Typography>Filters & Layout</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Grid container spacing={2}>

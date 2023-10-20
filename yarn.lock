@@ -1273,6 +1273,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/file-saver@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@types/file-saver@npm:2.0.6"
+  checksum: 4be4bc301bfbd8a173c7ed760594d73120c71ec9a0a74a6e7b4a2c8295397826a976cda3ee490fa1adf97f6a072d01bc9409343e07af3c9ffad218aad1746896
+  languageName: node
+  linkType: hard
+
 "@types/lodash@npm:^4.14.198":
   version: 4.14.198
   resolution: "@types/lodash@npm:4.14.198"
@@ -1450,6 +1457,7 @@ __metadata:
     "@mui/icons-material": ^5.14.12
     "@mui/material": ^5.14.12
     "@trivago/prettier-plugin-sort-imports": ^4.2.0
+    "@types/file-saver": ^2.0.6
     "@types/lodash": ^4.14.198
     "@types/randomcolor": ^0.5.7
     "@types/react": ^18.2.12
@@ -1464,6 +1472,7 @@ __metadata:
     cytoscape-compound-drag-and-drop: ^1.1.0
     cytoscape-edgehandles: ^4.0.1
     cytoscape-fcose: ^2.2.0
+    file-saver: ^2.0.5
     lodash: ^4.17.21
     postcss: ^8.4.24
     prettier: ^3.0.3
@@ -2408,6 +2417,13 @@ __metadata:
   dependencies:
     reusify: ^1.0.4
   checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
+  languageName: node
+  linkType: hard
+
+"file-saver@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "file-saver@npm:2.0.5"
+  checksum: c62d96e5cebc58b4bdf3ae8a60d5cf9607ad82f75f798c33a4ee63435ac2203002584d5256a2a780eda7feb5e19dc3b6351c2212e58b3f529e63d265a7cc79f7
   languageName: node
   linkType: hard
 
