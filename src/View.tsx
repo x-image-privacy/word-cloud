@@ -125,12 +125,6 @@ const View = ({ graph }: Props) => {
       },
     },
     {
-      selector: 'edge',
-      style: {
-        opacity: 0.5,
-      },
-    },
-    {
       selector: 'node:parent[color]',
       style: {
         borderColor: 'data(color)',
@@ -191,6 +185,7 @@ const View = ({ graph }: Props) => {
       try {
         // edges visible
         if (settings[SHOW_EDGES_KEY]) {
+          cyHandle.$('edge').selectify();
           cyHandle
             .style()
             .selector('edge')
@@ -200,7 +195,7 @@ const View = ({ graph }: Props) => {
             .update();
           // edges not visible
         } else {
-          cyHandle.$('edge').unselect();
+          cyHandle.$('edge').unselect().unselectify();
           cyHandle
             .style()
             .selector('edge')
@@ -350,8 +345,7 @@ const View = ({ graph }: Props) => {
           ele.connectedEdges().style({ visibility: 'hidden' });
         });
 
-        const visibleNodes = cyHandle.nodes(':visible');
-        // console.log(visibleNodes.length);
+        const visibleNodes = cyHandle.nodes(':visible:selectable');
 
         if (visibleNodes.length && cyHandle.container()) {
           cyHandle.fit(visibleNodes);

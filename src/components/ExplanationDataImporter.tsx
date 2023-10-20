@@ -48,7 +48,7 @@ type ErrorToastContainerProps = {
   message: string;
   onClick: () => void;
 };
-const ErrorToastContainer = ({
+export const ErrorToastContainer = ({
   message,
   onClick,
 }: ErrorToastContainerProps) => {

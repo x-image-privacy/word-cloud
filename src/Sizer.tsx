@@ -30,9 +30,9 @@ export default function Sizer({
   cy,
   minScore,
   maxScore,
-  settings,
   minWeight,
   maxWeight,
+  settings,
   filters,
   matchFullWord,
 }: Props) {
@@ -102,17 +102,14 @@ export default function Sizer({
         if (settings[SHOW_LABELS_KEY]) {
           cy.style()
             .selector('node')
-            .style(
-              // assuming absolute minScore of 0 and maxScore of 1
-              {
-                height: 'label',
-                width: 'label',
-              },
-            )
+            .style({
+              height: 'label',
+              width: 'label',
+            })
             .update();
         }
 
-        // edge size affects all edges
+        // edge size affects all weighted edges
         // update number of weighted edges
         setNumWeightedEdges(cy.$('edge[weight]').length);
 
