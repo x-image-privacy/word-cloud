@@ -1259,6 +1259,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cytoscape-avsdf@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/cytoscape-avsdf@npm:1.0.2"
+  dependencies:
+    "@types/cytoscape": "*"
+  checksum: 49c2d07bfe57b18b58ffb5c2aba15f3722638571a0626a4c85c050623b69ce3b06533968233aa904115382dc846af947c3bec16db06c3a9da3831a4471ec9eb9
+  languageName: node
+  linkType: hard
+
 "@types/cytoscape@npm:*":
   version: 3.19.11
   resolution: "@types/cytoscape@npm:3.19.11"
@@ -1457,6 +1466,7 @@ __metadata:
     "@mui/icons-material": ^5.14.12
     "@mui/material": ^5.14.12
     "@trivago/prettier-plugin-sort-imports": ^4.2.0
+    "@types/cytoscape-avsdf": ^1.0.2
     "@types/file-saver": ^2.0.6
     "@types/lodash": ^4.14.198
     "@types/randomcolor": ^0.5.7

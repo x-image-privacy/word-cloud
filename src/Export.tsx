@@ -12,13 +12,16 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import { ElementDefinition } from 'cytoscape';
 import Cytoscape from 'cytoscape';
 import { saveAs } from 'file-saver';
 
+import { SHOW_PARENT_NODES_KEY, SettingsProps } from './View';
 import { ErrorToastContainer } from './components/ExplanationDataImporter';
 
 type Props = {
   cy: Cytoscape.Core | undefined;
+  settings: SettingsProps;
 };
 
 const style = {
@@ -32,21 +35,45 @@ const style = {
   p: 4,
 };
 
+const NODES_SELECTOR = 'node:childless';
+
+const exportingNodes = (selector: string): boolean =>
+  selector === NODES_SELECTOR;
+
 const handleExport = (
   elements: Cytoscape.CollectionReturnValue,
   dataOnly: boolean,
   fileName: string,
+  selector: string,
+  settings: SettingsProps,
 ) => {
   const exportableElements: Cytoscape.CollectionReturnValue = elements.filter(
     ':visible:selectable',
   );
-  let json: Object[];
-  if (dataOnly) {
-    json = exportableElements.map((ele) => ({
-      data: ele.data(),
-    }));
-  } else {
-    json = exportableElements.jsons();
+  let json: ElementDefinition[];
+
+  json = exportableElements.map((ele) => {
+    let rvalue: ElementDefinition = { data: {} };
+
+    if (dataOnly) {
+      rvalue.data = ele.data();
+    } else {
+      rvalue = {
+        ...rvalue,
+        // @ts-ignore
+        ...ele.json(),
+      };
+    }
+
+    return rvalue;
+  });
+
+  if (exportingNodes(selector) && !settings[SHOW_PARENT_NODES_KEY]) {
+    json.forEach((obj: ElementDefinition): void => {
+      if (obj?.data.hasOwnProperty('parent')) {
+        delete obj.data.parent;
+      }
+    });
   }
 
   const blob = new Blob([JSON.stringify(json)], {
@@ -65,18 +92,22 @@ const showToastError = (err: any) => {
   ));
 };
 
-export default function Export({ cy }: Props) {
+export default function Export({ cy, settings }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const [exportLayout, setExportLayout] = useState<boolean>(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleExportThunk = (selector: string, fileName: string): Function => {
+  const handleExportThunk = (
+    selector: string,
+    fileName: string,
+    settings: SettingsProps,
+  ): Function => {
     return () => {
       if (cy) {
         try {
           const elements = cy.$(selector);
-          handleExport(elements, !exportLayout, fileName);
+          handleExport(elements, !exportLayout, fileName, selector, settings);
         } catch (err: any) {
           showToastError(err);
         }
@@ -84,9 +115,17 @@ export default function Export({ cy }: Props) {
     };
   };
 
-  const handleExportCategories = handleExportThunk('node:parent', 'categories');
-  const handleExportNodes = handleExportThunk('node:childless', 'nodes');
-  const handleExportEdges = handleExportThunk('edge', 'edges');
+  const handleExportCategories = handleExportThunk(
+    'node:parent',
+    'categories',
+    settings,
+  );
+  const handleExportNodes = handleExportThunk(
+    NODES_SELECTOR,
+    'nodes',
+    settings,
+  );
+  const handleExportEdges = handleExportThunk('edge', 'edges', settings);
 
   const handleChangeExportLayout = () => {
     setExportLayout(!exportLayout);

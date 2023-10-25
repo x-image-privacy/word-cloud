@@ -11,12 +11,12 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
+  rgbToHex,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Cytoscape, { Core, NodeSingular } from 'cytoscape';
-// @ts-ignore
 import avsdf from 'cytoscape-avsdf';
 // @ts-ignore
 import cise from 'cytoscape-cise';
@@ -40,16 +40,23 @@ Cytoscape.use(avsdf);
 Cytoscape.use(cise);
 
 // todo: figure out how to uncache for nodes that change color
-const selectTextOutlineColor = _.memoize(function (ele: NodeSingular) {
+const selectColor = _.memoize(function (ele: NodeSingular) {
   if (ele.isParent()) {
-    return ele.data()['color'];
+    return ele.data('color');
   }
 
   if (ele.isChild()) {
-    return randomColor({
+    const color = randomColor({
       luminosity: 'dark',
       hue: ele.parent().data()['color'],
     });
+
+    return color;
+  }
+
+  // orphan
+  if (ele.data('color')) {
+    return ele.data('color');
   }
 
   return 'gray';
@@ -101,19 +108,19 @@ const View = ({ graph }: Props) => {
       style: {
         label: 'data(name)',
         backgroundOpacity: 0,
-        backgroundColor: selectTextOutlineColor,
+        backgroundColor: selectColor,
         color: 'white',
         textHalign: 'center',
         textValign: 'center',
-        textOutlineColor: selectTextOutlineColor,
+        textOutlineColor: selectColor,
         textOutlineOpacity: 0.9,
       },
     },
     {
-      // orphan nodes are grey
+      // orphan nodes are grey unless they have a color
       selector: 'node:orphan',
       style: {
-        textOutlineColor: 'gray',
+        textOutlineColor: selectColor,
         textOutlineOpacity: 1,
       },
     },
@@ -314,6 +321,14 @@ const View = ({ graph }: Props) => {
             .update();
         }
 
+        // update colors
+        cyHandle.nodes().forEach((ele) => {
+          const color = ele.style('background-color');
+          if (color) {
+            ele.data({ color: rgbToHex(color) });
+          }
+        });
+
         // hide all nodes
         if (filters.size) {
           cyHandle.nodes().style({ visibility: 'hidden' });
@@ -386,7 +401,7 @@ const View = ({ graph }: Props) => {
   return (
     <>
       <Box sx={{ my: 1, marginX: 5 }}>
-        <Export cy={cyHandle} />
+        <Export cy={cyHandle} settings={settings} />
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

@@ -134,6 +134,7 @@ export default function Sizer({
   const edgesDisabled = (n: number) => !settings[SHOW_EDGES_KEY] || n === 0;
   const nodesDisabled = !settings[SHOW_NODES_KEY] || settings[SHOW_LABELS_KEY];
   const labelsDisabled = !settings[SHOW_LABELS_KEY];
+
   return (
     <Box sx={{ mt: 2 }}>
       <Typography>Sizes</Typography>
